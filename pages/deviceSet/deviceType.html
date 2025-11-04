@@ -125,10 +125,11 @@
                               <tr>
                                 <th>設備類型名稱</th>
                                 <th>設備類型代碼</th>
+                                <th>說明</th>
                              <!--   <th>狀態</th>
-                                <th>心跳頻率(秒)</th> -->
+                                <th>心跳頻率(秒)</th> 
                                 <th>最後編輯人員</th>
-                                <th>最後編輯時間</th>
+                                <th>最後編輯時間</th>-->
                                 <th>功能</th>
                               </tr>
                             </thead>
@@ -257,10 +258,11 @@
           row.innerHTML = `
                   <td>${data.deviceTypeName}</td>
                   <td>${data.deviceTypeCode}</td>
+                  <td>${data.deviceTypeDesc}</td>
                <!--   <td style="color:${statusColorMap[data.status] || 'black'}">${data.status === 'true' ? '啟用' : '停用'}</td>
-                  <td>${data.heartBeatFreq}</td> -->
+                  <td>${data.heartBeatFreq}</td>
                   <td>${data.modId}</td> 
-                  <td>${data.modTime}</td>              
+                  <td>${data.modTime}</td>   -->            
                   <td style="text-align: center;">
                       <a href="deviceTypeEdit.html?id=${data.deviceTypeCode}&readonly=true" class="btn btn-sm btn-primary">檢視</a>
                       <a href="deviceTypeEdit.html?id=${data.deviceTypeCode}" class="btn btn-secondary btn-sm">修改</a>
