@@ -6,8 +6,9 @@ const sidebarMenu = [
 		icon: 'fas fa-sliders-h',
 		order: 0,
 		subMenu: [
-			{ id: "item1", name: '設備資料設定', href: basePath +'pages/deviceSet/deviceData.html', order: 1 },
-			{ id: "item2", name: '設備類型設定', href: basePath +'pages/deviceSet/deviceType.html', order: 0 },
+		{ id: "item2", name: '設備類型設定', href: basePath +'pages/deviceSet/deviceType.html', order: 0 },
+	{ id: "item1", name: '設備資料設定', href: basePath +'pages/deviceSet/deviceData.html', order: 1 },
+			
 			{ id: "item3", name: '設備組別設定', href: basePath +'pages/deviceSet/deviceGroup.html', order: 2 },
 		]
 	},
