@@ -4,10 +4,9 @@
 // deviceTypeAdd.html
 // deviceTypeEdit.html
 const deviceTypeDataList = [
-  {deviceTypeName:'ATM系統', deviceTypeCode:'0001', deviceTypeDesc: '我是ATM', status:'true', heartBeatFreq:"15", moduleSelect: ['現金模組', '卡片模組', '百鈔存儲上限', '千鈔存儲上限'], deviceToken:'eyJhbGciOiJIUzI1NiJ9.eyJyb3VuZCI6IjA5NTMxNmNiLWRkZTAtNDEzYS04ZmIxLWIwNTZlOTYyOTdhZiIsInVzZXJuYW1lIjoiTEVPIiwiZXhwIjoxNzQ0MDk5MjI3fQ.dK4vEl-b1Z2sv5L7R8PSqIkj7se7NgUyZTnuU56L8kw', createId:'tom', createTime:'2024-05-22 09:42', modId:'Admin1', modTime:'2025-01-12 13:55'},
-  {deviceTypeName:'TCR系統', deviceTypeCode:'0002', deviceTypeDesc: '我是TCR系統', status:'true', heartBeatFreq:"20", moduleSelect: [], deviceToken:'leoleoleo', createId:'sam', createTime:'2024-09-15 16:02', modId:'Admin1', modTime:'2025-02-01 12:07'},
-  {deviceTypeName:'門禁系統', deviceTypeCode:'0003', deviceTypeDesc: '我是門禁系統', status:'false', heartBeatFreq:"10", moduleSelect: ['門禁控制面板', '讀卡', '指紋識別器'], deviceToken:'eyJhbGciOiJIUzI1NiJ9.eyJyb3VuZCI6ImRhOGQ1YTM4LWI1ZjQtNDlkZS05NmIwLTFkYThc4Zq8rxwEnSIpo', createId:'ann', createTime:'2024-10-17 14:25', modId:'Admin2', modTime:'2025-02-25 08:42'},
-  {deviceTypeName:'監控系統', deviceTypeCode:'0004', deviceTypeDesc: '我是監控系統', status:'true', heartBeatFreq:"30", moduleSelect: ['網絡視頻錄像機（NVR）', '數字視頻錄像機（DVR）', '存儲設備', '監視顯示器', '視頻管理軟件（VMS）', '移動偵測模組'], deviceToken:'abcabc', createId:'sam', createTime:'2024-10-28 16:02', modId:'Admin1', modTime:'2025-03-01 12:07'}
+  {deviceTypeName:'自動提款機', deviceTypeCode:'WIN-1500XE', deviceTypeDesc: '德利多富', status:'true', heartBeatFreq:"15", moduleSelect: [], deviceToken:'eyJhbGciOiJIUzI1NiJ9.eyJyb3VuZCI6IjA5NTMxNmNiLWRkZTAtNDEzYS04ZmIxLWIwNTZlOTYyOTdhZiIsInVzZXJuYW1lIjoiTEVPIiwiZXhwIjoxNzQ0MDk5MjI3fQ.dK4vEl-b1Z2sv5L7R8PSqIkj7se7NgUyZTnuU56L8kw', createId:'tom', createTime:'2024-05-22 09:42', modId:'Admin1', modTime:'2025-01-12 13:55'},
+  {deviceTypeName:'循環機', deviceTypeCode:'OKI-RG7', deviceTypeDesc: '國眾', status:'true', heartBeatFreq:"20", moduleSelect: [], deviceToken:'leoleoleo', createId:'sam', createTime:'2024-09-15 16:02', modId:'Admin1', modTime:'2025-02-01 12:07'},
+  {deviceTypeName:'循環機', deviceTypeCode:'HITACHI-CZ5000', deviceTypeDesc: '三商', status:'false', heartBeatFreq:"10", moduleSelect: [], deviceToken:'eyJhbGciOiJIUzI1NiJ9.eyJyb3VuZCI6ImRhOGQ1YTM4LWI1ZjQtNDlkZS05NmIwLTFkYThc4Zq8rxwEnSIpo', createId:'ann', createTime:'2024-10-17 14:25', modId:'Admin2', modTime:'2025-02-25 08:42'},
 ]
 
 // deviceTransactionCode.html
