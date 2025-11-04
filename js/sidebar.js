@@ -29,7 +29,7 @@
 // 先處理 sidebarMenu 的 active、open 狀態
 document.addEventListener("DOMContentLoaded", function () {
   const sidebar = document.getElementById('sidebarMenu');
-  const currentPath = window.location.pathname.split('/').pop(); // 只取檔名部分
+  const currentPath = window.location.pathname; 
 
   sidebarMenu.forEach(menu => {
     // 判斷這個 menu 有沒有子選單 href 符合目前頁面
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
       </a>
       <ul class="nav nav-treeview">
         ${menu.subMenu.map(sub => {
-          const isActive = sub.href === currentPath;
+          const isActive = currentPath.endsWith(sub.href);
           return `
             <li class="nav-item">
               <a href="${sub.href}" class="nav-link${isActive ? ' active' : ''}">
