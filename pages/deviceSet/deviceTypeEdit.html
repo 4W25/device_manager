@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>設備類型(修改)</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <!-- <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker.css">
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- Bootstrap Color Picker -->
+  <link rel="stylesheet" href="../../plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="../../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  <!-- Bootstrap4 Duallistbox -->
+  <link rel="stylesheet" href="../../plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+  <!-- BS Stepper -->
+  <link rel="stylesheet" href="../../plugins/bs-stepper/css/bs-stepper.min.css">
+  <!-- dropzonejs -->
+  <link rel="stylesheet" href="../../plugins/dropzone/min/dropzone.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <!-- Site wrapper -->
+  <div class="wrapper">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- 上方行列 -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="deviceType.html" class="nav-link">返回設備類型設定總覽頁</a>
+        </li>
+      </ul>
+
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+            <i class="fas fa-expand-arrows-alt"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="../../DeviceControllerIndex.html" class="brand-link">
+        <img src="../../dist/img/device01.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+          style="opacity: .8">
+        <span class="brand-text font-weight-light">設備監控管理後台</span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="../../dist/img/userNobody.png" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="#" class="d-block">登入者姓名</a>
+          </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul id="sidebarMenu" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+            data-accordion="false">
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>修改</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="../../DeviceIndex.html">首頁</a></li>
+                <li class="breadcrumb-item active">基本管理 / 設備類型設定 / 設備類型修改</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-info">
+              <div class="card-header">
+                <h3 class="card-title">設備類型</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <!-- 左 -->
+                    <div class="form-group">
+                      <label for="deviceTypeName">設備類型名稱<span class="text-danger">*</span></label>
+                      <input type="text" id="deviceTypeName" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="deviceTypeCode">設備類型代碼<span class="text-danger">*</span></label>
+                      <input type="text" id="deviceTypeCode" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="deviceTypeDesc">設備類型描述</label>
+                      <input type="text" id="deviceTypeDesc" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="status">設備類型狀態<span class="text-danger">*</span></label>
+                      <select id="status" class="form-control select2">
+                        <option value="" selected disabled>選擇狀態</option>
+                        <option value="true">啟用</option>
+                        <option value="false">停用</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="heartBeatFreq">心跳頻率<span class="text-danger">*</span></label>
+                      <input type="number" id="heartBeatFreq" class="form-control" value="1" min="1">
+                    </div>
+                    <div id="moduleDiv" class="form-group">
+                      <label>設備模組</label><span class="text-danger">*</span>
+                      <select id="moduleSelect" class="select2" multiple="multiple" data-placeholder="選擇模組"
+                        style="width: 100%;">
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="deviceToken">識別碼(token)<span class="text-danger">*</span></label>
+                      <div class="d-flex">
+                        <textarea id="deviceToken" class="form-control" rows="2" style="resize: none;"></textarea>
+                        <button class="btn btn-outline-secondary border-0" title="更新">
+                          <i class="fa-solid fa-rotate"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- 右 -->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="inputProjectLeader">建立人員</label>
+                      <input type="text" id="createId" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputProjectLeader">建立時間</label>
+                      <input type="text" id="createTime" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputProjectLeader">最後編輯人員</label>
+                      <input type="text" id="modId" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputProjectLeader">最後編輯時間</label>
+                      <input type="text" id="modTime" class="form-control" readonly>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <div class="content">
+            <div class="form-group">
+              <a href="deviceType.html" class="btn btn-secondary ml-2">取消</a>
+              <button type="button" id="confirmButton" class="btn btn-success " onclick="validateForm()">確認修改</button>
+            </div>
+          </div>
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <footer class="main-footer">
+      <div class="float-right d-none d-sm-block">
+        <b>Version</b> 3.2.0
+      </div>
+      <strong>Copyright &copy; 2014-2024
+        <a href="https://www.leosys.com/">國眾電腦股份有限公司</a>.
+      </strong> All rights reserved.
+    </footer>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- jQuery -->
+  <script src="../../plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Select2 -->
+  <script src="../../plugins/select2/js/select2.full.min.js"></script>
+  <!-- Bootstrap4 Duallistbox -->
+  <script src="../../plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+  <!-- InputMask -->
+  <script src="../../plugins/moment/moment.min.js"></script>
+  <script src="../../plugins/inputmask/jquery.inputmask.min.js"></script>
+  <!-- date-range-picker -->
+  <script src="../../plugins/daterangepicker/daterangepicker.js"></script>
+  <!-- bootstrap color picker -->
+  <script src="../../plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+  <!-- Tempusdominus Bootstrap 4 -->
+  <script src="../../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+  <!-- Bootstrap Switch -->
+  <script src="../../plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+  <!-- BS-Stepper -->
+  <script src="../../plugins/bs-stepper/js/bs-stepper.min.js"></script>
+  <!-- dropzonejs -->
+  <script src="../../plugins/dropzone/min/dropzone.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../../dist/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="../../dist/js/demo.js"></script>
+  <!-- 假資料存放區 -->
+  <script src="../../data/deviceType_info.js"></script>
+  <!-- 左側欄動態生成 -->
+  <script src="../../data/sidebar_menu.js"></script>
+  <script src="../../js/sidebar.js"></script>
+  <!-- Page specific script -->
+  <script>
+    $(function () {
+      //Initialize Select2 Elements
+      $('.select2').select2()
+
+      //Initialize Select2 Elements
+      $('.select2bs4').select2({
+        theme: 'bootstrap4'
+      })
+
+      //Date picker
+      $('#reservationdate').datetimepicker({
+        format: 'YYYY-MM-DD'
+      });
+
+      //Date range picker
+      $('#reservation').daterangepicker()
+
+      //Money Euro 設備IP
+      $('[data-mask]').inputmask()
+
+      //Bootstrap Duallistbox 設備模組
+      $('.duallistbox').bootstrapDualListbox()
+    })
+
+    // 獲取 URL 中的 id 參數
+    const urlParams = new URLSearchParams(window.location.search);
+    const moduleNames = deviceParams.map(p => p.moduleName);
+    const deviceTypeId = urlParams.get('id');
+    const isReadOnly = urlParams.get('readonly') === 'true'
+
+    // 唯讀模式
+    if (isReadOnly) {
+      //頁面用字
+      document.title = "設備類型(檢視)";
+      document.querySelector(".col-sm-6 h1").innerText = "檢視";
+      document.querySelector(".breadcrumb-item.active").innerText = "基本管理 / 設備類型設定 / 設備類型檢視";
+      // 取得 "確認修改" 按鈕
+      const confirmButton = document.getElementById("confirmButton");
+      // 如果是檢視模式，就隱藏按鈕
+      if (confirmButton) {
+        confirmButton.style.display = "none";
+      }
+      // Find all editable input fields and disable them
+      const inputs = document.querySelectorAll('input, select, textarea');
+      inputs.forEach(input => {
+        input.disabled = true;
+      });
+
+    }
+
+    if (deviceTypeId) {
+      // 根據 deviceTypeCode 查找對應的設備類型
+      const deviceTypeData = deviceTypeDataList.find(d => d.deviceTypeCode === deviceTypeId);
+      const moduleNames = deviceParams.map(p => p.moduleName);
+      const selectedModules = deviceTypeData.moduleSelect;
+
+      if (deviceTypeData) {
+        // 顯示設備資料
+        document.getElementById('deviceTypeName').value = deviceTypeData.deviceTypeName;
+        document.getElementById('deviceTypeCode').value = deviceTypeData.deviceTypeCode;
+        document.getElementById('deviceTypeDesc').value = deviceTypeData.deviceTypeDesc;
+        document.getElementById('status').value = deviceTypeData.status;
+        document.getElementById('heartBeatFreq').value = deviceTypeData.heartBeatFreq;
+        document.getElementById('moduleSelect').value = deviceTypeData.moduleSelect;
+        document.getElementById('deviceToken').value = deviceTypeData.deviceToken;
+        document.getElementById('createId').value = deviceTypeData.createId;
+        document.getElementById('createTime').value = deviceTypeData.createTime;
+        document.getElementById('modId').value = deviceTypeData.modId;
+        document.getElementById('modTime').value = deviceTypeData.modTime;
+
+        setSelectedModules(moduleNames, selectedModules);
+      } else {
+        console.log('找不到該設備資料');
+      }
+    } else {
+      console.log('未提供設備 ID');
+    }
+
+    function setSelectedModules(allModules, selectedModules) {
+      const moduleSelect = document.getElementById('moduleSelect');
+      if (!moduleSelect) return;
+      moduleSelect.innerHTML = ""; // 先清空
+
+      allModules.forEach(moduleName => {
+        const option = document.createElement("option");
+        option.value = moduleName;
+        option.textContent = moduleName;
+
+        // 已被選取的模組
+        if (selectedModules.includes(moduleName)) {
+          option.selected = true;
+        }
+
+        moduleSelect.appendChild(option);
+      });
+    }
+
+    function updateModules() {
+      const moduleSelect = document.getElementById('moduleSelect');
+      const filteredModules = deviceParams
+        .map((device) => device.moduleName);
+
+      moduleSelect.innerHTML = "";
+
+      // 動態新增選項
+      filteredModules.forEach((moduleName) => {
+        const option = document.createElement("option");
+        option.textContent = moduleName;
+        option.value = moduleName;
+        moduleSelect.appendChild(option);
+      });
+    }
+
+
+
+    // JavaScript 驗證表單
+    function validateForm() {
+      // 獲取左輸入框
+      var deviceTypeName = document.getElementById("deviceTypeName");
+      var deviceTypeCode = document.getElementById("deviceTypeCode");
+      var status = document.getElementById("status").value;
+      var heartBeatFreq = document.getElementById("heartBeatFreq");
+      var moduleSelect = document.getElementById("moduleSelect");
+      var deviceToken = document.getElementById("deviceToken");
+      if (!deviceTypeName || !deviceTypeName.value.trim()) {
+        alert("請輸入設備類型名稱");
+        return false;
+      } else if (!deviceTypeCode || !deviceTypeCode.value.trim()) {
+        alert("請輸入設備類型代碼");
+        return false;
+      } else if (!status) {
+        alert("請選擇設備類型狀態");
+        return false;
+      } else if (!heartBeatFreq || !heartBeatFreq.value.trim()) {
+        alert("請輸入心跳頻率");
+        return false;
+      } else if (!moduleSelect || !moduleSelect.value.trim()) {
+        alert("請選擇設備模組");
+        return false;
+      } else if (!deviceToken || !deviceToken.value.trim()) {
+        alert("請輸入識別碼");
+        return false;
+      }
+
+      // 所有驗證通過
+      alert("表單提交成功！");
+      return true; // 表單將提交
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>設備資料設定_分頁</title>
+
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<link rel="stylesheet"
+	href="../../plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet"
+	href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet"
+	href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet"
+	href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
+<link rel="stylesheet"
+	href="../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+<link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+
+<style>
+.nav-tabs {
+	margin-bottom: 20px;
+}
+</style>
+</head>
+<body class="hold-transition sidebar-mini">
+	<div class="wrapper">
+		<!-- Navbar -->
+		<nav
+			class="main-header navbar navbar-expand navbar-white navbar-light">
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link" data-widget="pushmenu"
+					href="#" role="button"><i class="fas fa-bars"></i></a></li>
+				<li class="nav-item d-none d-sm-inline-block"><a
+					href="../../DeviceIndex.html" class="nav-link">回首頁</a></li>
+			</ul>
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item"><a class="nav-link"
+					data-widget="fullscreen" href="#" role="button"> <i
+						class="fas fa-expand-arrows-alt"></i>
+				</a></li>
+			</ul>
+		</nav>
+
+		<!-- Sidebar -->
+		<aside class="main-sidebar sidebar-dark-primary elevation-4">
+			<!-- Brand Logo -->
+			<a href="../../DeviceIndex.html" class="brand-link"> <img
+				src="../../dist/img/device01.png" alt="Logo"
+				class="brand-image img-circle elevation-3" style="opacity: .8">
+				<span class="brand-text font-weight-light">設備監控管理後台</span>
+			</a>
+
+			<div class="sidebar">
+				<!-- User Panel -->
+				<div class="user-panel mt-3 pb-3 mb-3 d-flex">
+					<div class="image">
+						<img src="../../dist/img/userNobody.png"
+							class="img-circle elevation-2" alt="User Image">
+					</div>
+					<div class="info">
+						<a href="#" class="d-block">登入者姓名</a>
+					</div>
+				</div>
+
+				<!-- Sidebar Menu -->
+				<nav class="mt-2">
+					<ul id="sidebarMenu" class="nav nav-pills nav-sidebar flex-column"
+						data-widget="treeview" role="menu" data-accordion="false">
+						<!-- 動態產生選單 -->
+					</ul>
+				</nav>
+			</div>
+		</aside>
+
+		<!-- Content Wrapper -->
+		<div class="content-wrapper">
+			<!-- Page Header -->
+			<section class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1>使用者設定總覽頁</h1>
+						</div>
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a
+									href="../../DeviceIndex.html">首頁</a></li>
+								<li class="breadcrumb-item active">基本管理 / 使用者資料設定</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Main Content -->
+			<section class="content">
+				<div class="container-fluid">
+					<div class="card card-default card-outline">
+						<div class="card-header">
+							<h3 class="card-title">
+								<i class="fas fa-th-large"></i> 使用者資料
+							</h3>
+						</div>
+						<div class="card-body">
+							<h4>透過狀態類型分頁</h4>
+							<ul class="nav nav-tabs" id="custom-content-below-tab"
+								role="tablist"></ul>
+							<div class="tab-content" id="custom-content-below-tabContent"></div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<!-- Footer -->
+		<footer class="main-footer">
+			<div class="float-right d-none d-sm-block">
+				<b>Version</b> 3.2.0
+			</div>
+			<strong>&copy; 2014-2024 <a href="https://www.leosys.com/">國眾電腦股份有限公司</a>.
+			</strong> All rights reserved.
+		</footer>
+	</div>
+
+
+	<input type="file" id="hiddenFileInput" class="d-none"
+		accept=".xlsx,.xls">
+
+	<script src="../../plugins/jquery/jquery.min.js"></script>
+	<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+	<script
+		src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+	<script
+		src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+	<script src="../../plugins/select2/js/select2.full.min.js"></script>
+	<script src="../../dist/js/adminlte.min.js"></script>
+<!-- 	<script src="../../data/sidebar_menu.js"></script> -->
+	<script src="../../js/sidebar.js"></script>
+  <script src="../../data/sidebar_menu.js"></script>
+	<script src="../../data/device_info.js"></script>
+
+	<script>
+$(function () {
+  const typeList = deviceStatusList.map(device => ({
+    deviceStatus: device.deviceStatus
+  }));
+
+  const allDeviceDataList = [...deviceUserList, ...deviceUserCheckList];
+  const tabList = $("#custom-content-below-tab");
+  const tabContent = $("#custom-content-below-tabContent");
+  tabList.empty();
+  tabContent.empty();
+
+  typeList.forEach((device, index) => {
+    const isActive = index === 0 ? "active" : "";
+    const deviceStatus = device.deviceStatus;
+
+    // Tab
+    tabList.append(`
+      <li class="nav-item">
+        <a class="nav-link ${isActive}" id="tab-${deviceStatus}" data-toggle="pill"
+           href="#content-${deviceStatus}" role="tab"
+           aria-controls="content-${deviceStatus}" aria-selected="${index === 0}">
+          ${deviceStatus}
+        </a>
+      </li>
+    `);
+
+    // Content
+    tabContent.append(`
+      <div class="tab-pane fade show ${isActive}" id="content-${deviceStatus}" role="tabpanel">
+        <section class="content">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row mb-2">
+                      <div class="col-12 text-end">
+                        <button type="button" class="btn btn-primary me-3" onclick="openAddModal()">新增</button>
+                      </div>
+                    </div>
+                    <table id="table-${deviceStatus}" class="table table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th>使用者編號</th>
+                          <th>使用者姓名</th>
+                          <th>狀態</th>
+                          <th>部門</th>
+                          <th>群組別</th>
+                          <th>維護人員 / 審核人員</th>
+                          <th>功能</th>
+                        </tr>
+                      </thead>
+                      <tbody id="deviceTableBody-${deviceStatus}"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    `);
+
+    renderDeviceTable(deviceStatus, `deviceTableBody-${deviceStatus}`);
+  });
+
+  function renderDeviceTable(deviceStatus, tableBodyId) {
+    const tableBody = document.getElementById(tableBodyId);
+    tableBody.innerHTML = allDeviceDataList
+      .filter(d => d.status === deviceStatus)
+      .sort((a, b) => (statusMap[a.status]?.order || 99) - (statusMap[b.status]?.order || 99))
+      .map(d => {
+        let editButton = "";
+        if (d.status === "審核中") {
+          editButton = `<span class="btn btn-sm btn-secondary disabled"
+                            style="pointer-events:auto; cursor:pointer;"
+                            onclick="alert('設備 ${d.userNo} 為審核中不得修改')">修改</span>`;
+        } else if (d.status === "退回") {
+          editButton = `<span class="btn btn-sm btn-secondary disabled"
+                            style="pointer-events:auto; cursor:pointer;"
+                            onclick="alert('設備 ${d.userNo} 為退回不得修改，請重新申請')">修改</span>`;
+        } else {
+          editButton = `<button class="btn btn-sm btn-secondary" onclick="openEditModal('${d.userNo}')">修改</button>`;
+        }
+
+        const groupNames = (d.groups || [])
+          .map(groupNo => deviceGroupList.find(g => g.groupNo === groupNo)?.groupName || groupNo)
+          .join(", ");
+
+        return `
+          <tr>
+            <td>${d.userNo}</td>
+            <td>${d.userName}</td>
+            <td style="color:${statusMap[d.status]?.color || 'black'}">${d.status}</td>
+            <td>${d.department}</td>
+            <td>${groupNames}</td>
+            <td>${d.modId} / ${d.cofId}</td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-primary" onclick="openUserModal('view','${d.userNo}')">檢視</button>
+              ${editButton}
+              <button class="btn btn-sm btn-danger" onclick="deleteDevice('${d.userNo}')">刪除</button>
+            </td>
+          </tr>
+        `;
+      }).join("");
+  }
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const selectedType = urlParams.get("deviceStatus");
+  if (selectedType) {
+    $(`#tab-${selectedType}`).tab('show');
+  }
+});
+
+// === 功能區 ===
+
+function deleteDevice(deviceNumber) {
+  alert(`設備 ${deviceNumber} 已刪除！（此功能需連接後端）`);
+}
+
+function openAddModal() {
+  document.getElementById("formMode").value = "add";
+
+  // 清空欄位
+  $("#uploadProgramForm input, #uploadProgramForm textarea").val("");
+  $("#deviceDepartmentList").val("");
+  $('#moduleSelect').val([]).trigger('change'); // 清空 select2
+
+  // 欄位啟用
+  $('#uploadProgramForm input, #uploadProgramForm textarea, #uploadProgramForm select').prop('disabled', false);
+  $('#moduleSelect').prop('disabled', false).trigger('change');
+  $('#uploadProgramForm button[type="submit"]').show();
+
+  // 顯示 modal
+  $('#addNewUser').modal('show');
+}
+
+function openEditModal(userNo) {
+  const allDeviceDataList = [...deviceUserList, ...deviceUserCheckList];
+  const user = allDeviceDataList.find(d => d.userNo === userNo);
+  if (!user) return;
+
+  document.getElementById("formMode").value = "edit";
+  document.getElementById("userNo").value = user.userNo;
+  document.getElementById("userName").value = user.userName;
+  document.getElementById("email").value = user.email || "";
+  document.getElementById("phoneNo").value = user.phoneNo || "";
+  document.getElementById("note").value = user.note || "";
+  document.getElementById("deviceDepartmentList").value = user.department;
+  $('#moduleSelect').val(user.groups).trigger("change");
+
+  $('#uploadProgramForm input, #uploadProgramForm textarea, #uploadProgramForm select').prop('disabled', false);
+  $('#moduleSelect').prop('disabled', false).trigger('change');
+  $('#uploadProgramForm button[type="submit"]').show();
+
+  $('#addNewUser').modal('show');
+}
+
+function openUserModal(mode, userNo) {
+  document.getElementById("formMode").value = mode;
+  const isView = (mode === "view");
+
+  const allDeviceDataList = [...deviceUserList, ...deviceUserCheckList];
+  const data = allDeviceDataList.find(d => d.userNo === userNo);
+  if (!data) return;
+
+  document.getElementById("userNo").value = data.userNo;
+  document.getElementById("userName").value = data.userName;
+  document.getElementById("email").value = data.email;
+  document.getElementById("phoneNo").value = data.phoneNo;
+  document.getElementById("note").value = data.note;
+  document.getElementById("deviceDepartmentList").value = data.department || "";
+  $('#moduleSelect').val(data.groups || []).trigger('change');
+
+  $('#uploadProgramForm input, #uploadProgramForm textarea, #uploadProgramForm select').prop('disabled', isView);
+  $('#moduleSelect').prop('disabled', isView).trigger('change');
+
+  if (isView) {
+    $('#uploadProgramForm button[type="submit"]').hide();
+  } else {
+    $('#uploadProgramForm button[type="submit"]').show();
+  }
+
+  $('#addNewUser').modal('show');
+}
+</script>
+
+
+	<script>
+// 表單提交處理（新增使用者 Modal）
+$(document).ready(function () {
+  $('#uploadProgramForm').on('submit', function (e) {
+    e.preventDefault();
+    const mode = $("#formMode").val();
+    const formData = new FormData(this);
+    if (mode === "edit") {
+    }else{
+    $.ajax({
+      url: '/addNewUser',
+      type: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function () {
+        alert('新增成功！');
+        $('#addNewUser').modal('hide');
+      },
+      error: function () {
+        alert('還沒開通後台暫時這樣');
+      }
+    });
+    }
+  });
+});
+</script>
+
+
+
+
+
+	<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // === UI 元件初始化 ===
+  $('.select2').select2();
+  $('.select2bs4').select2({ theme: 'bootstrap4' });
+
+  // SweetAlert 提示
+//   $('.swalDefaultSuccess').click(function () {
+//     if (typeof validateForm === 'function' && validateForm()) {
+//       Swal.fire({
+//         icon: 'success',
+//         title: '<div style="text-align:center">新增成功！</div>',
+//         html: `<div style="text-align:center">設備編號: ${document.getElementById("inputDeviceNo").value}</div>`,
+//         showConfirmButton: false,
+//         timer: 3000,
+//         width: '500px',
+//         customClass: { popup: 'swal2-popup-custom' }
+//       });
+//     }
+//   });
+
+  // === 部門下拉選單初始化 ===
+  const departmentSelect = document.getElementById("deviceDepartmentList");
+  if (departmentSelect) {
+    departmentSelect.innerHTML = '';
+    deviceDepartmentList.forEach(item => {
+      const option = document.createElement("option");
+      option.value = item.department;
+      option.textContent = `${item.department} - ${item.departmentName}`;
+      departmentSelect.appendChild(option);
+    });
+  }
+
+  // === 群組模組下拉選單初始化 ===
+  const moduleSelect = document.getElementById("moduleSelect");
+  if (moduleSelect) {
+    moduleSelect.innerHTML = '';
+    deviceGroupList.forEach(item => {
+      const option = document.createElement("option");
+      option.value = item.groupNo;
+      option.textContent = `${item.groupNo} - ${item.groupName}`;
+      moduleSelect.appendChild(option);
+    });
+  }
+
+});
+
+// === 方法區 ===
+
+// 設定選取模組為唯讀（用於檢視）
+function setSelectedModules(deviceGroupList) {
+  const moduleSelect = document.getElementById('moduleSelect');
+  if (!moduleSelect) return;
+
+  moduleSelect.innerHTML = "";
+
+  if (Array.isArray(modules)) {
+    modules.forEach(moduleName => {
+      const option = document.createElement("option");
+      option.value = moduleName;
+      option.textContent = moduleName;
+      option.selected = true;
+      moduleSelect.appendChild(option);
+    });
+  }
+
+  moduleSelect.disabled = true;
+}
+
+// 根據設備類型更新模組選單
+function updateModules() {
+  const inputType = document.getElementById('inputType');
+  const moduleSelect = document.getElementById('moduleSelect');
+  if (!inputType || !moduleSelect) return;
+
+  const selectedType = inputType.value;
+  const filteredModules = deviceGroupList
+    .filter(device => device.groupNo === selectedType)
+    .map(device => device.moduleName);
+
+  moduleSelect.innerHTML = "";
+
+  filteredModules.forEach(moduleName => {
+    const option = document.createElement("option");
+    option.textContent = moduleName;
+    option.value = moduleName;
+    moduleSelect.appendChild(option);
+  });
+}
+
+// 返回上一頁
+function cancelAndReturn() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const deviceType = urlParams.get("deviceType");
+  window.location.href = `deviceData.html?deviceType=${encodeURIComponent(deviceType)}`;
+}
+</script>
+
+
+
+	<!-- 新增使用者 Modal -->
+	<div class="modal fade" id="addNewUser" tabindex="-1" role="dialog"
+		aria-labelledby="addUserModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<form id="uploadProgramForm" enctype="multipart/form-data">
+				<input type="hidden" id="formMode" value="add">
+				<div class="modal-content">
+
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h5 class="modal-title" id="addUserModalLabel">新增使用者</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span>&times;</span>
+						</button>
+					</div>
+
+					<!-- Modal Body -->
+					<div class="modal-body">
+						<!-- 使用者編號 -->
+						<div class="form-group">
+							<label for="userNo">使用者編號</label> <input type="text"
+								class="form-control" id="userNo" name="userNo"
+								placeholder="輸入使用者編號">
+						</div>
+
+						<!-- 使用者名稱 -->
+						<div class="form-group">
+							<label for="userName">使用者名稱</label> <input type="text"
+								class="form-control" id="userName" name="userName"
+								placeholder="輸入使用者名稱">
+						</div>
+
+						<!-- E-mail -->
+						<div class="form-group">
+							<label for="email">E-mail</label> <input type="email"
+								class="form-control" id="email" name="email"
+								placeholder="輸入 E-mail">
+						</div>
+
+						<!-- 聯絡電話 -->
+						<div class="form-group">
+							<label for="phone">聯絡電話</label> <input type="text"
+								class="form-control" id="phoneNo" name="phoneNo"
+								placeholder="輸入連絡電話">
+						</div>
+
+						<!-- 部門選擇 -->
+						<div class="form-group">
+							<label for="deviceDepartmentList">部門</label> <select
+								id="deviceDepartmentList" class="form-control">
+								<!-- 選項由 JavaScript 動態產生 -->
+							</select>
+						</div>
+
+						<!-- 群組別選擇 -->
+						<div class="form-group">
+							<label for="moduleSelect">群組別</label> <select id="moduleSelect"
+								class="select2" multiple="multiple" data-placeholder="設備模組選擇"
+								style="width: 100%;">
+								<!-- 選項由 JavaScript 動態產生 -->
+							</select>
+						</div>
+
+						<!-- 備註 -->
+						<div class="form-group">
+							<label for="description">備註</label>
+							<textarea class="form-control" id="note" name="note" rows="3"
+								placeholder="備註說明..."></textarea>
+						</div>
+					</div>
+
+					<!-- Modal Footer -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">取消</button>
+						<button type="submit" class="btn btn-primary">送出</button>
+					</div>
+
+				</div>
+			</form>
+		</div>
+	</div>
+
+</body>
+</html>

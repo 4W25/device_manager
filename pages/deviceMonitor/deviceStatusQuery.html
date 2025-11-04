@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>設備狀態查詢</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <style>
+    .nav-tabs { margin-bottom: 20px;}
+  </style>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="../../DeviceIndex.html" class="nav-link">回首頁</a>
+      </li>
+    </ul>
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">     
+      <li class="nav-item">
+        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+          <i class="fas fa-expand-arrows-alt"></i>
+        </a>
+      </li>
+      <!-- <li class="nav-item">
+        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+          <i class="fas fa-th-large"></i>
+        </a>
+      </li> -->
+    </ul>
+  </nav>
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="../../DeviceIndex.html" class="brand-link">
+      <img src="../../dist/img/device01.png" alt="device01" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">設備監控管理後台</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="../../dist/img/userNobody.png" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block">登入者姓名</a>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul id="sidebarMenu" class="nav nav-pills nav-sidebar flex-column"
+          data-widget="treeview" role="menu" data-accordion="false">
+        </ul>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>設備狀態查詢</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="../../DeviceIndex.html">首頁</a></li>
+              <li class="breadcrumb-item active">設備監控管理 / 設備狀態查詢</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-th-large"></i>
+                  設備狀態查詢表
+                </h3>              
+              </div>
+              <div class="card-body">
+                <!--表頭內容-->
+                <h4>透過設備類型分頁</h4>
+                <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist"></ul>
+                <!--表身內容-->
+                <div class="tab-content" id="custom-content-below-tabContent"></div> 
+              </div>
+            </div>       
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <footer class="main-footer">
+    <div class="float-right d-none d-sm-block">
+      <b>Version</b> 3.2.0
+    </div>
+    <strong>Copyright &copy; 2014-2024 
+      <a href="https://www.leosys.com/">國眾電腦股份有限公司</a>.
+    </strong> All rights reserved.
+  </footer>
+</div>
+
+<!-- 更新彈跳視窗 -->
+<div class="modal fade" id="modal-default">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">更新狀態</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- jQuery -->
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="../../plugins/jszip/jszip.min.js"></script>
+<script src="../../plugins/pdfmake/pdfmake.min.js"></script>
+<script src="../../plugins/pdfmake/vfs_fonts.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+<!-- 假資料存放區 -->
+<script src="../../data/device_info.js"></script>
+<!-- 左側欄動態生成 -->
+<script src="../../data/sidebar_menu.js"></script>
+<script src="../../js/sidebar.js"></script>
+<script>
+  $(function () {
+    // 將 deviceTypeList 轉換成需要的格式
+    const typeList = deviceTypeList.map((device, index) => ({
+        deviceId: `Device${(index + 1).toString().padStart(2, '0')}`,  // 自動生成設備 ID
+        deviceType: device.deviceType,
+        paramValue: device.paramValue,
+        applyDate: device.applyDate,
+        modId: device.modId
+    }));
+
+    // 使用狀態排序
+    const statusOrder = {"連線": 1,"維護中": 2,"已離線": 3};
+    // 設備狀態顏色對應
+    const statusColorMap = { "維護中": "red","已離線": "gray","連線": "blue"};
+
+    const tabList = $("#custom-content-below-tab"); // 設備類型分頁
+    const tabContent = $("#custom-content-below-tabContent");  // 設備資料明細
+    tabList.empty();
+    tabContent.empty();
+
+    // 分頁標籤
+    typeList.forEach((device, index) => {
+        const isActive = index === 0 ? "active" : "";
+        
+        // 自動生成分頁
+        tabList.append(`
+            <li class="nav-item">
+              <a class="nav-link ${isActive}" id="tab-${device.deviceId}" data-toggle="pill" href="#content-${device.deviceId}" 
+                 role="tab" aria-controls="content-${device.deviceId}" aria-selected="${index === 0}">
+                ${device.deviceType}
+              </a>
+            </li>
+        `);
+
+        // 自動生成內容區域
+        tabContent.append(`
+            <div class="tab-pane fade show ${isActive}" id="content-${device.deviceId}" 
+                 role="tabpanel" aria-labelledby="custom-content-below-home-tab">
+              <section class="content">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="card">
+                        <div class="card-body">
+                          <table id="table-${device.deviceId}" class="table table-bordered table-hover">
+                            <thead>
+                              <tr>
+                                <th>設備編號</th>
+                                <th>設備名稱</th>
+                                <th>設備類型</th>
+                                <th>使用狀態</th>
+                                <th>目前版本</th>
+                                <th>最後更新時間</th>
+                                <th>更新紀錄</th>
+                                <th>必要版本更新</th>
+                                <th>維護人員</th>
+                              </tr>
+                            </thead>
+                            <tbody id="deviceTableBody-${device.deviceId}"></tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+        `);
+        
+        // 渲染設備表格
+        renderDeviceTable(device.deviceId, `deviceTableBody-${device.deviceId}`, device.deviceType);
+        // 初始化 DataTable
+        initializeDataTable(`table-${device.deviceId}`, device.deviceType);
+        
+    });    
+
+    // 通用設備表格渲染函數
+    function renderDeviceTable(deviceId, tableBodyId, deviceType) {
+      const tableBody = document.getElementById(tableBodyId);
+      tableBody.innerHTML = ""; // 清空表格
+
+      deviceStatusData.filter(data => data.deviceType === deviceType)
+                      .sort((a, b) => statusOrder[a.deviceStatus] - statusOrder[b.deviceStatus])
+                      .forEach(data => {
+          const row = document.createElement('tr');
+        
+          // 根據 updateVersion 判斷按鈕顯示內容
+          let updateButtonHTML = data.updateVersion 
+                                  ? `<button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" 
+                                      data-target="#modal-default" onclick="updateSystem('${data.deviceNo}')">
+                                      更新
+                                    </button>` 
+                                  : `<span style="color: gray;">無需更新</span>`;
+          row.innerHTML = `
+              <td>${data.deviceNo}</td>
+              <td>${data.deviceName}</td>
+              <td>${data.deviceType}</td>
+              <td style="color: ${statusColorMap[data.deviceStatus] || 'black'}">${data.deviceStatus}</td>
+              <td>${data.deviceVersion}</td>
+              <td>${data.updateDate}</td>
+              <td class="project-actions text-center">
+                <a class="btn btn-primary btn-sm" href="updateVersionHist.html?id=${data.deviceNo}&deviceType=ATM系統">查詢</a>
+              </td>
+              <td class="project-actions text-center">
+                ${updateButtonHTML}
+              </td>
+              <td>${data.modId}</td>
+          `;
+          tableBody.appendChild(row);
+      });
+
+    }
+    
+    // 自定義函數來初始化 DataTable
+    function initializeDataTable(tableId, deviceType) {
+      $(`#${tableId}`).DataTable({
+        "responsive": true, 
+        "lengthChange": false, 
+        "autoWidth": false,
+        "ordering": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print"],
+        "language": {
+          "lengthMenu": "每頁顯示 _MENU_ 筆",
+          "zeroRecords": "查無資料",
+          "info": "顯示第 _START_ 筆到第 _END_ 筆，共 _TOTAL_ 筆",
+          "infoFiltered": "(從 _MAX_ 筆資料過濾)",
+          "search": "搜尋：",
+          "paginate": {
+            "first": "第一頁",
+            "last": "最後一頁",
+            "next": "下一頁",
+            "previous": "上一頁"
+          },
+        }
+      }).buttons().container().appendTo(`#${tableId}_wrapper .col-md-6:eq(0)`);
+    }
+    
+    // 載入時自動選中對應分頁
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedType = urlParams.get("deviceType");
+    if (selectedType) {
+      const selectedTab = typeList.find(t => t.deviceType === selectedType);
+      if (selectedTab) {
+        $(`#tab-${selectedTab.deviceId}`).tab('show');
+        // 模擬點擊分頁
+        setTimeout(() => {
+        }, 0); // 確保頁面分頁渲染完成後再觸發切換
+      }
+    }
+
+  });
+
+  function updateSystem(deviceNo) {
+    const modalBody = document.querySelector('#modal-default .modal-body');
+    modalBody.innerHTML = `<p>設備 ${deviceNo} 確認更新中...</p>`;
+  }
+
+</script>
+</body>
+</html>

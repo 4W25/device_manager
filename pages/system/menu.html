@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>選單設定</title>
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <style>
+    .menu-box {
+      border: 1px solid #dee2e6;
+      border-radius: 0.25rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .menu-header span {
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .editable-field {
+      border: none;
+      background: transparent;
+      padding: 0;
+      width: auto;
+    }
+
+    .editable-field:focus {
+      outline: none;
+      border-bottom: 1px solid #007bff;
+      background: #fffbe6;
+    }
+
+    .list-group-item {
+      padding: 0.5rem 1rem;
+      border: 1px solid #dee2e6;
+      margin-bottom: 0.25rem;
+    }
+
+    .icon-input {
+      width: 120px;
+      margin-left: 10px;
+    }
+
+    .submenu-indent {
+      padding-left: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .order-input {
+      width: 50px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar-->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- 上方行列 -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="../../DeviceIndex.html" class="nav-link">回首頁</a>
+        </li>
+      </ul>
+
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+            <i class="fas fa-expand-arrows-alt"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container 側邊欄位 -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="../../DeviceIndex.html" class="brand-link">
+        <img src="../../dist/img/device01.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+          style="opacity: .8">
+        <span class="brand-text font-weight-light">設備監控管理後台</span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="../../dist/img/userNobody.png" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="#" class="d-block">登入者姓名</a>
+          </div>
+        </div>
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul id="sidebarMenu" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+            data-accordion="false">
+          </ul>
+        </nav>
+      </div>
+    </aside>
+    <div class="content-wrapper">
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>選單設定</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="../../DeviceIndex.html">首頁</a></li>
+                <li class="breadcrumb-item active">系統管理 / 選單設定</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="card card-outline card-primary">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h3 class="card-title"><i class="fas fa-sitemap"></i> 選單設定</h3>
+              <div>
+                <button class="btn btn-secondary" onclick="addMainMenu()"><i class="fas fa-pencil-alt"></i> 新增主選單
+                </button>
+                <button class="btn btn-success mr-2" onclick="submitChanges()"><i class="fas fa-check mr-1"></i>
+                  確定送出</button>
+              </div>
+            </div>
+            <div class="card-body" id="menu-config-container"></div>
+          </div>
+        </div>
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+      <div class="float-right d-none d-sm-block">
+        <b>Version</b> 3.2.0
+      </div>
+      <strong>Copyright &copy; 2014-2024
+        <a href="https://www.leosys.com/">國眾電腦股份有限公司</a>.
+      </strong> All rights reserved.
+    </footer>
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+  </div>
+  <!-- jQuery -->
+  <script src="../../plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../../dist/js/adminlte.min.js"></script>
+  <!-- 左側欄動態生成 -->
+  <script src="../../data/sidebar_menu.js"></script>
+  <script src="../../js/sidebar.js"></script>
+  <script>
+    function renderMenuList() {
+      const container = document.getElementById("menu-config-container");
+      container.innerHTML = "";
+      sidebarMenu.sort((a, b) => a.order - b.order).forEach((menu, mainIdx) => {
+        const div = document.createElement("div");
+        div.className = "menu-box";
+        div.id = `menu-box-${mainIdx}`;
+        div.innerHTML = `
+          <div class="menu-header">
+            <span>
+              <input class="editable-field order-input" type="number" value="${menu.order}" onchange="sidebarMenu[${mainIdx}].order = parseInt(this.value); renderMenuList()">
+              <i class="${menu.icon} mr-2"></i>
+              <input class="editable-field font-weight-bold" value="${menu.title}" placeholder="請輸入主選單名稱" onkeypress="saveOnEnter(event)" onchange="sidebarMenu[${mainIdx}].title = this.value">
+              <input class="editable-field" value="${menu.id}" placeholder="請輸入主選單編號" onkeypress="saveOnEnter(event)" onchange="sidebarMenu[${mainIdx}].id = this.value">
+            </span>
+            <div>
+              <button class="btn btn-sm btn-outline-primary mr-2" onclick="addSubItem('${menu.id}')">新增子選單</button>
+              <button class="btn btn-sm btn-outline-danger" onclick="removeMainMenu('${menu.id}')">刪除主選單</button>
+            </div>
+          </div>
+          <ul class="list-group">
+        ${menu.subMenu.sort((a, b) => a.order - b.order).map((child, childIdx) => `
+          <li class="list-group-item submenu-indent">
+            <div>              
+              <input class="editable-field order-input" type="number" value="${child.order}" onchange="sidebarMenu[${mainIdx}].subMenu[${childIdx}].order = parseInt(this.value); renderMenuList()">
+              <input class="editable-field" value="${child.id}" placeholder="請輸入子選單編號" onkeypress="saveOnEnter(event)" onchange="sidebarMenu[${mainIdx}].subMenu[${childIdx}].id = this.value">
+              <input class="editable-field" value="${child.name}" placeholder="請輸入子選單名稱" onkeypress="saveOnEnter(event)" onchange="sidebarMenu[${mainIdx}].subMenu[${childIdx}].name = this.value">
+              <input class="editable-field ml-2" value="${child.href}" placeholder="請輸入連結位置" onkeypress="saveOnEnter(event)" style="width:400px" onchange="sidebarMenu[${mainIdx}].subMenu[${childIdx}].href = this.value">
+            </div>
+            <div>
+              <button class="btn btn-sm btn-danger ml-2" onclick="removeSubItem('${menu.id}', '${child.id}')">刪除</button>
+            </div>
+          </li>
+        `).join("")}
+      </ul>`;
+        container.appendChild(div);
+      });
+    }
+
+    function saveOnEnter(e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        e.target.blur();
+      }
+    }
+
+    function toggleEdit(id) {
+      document.getElementById(`view-${id}`).style.display = 'none';
+      document.getElementById(`edit-${id}`).style.display = 'inline';
+    }
+
+    function addMainMenu() {
+      const id = "";
+      sidebarMenu.push({ id, title: "", icon: "fas fa-folder", order: sidebarMenu.length, subMenu: [] });
+      renderMenuList();
+      //滾動效果
+      setTimeout(() => {
+        const newIndex = sidebarMenu.length - 1;
+        const target = document.getElementById(`menu-box-${newIndex}`);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 100);
+    }
+
+    function removeMainMenu(id) {
+      const index = sidebarMenu.findIndex(m => m.id === id);
+      if (index >= 0 && confirm("確定刪除主選單？")) {
+        sidebarMenu.splice(index, 1);
+        renderMenuList();
+      }
+    }
+
+    function addSubItem(menuId) {
+      const menu = sidebarMenu.find(m => m.id === menuId);
+      menu.subMenu.push({ id: "", name: "", href: "", order: menu.subMenu.length });
+      renderMenuList();
+    }
+
+    function removeSubItem(menuId, itemId) {
+      const menu = sidebarMenu.find(m => m.id === menuId);
+      menu.subMenu = menu.subMenu.filter(i => i.id !== itemId);
+      renderMenuList();
+    }
+
+    function submitChanges() {
+      console.log("最終選單結構：", JSON.stringify(sidebarMenu, null, 2));
+      alert("變更已送出！（實際功能需後端串接）");
+    }
+
+    renderMenuList();
+
+
+  </script>
+</body>
+
+</html>

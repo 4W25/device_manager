@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>設備組別(修改)</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <!-- jsGrid -->
+  <link rel="stylesheet" href="../../plugins/jsgrid/jsgrid.min.css">
+  <link rel="stylesheet" href="../../plugins/jsgrid/jsgrid-theme.min.css">
+  <!-- Select2 下拉選單(附有查找功能)-->
+  <link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <!-- Site wrapper -->
+  <div class="wrapper">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- 上方行列 -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="deviceGroup.html" class="nav-link">返回設備組別設定總覽頁</a>
+        </li>
+      </ul>
+
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+            <i class="fas fa-expand-arrows-alt"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container 側邊欄位 -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="../../DeviceIndex.html" class="brand-link">
+        <img src="../../dist/img/device01.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+          style="opacity: .8">
+        <span class="brand-text font-weight-light">設備監控管理後台</span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="../../dist/img/userNobody.png" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="#" class="d-block">登入者姓名</a>
+          </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul id="sidebarMenu" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+            data-accordion="false">
+          </ul>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>修改</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="../../DeviceIndex.html">首頁</a></li>
+                <li class="breadcrumb-item active">基本管理 / 設備組別設定 / 設備組別修改</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-info">
+              <div class="card-header">
+                <h3 class="card-title">設備組別</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <!-- 左 -->
+                    <div class="form-group">
+                      <label for="groupId">組別編號<span class="text-danger">*必填</span></label>
+                      <input class="form-control readonly-input" id="groupId" type="text" placeholder="最多20個字元"
+                        maxlength="20">
+                    </div>
+                    <div class="form-group">
+                      <label for="deviceKind">設備類型</label>
+                      <input type="text" id="deviceKind" class="form-control" disabled="disabled">
+                    </div>
+                    <div class="form-group">
+                      <label>設備選擇</label>
+                      <button id="sdbtn" class="btn btn-primary btn-sm d-block readonly-input"
+                        onclick="deviceSelection()">
+                        點擊選擇
+                      </button>
+                    </div>
+                  </div>
+                  <!-- 右 -->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="groupName">組別名稱<span class="text-danger">*必填</span></label>
+                      <input class="form-control readonly-input" id="groupName" type="text" placeholder="最多18個字元"
+                        maxlength="18">
+                    </div>
+                    <div class="form-group">
+                      <label for="groupTag">組別標籤</label>
+                      <input class="form-control readonly-input" id="groupTag" type="text" placeholder="最多5個字元"
+                        maxlength="5">
+                    </div>
+                    <div class="form-group">
+                      <label for="inputOrganName">所屬單位</label>
+                      <input id="inputOrganName" class="form-control readonly-input" type="text">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="modId">編輯人員</label>
+                      <input class="form-control" id="modId" type="text" disabled="disabled">
+                    </div>
+                  </div>
+                  <!-- /.col -->
+                  <!--<div class="col-md-6">
+                    <div class="form-group">
+                      <label>編輯日期</label>
+                      <input class="form-control" type="text" disabled="disabled">
+                    </div>
+                  </div>
+                  -->
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <div id="device-selection" class="card card-gray collapsed-card">
+              <div class="card-header">
+                <h3 class="card-title">選擇設備</h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>搜尋</label>
+                      <input id="searchInput" class="form-control" type="text" placeholder="請輸入設備代號或名稱" maxlength="18">
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                      <button class="btn btn-secondary btn-sm d-block" onclick="filterDevices()">
+                        查詢
+                      </button>
+                    </div>
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>設備地區</label>
+                      <select id="areaSelect" class="form-control select2bs4" style="width: 100%;">
+                        <option selected="selected" value="">請選擇</option>
+                      </select>
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+                <div id="jsGrid1"></div>
+                <!-- /#jsGrid1 區塊 -->
+                <div class="d-flex justify-content-center mt-2">
+                  <button class="btn btn-secondary" onclick="addDevices()">選擇加入</button>
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- 已選擇設備-->
+            <div id="device-selected" class="card card-gray collapsed-card">
+              <div class="card-header">
+                <h3 class="card-title">已選擇設備</h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div id="jsGrid2"></div>
+                <!-- /#jsGrid2 區塊 -->
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="form-group">
+            <a onclick="window.location.href = returnPage()" class="btn btn-secondary">取消</a>
+            <button type="button" id="confirmButton" class="btn btn-success " onclick="validateForm()">確認修改</button>
+          </div>
+        </div>
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <footer class="main-footer">
+      <div class="float-right d-none d-sm-block">
+        <b>Version</b> 3.2.0
+      </div>
+      <strong>Copyright &copy; 2014-2024
+        <a href="https://www.leosys.com/">國眾電腦股份有限公司</a>.
+      </strong> All rights reserved.
+    </footer>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- jQuery -->
+  <script src="../../plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Select2 -->
+  <script src="../../plugins/select2/js/select2.full.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../../dist/js/adminlte.min.js"></script>
+  <!-- jsGrid -->
+  <script src="../../plugins/jsgrid/jsgrid.min.js"></script>
+  <!-- 自訂義jsGrid -->
+  <script src="../../js/jsGridInit.js"></script>
+  <!-- 假資料存放區 -->
+  <script src="../../data/device_group.js"></script>
+  <!-- 左側欄動態生成 -->
+  <script src="../../data/sidebar_menu.js"></script>
+  <script src="../../js/sidebar.js"></script>
+  <!-- Page specific script -->
+  <script>
+    let urlParams = new URLSearchParams(window.location.search);
+    let currentGroupId = urlParams.get('Id');
+    let isView = urlParams.get('isView') === 'true'  //是否為'檢視'畫面
+    let deviceListOfType = [];                       //該'設備類型'的設備list
+    initialData(currentGroupId);
+
+    $(function () {
+      //Initialize Select2 Elements
+      $('.select2').select2()
+
+      //Initialize Select2 Elements
+      $('.select2bs4').select2({
+        theme: 'bootstrap4'
+      })
+
+    })
+
+    function initialData(groupId) {
+      let group = deviceGroupList.find(g => g.groupId === groupId);
+      deviceListOfType = deviceList.filter(d => d.typeId === group.typeId); //取得 選擇設備的資料
+      let typeName = deviceTypeList.find(t => t.typeId === group.typeId).typeName; //取得 設備類型
+      document.getElementById('groupId').value = group.groupId;
+      document.getElementById('groupName').value = group.groupName;
+      document.getElementById('deviceKind').value = typeName;
+      document.getElementById('groupTag').value = group.groupTag;
+      document.getElementById('modId').value = group.modId;
+      document.getElementById('inputOrganName').value = group.organId + '-' + group.organName;
+    }
+
+    if (isView) { //檢視頁面   
+      //頁面用字
+      document.title = "設備組別(檢視)";
+      document.querySelector(".col-sm-6 h1").innerText = "檢視";
+      document.querySelector(".breadcrumb-item.active").innerText = "基本管理 / 設備組別設定 / 設備組別檢視";
+      //input框
+      document.querySelectorAll('.readonly-input').forEach(input => {
+        input.disabled = true;
+      });
+      document.getElementById("device-selection").style.display = "none"; //'隱藏'設備列表card
+      document.getElementById("confirmButton").style.display = "none"; //'隱藏'確認按鈕
+    } else {
+      document.querySelectorAll('.readonly-input:not(#groupName):not(#groupTag):not(#sdbtn)').forEach(input => {
+        input.disabled = true;
+      });
+    }
+
+    //選擇設備列表-地區選單
+    let areaSelect = $("#areaSelect");
+    areas.forEach(area => {
+      areaSelect.append(`<option value="${area.Id}">${area.Name}</option>`);
+    });
+
+    //'選擇'設備列表
+    initJsGrid("#jsGrid1", {
+      data: deviceListOfType,
+      fields: [
+      {
+          name: "checked", title: "勾選欄位", type: "checkbox", width: 40, align: "center",
+          itemTemplate: function (value, item) {
+            const isDisabled = item.groupIds.includes(currentGroupId);
+            const isChecked = item.isSelected || isDisabled;
+            const $checkbox = $("<input type='checkbox'>")
+              .prop("checked", isChecked)
+              .prop("disabled", isDisabled);
+
+            if (!isDisabled) {
+              $checkbox.on("change", function () {
+                item.isSelected = $(this).prop("checked");
+              });
+            }
+
+            return $checkbox;
+          }
+        },
+        { name: "deviceId", title: "設備代號", type: "text", width: 100 },
+        { name: "deviceName", title: "設備名稱", type: "text", width: 100 },
+        { name: "area", title: "設備地區", type: "select", width: 60, items: areas, valueField: "Id", textField: "Name" },
+        {
+          name: "groupIds", title: "歸屬組別代號", type: "text", width: 100,
+          itemTemplate: function (value, item) {
+            return isNullOrEmpty(item.groupIds) ? $("<span>").text("尚無組別") : $("<span>").text(value);
+          }
+        },
+        { name: "version", title: "當前版本", type: "text", width: 40 },
+      ],
+    });
+
+    //宣告'已選擇'設備列表欄位
+    const gridField2 = [
+      { name: "deviceId", title: "設備代號", type: "text", width: 100 },
+      { name: "deviceName", title: "設備名稱", type: "text", width: 100 },
+      { name: "area", title: "設備地區", type: "select", width: 60, items: areas, valueField: "Id", textField: "Name" },
+      { name: "version", title: "當前版本", type: "text", width: 40 },
+    ]
+    //修改頁面時，增加刪除按鈕
+    if (!isView) gridField2.push({ type: "control", editButton: false, deleteButton: true });
+
+    //'已選擇'設備列表
+    initJsGrid("#jsGrid2", {
+      data: deviceListOfType.filter(device => device.groupIds.includes(currentGroupId)), //顯示當前組別的設備
+      fields: gridField2,
+      onItemDeleted: function (args) {
+        let item = args.item;
+
+        // 更新 devices，移除 groupId
+        let deviceIndex = deviceListOfType.findIndex(d => d.deviceId === item.deviceId);
+        if (deviceIndex !== -1) {
+          let originalGroupIds = deviceListOfType[deviceIndex].groupIds || [];
+          let updatedGroupIds = originalGroupIds.filter(gid => gid != currentGroupId); // 移除 currentGroupId
+          deviceListOfType[deviceIndex].groupIds = updatedGroupIds.length > 0 ? updatedGroupIds : []; // 若還有其他 groupId，保留陣列；否則設為 []
+        }
+        $("#jsGrid1").jsGrid("refresh");
+      },
+    });
+
+
+    //設備組別card - 點擊設備選擇
+    function deviceSelection() {
+      let card = document.getElementById("device-selection");
+      expandCard(card);
+    }
+    
+    //保留原始勾選設備
+    function syncSelectionsToOriginalData() {
+      $("#jsGrid1").find("tr").each(function () {
+        const deviceId = $(this).find("td").eq(1).text().trim();
+        const $checkbox = $(this).find("input[type=checkbox]");
+        const isChecked = $checkbox.prop("checked");
+        const isDisabled = $checkbox.prop("disabled");
+
+        const device = deviceListOfType.find(d => d.deviceId === deviceId);
+        if (device && !isDisabled) {
+          device.isSelected = isChecked;
+        }
+      });
+    }
+
+    //選擇設備card - 點擊搜尋
+    function filterDevices() {
+      syncSelectionsToOriginalData();
+      let keyword = $("#searchInput").val().trim().toLowerCase();
+      let selectedArea = $("#areaSelect").val();
+
+      let filteredData = deviceListOfType.filter(device => {
+        let matchKeyword = keyword === "" || device.deviceId.toLowerCase().includes(keyword) || device.deviceName.toLowerCase().includes(keyword);
+        let matchArea = selectedArea === "" || device.area === selectedArea;
+        return matchKeyword && matchArea;
+      });
+      
+      $("#jsGrid1").jsGrid("option", "data", filteredData);
+      $("#jsGrid1").jsGrid("refresh");
+    }
+
+    //選擇設備card - 點擊加入
+    function addDevices() {
+      let selectedDevices = $("#jsGrid1").jsGrid("option", "data").filter(item => item.isSelected);
+      if (selectedDevices.length === 0) {
+        alert("請選擇要加入的設備！");
+        return;
+      }
+
+      // 遍歷選中的設備，將 groupId 設定為當前群組，並清空 isSelected
+      selectedDevices.forEach(item => {
+        item.groupIds.push(currentGroupId); // currentGroupId 為當前組別 ID
+        item.isSelected = false; // 清除選擇狀態
+      });
+
+      // 加入已選擇列表
+      let selectedList = $("#jsGrid2").jsGrid("option", "data"); //獲取原已選擇設備list
+      selectedList = selectedList.concat(selectedDevices);
+
+      $("#jsGrid2").jsGrid("option", "data", selectedList).jsGrid("refresh");
+      $("#jsGrid1").jsGrid("refresh");
+
+      //展開'已選擇'設備card
+      let card = document.getElementById("device-selected");
+      expandCard(card);
+    }
+
+    //展開card 
+    function expandCard(card) {
+      let button = card.querySelector("[data-card-widget='collapse']");
+
+      // 如果卡片是收起狀態，先展開
+      if (card.classList.contains("collapsed-card")) {
+        button.click(); // 觸發展開
+
+        setTimeout(() => {// 延遲滾動，確保展開後再滾動
+          card.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 300);
+      } else {// 如果已展開，直接滾動
+        card.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    // JavaScript 驗證表單
+    function validateForm() {
+      // 獲取左輸入框
+      let inputGroupId = document.getElementById("groupId").value;
+      let inputGroupName = document.getElementById("groupName").value;
+      let inputOrganName = document.getElementById("inputOrganName").value;
+      let selectedList = $("#jsGrid2").jsGrid("option", "data");
+      if (isNullOrEmpty(inputGroupId)) {
+        alert("請輸入組別編號");
+        return false;
+      } else if (isNullOrEmpty(inputGroupName)) {
+        alert("請輸入組別名稱");
+        return false;
+      } else if (isNullOrEmpty(inputOrganName) || inputOrganName === '單位選擇') {
+        alert("請輸入所屬單位");
+        return false;
+      } else if (isNullOrEmpty(selectedList)) {
+        alert("請選擇要加入的設備");
+        return false;
+      }
+
+      // 所有驗證通過
+      alert("表單提交成功！");
+      return true; // 表單將提交
+    }
+
+    // 取消回上一頁
+    function returnPage() {
+      return 'deviceGroup.html';
+    }
+
+    function isNullOrEmpty(value) {
+      if (value === null || value === undefined) return true;
+      if (typeof value === 'string' && value.trim() === '') return true;
+      if (Array.isArray(value) && value.length === 0) return true;
+      if (typeof value === 'object' && !Array.isArray(value)) {
+        return Object.keys(value).length === 0;
+      }
+      return false;
+    }
+  </script>
+</body>
+
+</html>

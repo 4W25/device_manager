@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>權限設定</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <style>
+    .nav-tabs {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar-->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- 上方行列 -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="../../DeviceIndex.html" class="nav-link">回首頁</a>
+        </li>
+      </ul>
+
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+            <i class="fas fa-expand-arrows-alt"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container 側邊欄位 -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="../../DeviceIndex.html" class="brand-link">
+        <img src="../../dist/img/device01.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+          style="opacity: .8">
+        <span class="brand-text font-weight-light">設備監控管理後台</span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="../../dist/img/userNobody.png" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="#" class="d-block">登入者姓名</a>
+          </div>
+        </div>
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul id="sidebarMenu" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+            data-accordion="false">
+          </ul>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>權限設定</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="../../DeviceIndex.html">首頁</a></li>
+                <li class="breadcrumb-item active">基本管理 / 權限設定</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="card card-outline card-primary">
+            <div class="card-header">
+              <h3 class="card-title"><i class="fas fa-user-shield mr-2"></i>群組權限設定</h3>
+            </div>
+            <div class="card-body">
+              <!-- 群組角色選擇 -->
+              <div class="form-group">
+                <label for="roleSelect">選擇群組：</label>
+                <select id="roleSelect" class="form-control select2" style="width: 300px;">
+                </select>
+              </div>
+              <!-- 權限選擇區域 -->
+              <div id="menuPermissions">
+                <!-- 主選單與子選單權限會透過 JS 動態產生 -->
+              </div>
+              <!-- 送出按鈕 -->
+              <div class="mt-4">
+                <button class="btn btn-success" id="submitBtn" onclick="submitPermissions()"><i class="fas fa-check mr-1"></i>確定送出</button>
+              </div>
+            </div>
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+      <div class="float-right d-none d-sm-block">
+        <b>Version</b> 3.2.0
+      </div>
+      <strong>Copyright &copy; 2014-2024
+        <a href="https://www.leosys.com/">國眾電腦股份有限公司</a>.
+      </strong> All rights reserved.
+    </footer>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- jQuery -->
+  <script src="../../plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Select2 -->
+  <script src="../../plugins/select2/js/select2.full.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../../dist/js/adminlte.min.js"></script>
+  <!-- 左側欄動態生成 -->
+  <script src="../../data/sidebar_menu.js"></script>
+  <script src="../../js/sidebar.js"></script>
+  <script>
+    $(function () {
+      //Initialize Select2 Elements
+      $('.select2').select2();
+
+      $('#roleSelect').val('PM').trigger('change');
+    })
+
+    //角色群組
+    const roleList = [
+      { roleId: 'PM', roleName: 'PM', permissions: { menu1: ['item1', 'item2', 'item3'], menu2: ['item4', 'item7'], menu3: ['item8'] } },
+      { roleId: 'SYSTEM', roleName: '系統管理員', permissions: { menu1: ['item1', 'item2', 'item3'], menu2: ['item4', 'item5', 'item6', 'item7'], menu3: ['item8', 'item9', 'item10'], menu4: ['item11', 'item12', 'item13', 'item14'] } },
+      { roleId: 'POINTER', roleName: '設備管理員', permissions: { menu1: ['item1', 'item2', 'item3'], menu2: ['item4', 'item5', 'item6', 'item7'], menu3: ['item8', 'item9', 'item10'] } },
+      { roleId: 'TECH', roleName: '技術人員',  permissions: { menu2: ['item4', 'item5', 'item6', 'item7'] } }
+    ]
+
+    //角色群組選項
+    const selectOption = document.getElementById('roleSelect')
+    roleList.forEach(role => {
+      let option = document.createElement("option");
+      option.value = role.roleId;
+      option.textContent = `${role.roleName}`;
+      selectOption.appendChild(option);
+    });
+
+
+    // 依據主選單渲染權限
+    function renderPermissions() {
+      const container = $('#menuPermissions');
+      container.empty();
+      sidebarMenu.forEach(menu => {
+        const sectionId = `perm-${menu.id}`;
+        const selectId = `select-${menu.id}`;
+
+        const html = `
+        <div class="form-group">
+          <label>${menu.title}</label>
+          <div class="select2-purple">
+            <select id="${selectId}" class="select2" multiple="multiple" data-dropdown-css-class="select2-purple" style="width: 100%;">
+              ${menu.subMenu.map(subMenu => `<option value="${subMenu.id}">${subMenu.name}</option>`).join('')}
+            </select>
+          </div>
+        </div>
+      `;
+        container.append(html);
+      });
+    }
+
+    //群組變更事件
+    $('#roleSelect').on('change', function () {
+      const selectedRoleId = $(this).val();
+      updatePermissionUI(selectedRoleId);
+    });
+
+    // 變更後渲染
+    function updatePermissionUI(roleId) {
+      const role = roleList.find(r => r.roleId === roleId);
+      const permissions = role?.permissions || {};
+
+      sidebarMenu.forEach(menu => {
+        const selectId = `#select-${menu.id}`;
+        const selectedIds = permissions[menu.id] || [];
+        $(selectId).val(selectedIds).trigger('change');
+      });
+    }
+
+
+    //送出權限
+    function submitPermissions() {
+      const role = $('#roleSelect').val();
+      const permissions = {};
+
+      sidebarMenu.forEach(menu => {
+        const selected = $(`#select-${menu.id}`).val() || [];
+        permissions[menu.id] = selected;
+      });
+
+      console.log('儲存權限', { role, permissions });
+      alert("權限設定已儲存！（實際功能需後端串接）");
+    }
+
+    renderPermissions();
+
+
+  </script>
+</body>
+
+</html>
