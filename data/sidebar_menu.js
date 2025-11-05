@@ -32,7 +32,7 @@ const sidebarMenu = [
 		subMenu: [
 			{ id: "item8", name: '軟體版本設定', href: basePath +'pages/versionDelivery/deviceSWVerSetting.html', order: 0 },
 			{ id: "item9", name: '軟體派送排程', href: basePath +'pages/versionDelivery/deviceSchedule.html', order: 1 },
-		//	{ id: "item10", name: '設備版本更新紀錄查詢', href: basePath +'pages/versionDelivery/deviceVerUpdateQuery.html', order: 2 }
+			{ id: "item10", name: '派送紀錄查詢', href: basePath +'pages/versionDelivery/deviceVerUpdateQuery.html', order: 2 }
 		]
 	},
 	{
