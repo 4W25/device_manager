@@ -6,9 +6,8 @@ const sidebarMenu = [
 		icon: 'fas fa-sliders-h',
 		order: 0,
 		subMenu: [
-		{ id: "item2", name: '設備類型設定', href: basePath +'pages/deviceSet/deviceType.html', order: 0 },
-	{ id: "item1", name: '設備資料設定', href: basePath +'pages/deviceSet/deviceData.html', order: 1 },
-			
+		    { id: "item2", name: '設備類型設定', href: basePath +'pages/deviceSet/deviceType.html', order: 0 },
+	        { id: "item1", name: '設備資料設定', href: basePath +'pages/deviceSet/deviceData.html', order: 1 },			
 			{ id: "item3", name: '設備組別設定', href: basePath +'pages/deviceSet/deviceGroup.html', order: 2 },
 		]
 	},
@@ -20,8 +19,8 @@ const sidebarMenu = [
 		subMenu: [
 			{ id: "item4", name: '設備狀態查詢', href: basePath +'pages/deviceMonitor/deviceStatusQuery.html', order: 0 },
 			{ id: "item5", name: '交易紀錄查詢', href: basePath +'pages/deviceMonitor/deviceTransDataQuery.html', order: 1 },
-{ id: "item6", name: '遠端檔案下載', href: basePath +'pages/deviceMonitor/deviceDownload.html', order: 2 },
-	//		{ id: "item6", name: '設備監控參數設定', href: basePath +'pages/deviceMonitor/deviceParam.html', order: 2 },
+            { id: "item6", name: '遠端檔案下載', href: basePath +'pages/deviceMonitor/deviceDownload.html', order: 2 },
+	    //	{ id: "item6", name: '設備監控參數設定', href: basePath +'pages/deviceMonitor/deviceParam.html', order: 2 },
 		//	{ id: "item7", name: '設備交易代碼設定', href: basePath +'pages/deviceMonitor/deviceTransactionCode.html', order: 3 },
 		]
 	},
@@ -46,6 +45,8 @@ const sidebarMenu = [
 			{ id: "item12", name: '群組設定', href: basePath +'pages/system/deviceGroupsSetting.html', order: 0 },
 			{ id: "item13", name: '選單設定', href: basePath +'pages/system/menu.html', order: 3 },
 			{ id: "item14", name: '權限設定', href: basePath +'pages/system/permission.html', order: 1 },
+			{ id: "item15", name: '稽核軌跡', href: basePath +'pages/system/permission.html', order: 4 },
+			{ id: "item16", name: 'API紀錄', href: basePath +'pages/system/permission.html', order: 5 },
 		]
 	}
 ]
