@@ -186,9 +186,9 @@
     }));
 
     // 使用狀態排序
-    const statusOrder = {"連線": 1,"維護中": 2,"已離線": 3};
-    // 設備狀態顏色對應
-    const statusColorMap = { "維護中": "red","已離線": "gray","連線": "blue"};
+    const statusOrder = {"已更新": 1,"未派送": 2,"更新失敗": 3};
+    // 設備狀態顏色對應（保留但不再直接用於樣式）
+    const statusColorMap = { "更新失敗": "red","未派送": "gray","已更新": "blue"};
 
     const tabList = $("#custom-content-below-tab"); // 設備類型分頁
     const tabContent = $("#custom-content-below-tabContent");  // 設備資料明細
@@ -222,15 +222,12 @@
                           <table id="table-${device.deviceId}" class="table table-bordered table-hover">
                             <thead>
                               <tr>
+                                <th>設備型號</th>
                                 <th>設備編號</th>
-                                <th>設備名稱</th>
-                                <th>設備類型</th>
                                 <th>使用狀態</th>
                                 <th>目前版本</th>
-                                <th>最後更新時間</th>
                                 <th>更新紀錄</th>
-                                <th>必要版本更新</th>
-                                <th>維護人員</th>
+                                <th>位置</th>
                               </tr>
                             </thead>
                             <tbody id="deviceTableBody-${device.deviceId}"></tbody>
@@ -256,52 +253,51 @@
       const tableBody = document.getElementById(tableBodyId);
       tableBody.innerHTML = ""; // 清空表格
 
-      deviceStatusData.filter(data => data.deviceType === deviceType)
-                      .sort((a, b) => statusOrder[a.deviceStatus] - statusOrder[b.deviceStatus])
-                      .forEach(data => {
-          const row = document.createElement('tr');
-        
+    // 直接使用原始資料，不排序，DataTables 會排序
+    deviceStatusData
+        .filter(data => data.deviceType === deviceType)
+        .forEach(data => {
+            const row = document.createElement('tr');
+          
+          // 根據狀態選擇 badge 顏色
+          const badgeClass =
+            data.deviceStatus === "未派送" ? "badge-warning" :
+            data.deviceStatus === "已更新" ? "badge-success" :
+            data.deviceStatus === "更新失敗" ? "badge-danger" :
+            "badge-secondary";
+
           // 根據 updateVersion 判斷按鈕顯示內容
-          let updateButtonHTML = data.updateVersion 
-                                  ? `<button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" 
-                                      data-target="#modal-default" onclick="updateSystem('${data.deviceNo}')">
-                                      更新
-                                    </button>` 
-                                  : `<span style="color: gray;">無需更新</span>`;
-          row.innerHTML = `
-              <td>${data.deviceNo}</td>
-              <td>${data.deviceName}</td>
-              <td>${data.deviceType}</td>
-              <td style="color: ${statusColorMap[data.deviceStatus] || 'black'}">${data.deviceStatus}</td>
+		            row.innerHTML = `
+              <td>${data.deviceModel}</td>
+              <td>${data.deviceCode}</td>
+              <td><span class="badge ${badgeClass}">${data.deviceStatus}</span></td>
               <td>${data.deviceVersion}</td>
-              <td>${data.updateDate}</td>
-              <td class="project-actions text-center">
-                <a class="btn btn-primary btn-sm" href="updateVersionHist.html?id=${data.deviceNo}&deviceType=ATM系統">查詢</a>
-              </td>
-              <td class="project-actions text-center">
-                ${updateButtonHTML}
-              </td>
-              <td>${data.modId}</td>
+              <td class="project-actions text-center"> <a class="btn btn-primary btn-sm" href="updateVersionHist.html?id=${data.deviceCode}&deviceType=${data.deviceType}">查詢</a>
+              </td><td>${data.deviceLocation}</td>
           `;
           tableBody.appendChild(row);
       });
-
     }
     
     // 自定義函數來初始化 DataTable
-    function initializeDataTable(tableId, deviceType) {
+	    function initializeDataTable(tableId, deviceType) {
       $(`#${tableId}`).DataTable({
         "responsive": true, 
         "lengthChange": false, 
         "autoWidth": false,
         "ordering": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print"],
+		"searching": false,
+		"order": [
+            [0, "asc"], // 型號
+            [1, "asc"], // 編號
+            [2, "asc"]  // 狀態
+        ],
         "language": {
           "lengthMenu": "每頁顯示 _MENU_ 筆",
           "zeroRecords": "查無資料",
           "info": "顯示第 _START_ 筆到第 _END_ 筆，共 _TOTAL_ 筆",
           "infoFiltered": "(從 _MAX_ 筆資料過濾)",
-          "search": "搜尋：",
+		  "search": "搜尋：",
           "paginate": {
             "first": "第一頁",
             "last": "最後一頁",
@@ -327,9 +323,9 @@
 
   });
 
-  function updateSystem(deviceNo) {
+  function updateSystem(deviceCode) {
     const modalBody = document.querySelector('#modal-default .modal-body');
-    modalBody.innerHTML = `<p>設備 ${deviceNo} 確認更新中...</p>`;
+    modalBody.innerHTML = `<p>設備 ${deviceCode} 確認更新中...</p>`;
   }
 
 </script>

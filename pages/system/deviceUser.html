@@ -83,13 +83,12 @@
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1>使用者設定總覽頁</h1>
+							<h1>帳號設定</h1>
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a
-									href="../../index.html">首頁</a></li>
-								<li class="breadcrumb-item active">基本管理 / 使用者資料設定</li>
+								<li class="breadcrumb-item"><a href="../../index.html">首頁</a></li>
+								<li class="breadcrumb-item active">基本管理 / 帳號設定</li>
 							</ol>
 						</div>
 					</div>
@@ -102,11 +101,10 @@
 					<div class="card card-default card-outline">
 						<div class="card-header">
 							<h3 class="card-title">
-								<i class="fas fa-th-large"></i> 使用者資料
+								<i class="fas fa-th-large"></i> 帳號設定
 							</h3>
 						</div>
 						<div class="card-body">
-							<h4>透過狀態類型分頁</h4>
 							<ul class="nav nav-tabs" id="custom-content-below-tab"
 								role="tablist"></ul>
 							<div class="tab-content" id="custom-content-below-tabContent"></div>
@@ -139,9 +137,9 @@
 		src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 	<script src="../../plugins/select2/js/select2.full.min.js"></script>
 	<script src="../../dist/js/adminlte.min.js"></script>
-<!-- 	<script src="../../data/sidebar_menu.js"></script> -->
+	<!-- 	<script src="../../data/sidebar_menu.js"></script> -->
 	<script src="../../js/sidebar.js"></script>
-  <script src="../../data/sidebar_menu.js"></script>
+	<script src="../../data/sidebar_menu.js"></script>
 	<script src="../../data/device_info.js"></script>
 
 	<script>
@@ -193,7 +191,8 @@ $(function () {
                           <th>狀態</th>
                           <th>部門</th>
                           <th>群組別</th>
-                          <th>維護人員 / 審核人員</th>
+                          <th>申請人員 / 審核人員</th>
+						  <th>申請日期</th>
                           <th>功能</th>
                         </tr>
                       </thead>
@@ -217,8 +216,9 @@ $(function () {
       .filter(d => d.status === deviceStatus)
       .sort((a, b) => (statusMap[a.status]?.order || 99) - (statusMap[b.status]?.order || 99))
       .map(d => {
-        let editButton = "";
-        if (d.status === "審核中") {
+	  
+		let editButton = "";
+        if (d.status === "待覆核") {
           editButton = `<span class="btn btn-sm btn-secondary disabled"
                             style="pointer-events:auto; cursor:pointer;"
                             onclick="alert('設備 ${d.userNo} 為審核中不得修改')">修改</span>`;
@@ -229,7 +229,7 @@ $(function () {
         } else {
           editButton = `<button class="btn btn-sm btn-secondary" onclick="openEditModal('${d.userNo}')">修改</button>`;
         }
-
+	  
         const groupNames = (d.groups || [])
           .map(groupNo => deviceGroupList.find(g => g.groupNo === groupNo)?.groupName || groupNo)
           .join(", ");
@@ -238,14 +238,22 @@ $(function () {
           <tr>
             <td>${d.userNo}</td>
             <td>${d.userName}</td>
-            <td style="color:${statusMap[d.status]?.color || 'black'}">${d.status}</td>
+            <td>
+  <span class="badge ${
+    d.status === "待覆核" ? "badge-warning" :
+    d.status === "核准" ? "badge-success" :
+    d.status === "退回" ? "badge-danger" :
+    "badge-secondary"
+  }">${d.status}</span>
+</td>
             <td>${d.department}</td>
             <td>${groupNames}</td>
             <td>${d.modId} / ${d.cofId}</td>
+			<td>${d.registrationDate}</td>
             <td class="text-center">
-              <button class="btn btn-sm btn-primary" onclick="openUserModal('view','${d.userNo}')">檢視</button>
-              ${editButton}
-              <button class="btn btn-sm btn-danger" onclick="deleteDevice('${d.userNo}')">刪除</button>
+			  <button class="btn btn-sm btn-primary" onclick="openUserModal('view','${d.userNo}')">檢視</button>
+              <button class="btn btn-sm btn-success" onclick="approveUser('${d.userNo}')">修改</button>
+              <button class="btn btn-sm btn-danger" onclick="rejectUser('${d.userNo}')">刪除</button>
             </td>
           </tr>
         `;
@@ -330,6 +338,9 @@ function openUserModal(mode, userNo) {
 
   $('#addNewUser').modal('show');
 }
+
+function approveUser(userNo) { alert("使用者 " + userNo + " 已覆核通過！（需連接後端）"); }
+function rejectUser(userNo) { alert("使用者 " + userNo + " 已退回！（需連接後端）"); }
 </script>
 
 
@@ -548,6 +559,3 @@ function cancelAndReturn() {
 			</form>
 		</div>
 	</div>
-
-</body>
-</html>

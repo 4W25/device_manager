@@ -42,11 +42,12 @@ const sidebarMenu = [
 		order: 3,
 		subMenu: [
 			{ id: "item11", name: '帳號設定', href: basePath +'pages/system/deviceUser.html', order: 2 },
-			{ id: "item12", name: '群組設定', href: basePath +'pages/system/deviceGroupsSetting.html', order: 0 },
-			{ id: "item13", name: '選單設定', href: basePath +'pages/system/menu.html', order: 3 },
-			{ id: "item14", name: '權限設定', href: basePath +'pages/system/permission.html', order: 1 },
-			{ id: "item15", name: '稽核軌跡', href: basePath +'pages/system/permission.html', order: 4 },
-			{ id: "item16", name: 'API紀錄', href: basePath +'pages/system/permission.html', order: 5 },
+			{ id: "item12", name: '帳號設定覆核', href: basePath +'pages/system/deviceUserReview.html', order: 0 },
+			{ id: "item13", name: '群組設定', href: basePath +'pages/system/deviceGroupsSetting.html', order: 0 },
+			{ id: "item14", name: '選單設定', href: basePath +'pages/system/menu.html', order: 3 },
+			{ id: "item15", name: '權限設定', href: basePath +'pages/system/permission.html', order: 1 },
+			{ id: "item16", name: '稽核軌跡', href: basePath +'pages/system/permission.html', order: 4 },
+			{ id: "item17", name: 'API紀錄', href: basePath +'pages/system/permission.html', order: 5 },
 		]
 	}
 ]

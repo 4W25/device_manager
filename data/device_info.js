@@ -139,100 +139,36 @@ const deviceDataEditList = [
 // 設備狀態查詢 deviceStatusQuery.html
 const deviceStatusData = [
 	// ATM
-	{ deviceNo: "A012001601", deviceName: "富邦濟南ATM1", deviceId: "Device01", deviceType: "ATM系統", deviceStatus: "連線", deviceVersion: "A25.01.01", updateDate: '2025-01-01', updateVersion: 0, modId: "admin" },
-	{ deviceNo: "A012001602", deviceName: "富邦濟南ATM2", deviceId: "Device01", deviceType: "ATM系統", deviceStatus: "已離線", deviceVersion: "A25.01.01", updateDate: '2025-01-01', updateVersion: 0, modId: "admin" },
-	{ deviceNo: "A012001603", deviceName: "富邦濟南ATM3", deviceId: "Device01", deviceType: "ATM系統", deviceStatus: "維護中", deviceVersion: "A24.11.11", updateDate: '2024-11-11', updateVersion: 1, modId: "admin" },
-	{ deviceNo: "A012200901", deviceName: "富邦營業部ATM1", deviceId: "Device01", deviceType: "ATM系統", deviceStatus: "連線", deviceVersion: "A25.01.01", updateDate: '2025-01-01', updateVersion: 1, modId: "admin" },
-	{ deviceNo: "A012200902", deviceName: "富邦營業部ATM2", deviceId: "Device01", deviceType: "ATM系統", deviceStatus: "連線", deviceVersion: "A25.01.01", updateDate: '2025-01-01', updateVersion: 1, modId: "admin" },
-	{ deviceNo: "A012210201", deviceName: "富邦公庫處ATM1", deviceId: "Device01", deviceType: "ATM系統", deviceStatus: "連線", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateVersion: 0, modId: "admin" },
-	{ deviceNo: "A012210202", deviceName: "富邦公庫處ATM2", deviceId: "Device01", deviceType: "ATM系統", deviceStatus: "連線", deviceVersion: "D24.12.12", updateDate: '2024-12-12', updateVersion: 0, modId: "admin" },
-	{ deviceNo: "A012210203", deviceName: "富邦公庫處ATM3", deviceId: "Device01", deviceType: "ATM系統", deviceStatus: "維護中", deviceVersion: "D24.11.11", updateDate: '2024-11-11', updateVersion: 0, modId: "admin" },
-	// TCR
-	{ deviceNo: "T012001601", deviceName: "濟南TCR1", deviceId: "Device02", deviceType: "TCR系統", deviceStatus: "維護中", deviceVersion: "T24.11.11", updateDate: '2024-11-11', updateVersion: 1, modId: "admin3" },
-	{ deviceNo: "T012200901", deviceName: "營業部TCR1", deviceId: "Device02", deviceType: "TCR系統", deviceStatus: "連線", deviceVersion: "T25.01.01", updateDate: '2025-01-01', updateVersion: 0, modId: "admin3" },
-	// 門禁
-	{ deviceNo: "D012001601", deviceName: "富邦濟南1號門", deviceId: "Device03", deviceType: "門禁系統", deviceStatus: "連線", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateVersion: 0, modId: "admin1" },
-	{ deviceNo: "D012001602", deviceName: "富邦濟南2號門", deviceId: "Device03", deviceType: "門禁系統", deviceStatus: "連線", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateVersion: 0, modId: "admin1" },
-	{ deviceNo: "D012001603", deviceName: "富邦濟南3號門", deviceId: "Device03", deviceType: "門禁系統", deviceStatus: "維護中", deviceVersion: "D24.11.11", updateDate: '2024-11-11', updateVersion: 1, modId: "admin1" },
-	{ deviceNo: "D012200901", deviceName: "富邦營業部1號門", deviceId: "Device03", deviceType: "門禁系統", deviceStatus: "連線", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateVersion: 0, modId: "admin1" },
-	{ deviceNo: "D012200902", deviceName: "富邦營業部2號門", deviceId: "Device03", deviceType: "門禁系統", deviceStatus: "連線", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateVersion: 1, modId: "admin1" },
-	{ deviceNo: "D012200903", deviceName: "富邦營業部3號門", deviceId: "Device03", deviceType: "門禁系統", deviceStatus: "已離線", deviceVersion: "D24.11.11", updateDate: '2024-11-11', updateVersion: 1, modId: "admin1" },
-	{ deviceNo: "D012203201", deviceName: "富邦長安東路1號門", deviceId: "Device03", deviceType: "門禁系統", deviceStatus: "連線", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateVersion: 0, modId: "admin1" },
-	{ deviceNo: "D012203202", deviceName: "富邦長安東路2號門", deviceId: "Device03", deviceType: "門禁系統", deviceStatus: "已離線", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateVersion: 1, modId: "admin1" },
-	{ deviceNo: "D012203203", deviceName: "富邦長安東路3號門", deviceId: "Device03", deviceType: "門禁系統", deviceStatus: "維護中", deviceVersion: "D24.11.11", updateDate: '2024-11-11', updateVersion: 1, modId: "admin1" },
-	{ deviceNo: "D012210201", deviceName: "富邦公庫處1號門", deviceId: "Device03", deviceType: "門禁系統", deviceStatus: "連線", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateVersion: 0, modId: "admin1" },
-	{ deviceNo: "D012210202", deviceName: "富邦公庫處2號門", deviceId: "Device03", deviceType: "門禁系統", deviceStatus: "連線", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateVersion: 0, modId: "admin1" },
-	{ deviceNo: "D012210203", deviceName: "富邦公庫處3號門", deviceId: "Device03", deviceType: "門禁系統", deviceStatus: "維護中", deviceVersion: "D24.11.11", updateDate: '2024-11-11', updateVersion: 1, modId: "admin1" },
-	{ deviceNo: "D012210204", deviceName: "富邦公庫處4號門", deviceId: "Device03", deviceType: "門禁系統", deviceStatus: "已離線", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateVersion: 0, modId: "admin1" },
-	{ deviceNo: "D012210205", deviceName: "富邦公庫處5號門", deviceId: "Device03", deviceType: "門禁系統", deviceStatus: "連線", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateVersion: 0, modId: "admin1" },
-	{ deviceNo: "D012210206", deviceName: "富邦公庫處6號門", deviceId: "Device03", deviceType: "門禁系統", deviceStatus: "連線", deviceVersion: "D24.12.12", updateDate: '2024-12-12', updateVersion: 1, modId: "admin1" },
-	// 監控
-	{ deviceNo: "C012001601", deviceName: "富邦濟南1號機", deviceId: "Device04", deviceType: "監控系統", deviceStatus: "連線", deviceVersion: "C25.01.01", updateDate: '2025-01-01', updateVersion: 0, modId: "admin2" },
-	{ deviceNo: "C012001602", deviceName: "富邦濟南2號機", deviceId: "Device04", deviceType: "監控系統", deviceStatus: "連線", deviceVersion: "C25.01.01", updateDate: '2025-01-01', updateVersion: 0, modId: "admin2" },
-	{ deviceNo: "C012001603", deviceName: "富邦濟南3號機", deviceId: "Device04", deviceType: "監控系統", deviceStatus: "連線", deviceVersion: "C24.12.12", updateDate: '2024-12-12', updateVersion: 1, modId: "admin2" },
-	{ deviceNo: "C012200901", deviceName: "富邦營業部1號機", deviceId: "Device04", deviceType: "監控系統", deviceStatus: "連線", deviceVersion: "C25.01.01", updateDate: '2025-01-01', updateVersion: 0, modId: "admin2" },
-	{ deviceNo: "C012200902", deviceName: "富邦營業部2號機", deviceId: "Device04", deviceType: "監控系統", deviceStatus: "連線", deviceVersion: "C25.01.01", updateDate: '2025-01-01', updateVersion: 1, modId: "admin2" },
-	{ deviceNo: "C012200903", deviceName: "富邦營業部3號機", deviceId: "Device04", deviceType: "監控系統", deviceStatus: "已離線", deviceVersion: "C24.12.12", updateDate: '2024-12-12', updateVersion: 0, modId: "admin2" },
-	{ deviceNo: "C012203201", deviceName: "富邦長安東路1號機", deviceId: "Device04", deviceType: "監控系統", deviceStatus: "連線", deviceVersion: "C25.01.01", updateDate: '2025-01-01', updateVersion: 0, modId: "admin2" },
-	{ deviceNo: "C012203202", deviceName: "富邦長安東路2號機", deviceId: "Device04", deviceType: "監控系統", deviceStatus: "連線", deviceVersion: "C25.01.01", updateDate: '2025-01-01', updateVersion: 0, modId: "admin2" },
-	{ deviceNo: "C012203203", deviceName: "富邦長安東路3號機", deviceId: "Device04", deviceType: "監控系統", deviceStatus: "已離線", deviceVersion: "C24.12.12", updateDate: '2024-11-11', updateVersion: 1, modId: "admin2" },
-
+	{  deviceLocation: "全家楊鑫店", deviceCode: "WIN-1500XE-01", deviceId: "Device01", deviceModel: "WIN-1500XE", deviceType: "自動提款機", deviceStatus: "未派送", deviceVersion: "A25.01.01", updateDate: '2025-01-01', updateVersion: 0, modId: "admin" },
+	{  deviceLocation: "7-11匯揚門市", deviceCode: "WIN-1500XE-02",deviceId: "Device01", deviceModel:"WIN-1500XE", deviceType: "自動提款機", deviceStatus: "已派送", deviceVersion: "A25.01.01", updateDate: '2025-01-01', updateVersion: 0, modId: "admin" },
+	{  deviceLocation: "7-11大眾門市", deviceCode: "WIN-1500XE-03",deviceId: "Device01", deviceModel:"WIN-1500XE", deviceType: "自動提款機", deviceStatus: "已更新", deviceVersion: "A24.11.11", updateDate: '2024-11-11', updateVersion: 1, modId: "admin" },
+	{  deviceLocation: "全家堤頂店", deviceCode: "OKI-RG7-01",deviceId: "Device01", deviceModel:"OKI-RG7", deviceType: "循環機", deviceStatus: "更新失敗", deviceVersion: "A25.01.01", updateDate: '2025-01-01', updateVersion: 1, modId: "admin" },
+	{  deviceLocation: "7-11大眾門市", deviceCode: "OKI-RG7-02",deviceId: "Device01", deviceModel:"OKI-RG7", deviceType: "循環機", deviceStatus: "未派送", deviceVersion: "A25.01.01", updateDate: '2025-01-01', updateVersion: 1, modId: "admin" },
+	{  deviceLocation: "7-11匯揚門市", deviceCode: "OKI-RG7-03",deviceId: "Device01", deviceModel:"OKI-RG7", deviceType: "循環機", deviceStatus: "已派送", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateVersion: 0, modId: "admin" },
+	{  deviceLocation: "全家楊鑫店", deviceCode: "OKI-RG7-04",deviceId: "Device01", deviceModel:"OKI-RG7", deviceType: "循環機", deviceStatus: "已更新", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateVersion: 0, modId: "admin" },
+	{  deviceLocation: "富邦公庫處ATM2", deviceCode: "HITACHI-CZ5000-01", deviceModel:"HITACHI-CZ5000",deviceId: "Device01", deviceType: "循環機", deviceStatus: "已更新", deviceVersion: "D24.12.12", updateDate: '2024-12-12', updateVersion: 0, modId: "admin" },
+	{  deviceLocation: "富邦公庫處ATM3", deviceCode: "HITACHI-CZ5000-02", deviceModel:"HITACHI-CZ5000",deviceId: "Device01", deviceType: "循環機", deviceStatus: "更新失敗", deviceVersion: "D24.11.11", updateDate: '2024-11-11', updateVersion: 0, modId: "admin" },
 ]
 
 // updateVersionHist.更新紀錄
-const versionHist = [
-	// ATM
-	{ deviceNo: "A012001601", deviceName: "富邦濟南ATM-1", deviceVersion: "A25.01.01", updateDate: '2025-01-01', updateContent: '更新現金模組', modId: "admin" },
-	{ deviceNo: "A012001602", deviceName: "富邦濟南ATM-2", deviceVersion: "A25.01.01", updateDate: '2025-01-01', updateContent: '更新現金模組', modId: "admin" },
-	{ deviceNo: "A012001603", deviceName: "富邦濟南ATM-3", deviceVersion: "A24.11.11", updateDate: '2024-11-11', updateContent: '更新卡片模組', modId: "admin" },
-	{ deviceNo: "A012200901", deviceName: "富邦營業部ATM-1", deviceVersion: "A25.01.01", updateDate: '2025-01-01', updateContent: '更新現金模組', modId: "admin" },
-	{ deviceNo: "A012200902", deviceName: "富邦營業部ATM-2", deviceVersion: "A25.01.01", updateDate: '2025-01-01', updateContent: '更新現金模組', modId: "admin" },
-	{ deviceNo: "A012210201", deviceName: "富邦公庫處ATM-1", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateContent: '更新現金模組', modId: "admin" },
-	{ deviceNo: "A012210202", deviceName: "富邦公庫處ATM-2", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateContent: '更新現金模組', modId: "admin" },
-	{ deviceNo: "A012210203", deviceName: "富邦公庫處ATM-3", deviceVersion: "D24.11.11", updateDate: '2024-11-11', updateContent: '更新卡片模組', modId: "admin" },
-	// TCR
-	{ deviceNo: "T012001601", deviceName: "富邦濟南TCR-1", deviceVersion: "T24.11.11", updateDate: '2024-11-11', updateContent: '更新現金模組', modId: "admin3" },
-	{ deviceNo: "T012200901", deviceName: "富邦營業部TCR-1", deviceVersion: "T25.01.01", updateDate: '2025-01-01', updateContent: '更新驗鈔模組', modId: "admin3" },
-	// 門禁
-	{ deviceNo: "D012001601", deviceName: "富邦濟南1號門", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateContent: '更新門禁控制面板', modId: "admin1" },
-	{ deviceNo: "D012001601", deviceName: "富邦濟南1號門", deviceVersion: "D24.12.12", updateDate: '2025-01-01', updateContent: '更新讀卡器', modId: "admin1" },
-	{ deviceNo: "D012001601", deviceName: "富邦濟南1號門", deviceVersion: "D24.11.11", updateDate: '2024-11-11', updateContent: '更新指紋識別器', modId: "admin1" },
-	{ deviceNo: "D012001602", deviceName: "富邦濟南2號門", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateContent: '更新門禁控制面板', modId: "admin1" },
-	{ deviceNo: "D012001602", deviceName: "富邦濟南2號門", deviceVersion: "D24.12.12", updateDate: '2024-12-12', updateContent: '更新讀卡器', modId: "admin1" },
-	{ deviceNo: "D012001602", deviceName: "富邦濟南2號門", deviceVersion: "D24.11.11", updateDate: '2024-11-11', updateContent: '更新指紋識別器', modId: "admin1" },
-	{ deviceNo: "D012200901", deviceName: "富邦營業部1號門", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateContent: '更新監視顯示器', modId: "admin1" },
-	{ deviceNo: "D012200902", deviceName: "富邦營業部2號門", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateContent: '更新監視顯示器', modId: "admin1" },
-	{ deviceNo: "D012200903", deviceName: "富邦營業部3號門", deviceVersion: "D24.11.11", updateDate: '2024-11-11', updateContent: '更新存儲設備', modId: "admin1" },
-	{ deviceNo: "D012203201", deviceName: "富邦長安東路1號門", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateContent: '更新監視顯示器', modId: "admin1" },
-	{ deviceNo: "D012203201", deviceName: "富邦長安東路1號門", deviceVersion: "D24.12.12", updateDate: '2024-12-12', updateContent: '更新讀卡器', modId: "admin1" },
-	{ deviceNo: "D012203202", deviceName: "富邦長安東路2號門", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateContent: '更新監視顯示器', modId: "admin1" },
-	{ deviceNo: "D012203203", deviceName: "富邦長安東路3號門", deviceVersion: "D24.11.11", updateDate: '2024-11-11', updateContent: '更新存儲設備', modId: "admin1" },
-	{ deviceNo: "D012210201", deviceName: "富邦公庫處1號門", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateContent: '更新監視顯示器', modId: "admin1" },
-	{ deviceNo: "D012210201", deviceName: "富邦公庫處1號門", deviceVersion: "D24.12.12", updateDate: '2024-12-12', updateContent: '更新網絡視頻錄像機（NVR）', modId: "admin1" },
-	{ deviceNo: "D012210202", deviceName: "富邦公庫處2號門", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateContent: '更新監視顯示器', modId: "admin1" },
-	{ deviceNo: "D012210202", deviceName: "富邦公庫處2號門", deviceVersion: "D24.12.12", updateDate: '2024-12-12', updateContent: '更新網絡視頻錄像機（NVR）', modId: "admin1" },
-	{ deviceNo: "D012210203", deviceName: "富邦公庫處3號門", deviceVersion: "D24.11.11", updateDate: '2024-11-11', updateContent: '更新存儲設備', modId: "admin1" },
-	{ deviceNo: "D012210204", deviceName: "富邦公庫處4號門", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateContent: '更新監視顯示器', modId: "admin1" },
-	{ deviceNo: "D012210204", deviceName: "富邦公庫處4號門", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateContent: '更新網絡視頻錄像機（NVR）', modId: "admin1" },
-	{ deviceNo: "D012210205", deviceName: "富邦公庫處5號門", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateContent: '更新監視顯示器', modId: "admin1" },
-	{ deviceNo: "D012210205", deviceName: "富邦公庫處5號門", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateContent: '更新網絡視頻錄像機（NVR）', modId: "admin1" },
-	{ deviceNo: "D012210206", deviceName: "富邦公庫處6號門", deviceVersion: "D24.12.12", updateDate: '2024-12-12', updateContent: '更新網絡視頻錄像機（NVR）', modId: "admin1" },
-	// 監控
-	{ deviceNo: "C012001601", deviceName: "富邦濟南1號機", deviceVersion: "C25.01.01", updateDate: '2025-01-01', updateContent: '更新監視顯示器', modId: "admin2" },
-	{ deviceNo: "C012001601", deviceName: "富邦濟南1號機", deviceVersion: "C24.12.12", updateDate: '2024-12-12', updateContent: '更網絡視頻錄像機（NVR）', modId: "admin2" },
-	{ deviceNo: "C012001602", deviceName: "富邦濟南2號機", deviceVersion: "C25.01.01", updateDate: '2025-01-01', updateContent: '更新監視顯示器', modId: "admin2" },
-	{ deviceNo: "C012001602", deviceName: "富邦濟南2號機", deviceVersion: "C24.12.12", updateDate: '2024-12-12', updateContent: '更新讀卡器', modId: "admin2" },
-	{ deviceNo: "C012001603", deviceName: "富邦濟南3號機", deviceVersion: "C24.12.12", updateDate: '2024-12-12', updateContent: '更新讀卡器', modId: "admin2" },
-	{ deviceNo: "C012200901", deviceName: "富邦營業部1號機", deviceVersion: "C25.01.01", updateDate: '2025-01-01', updateContent: '更新監視顯示器', modId: "admin2" },
-	{ deviceNo: "C012200902", deviceName: "富邦營業部2號機", deviceVersion: "C25.01.01", updateDate: '2025-01-01', updateContent: '更新監視顯示器', modId: "admin2" },
-	{ deviceNo: "C012200903", deviceName: "富邦營業部3號機", deviceVersion: "C24.12.12", updateDate: '2024-12-12', updateContent: '更新網絡視頻錄像機（NVR）', modId: "admin2" },
-	{ deviceNo: "C012203201", deviceName: "富邦長安東路1號機", deviceVersion: "C25.01.01", updateDate: '2025-01-01', updateContent: '更新監視顯示器', modId: "admin2" },
-	{ deviceNo: "C012203201", deviceName: "富邦長安東路1號機", deviceVersion: "C24.12.12", updateDate: '2024-12-12', updateContent: '更新網絡視頻錄像機（NVR）', modId: "admin2" },
-	{ deviceNo: "C012203202", deviceName: "富邦長安東路2號機", deviceVersion: "C25.01.01", updateDate: '2025-01-01', updateContent: '更新監視顯示器', modId: "admin2" },
-	{ deviceNo: "C012203202", deviceName: "富邦長安東路2號機", deviceVersion: "C24.12.12", updateDate: '2024-12-12', updateContent: '更新網絡視頻錄像機（NVR）', modId: "admin2" },
-	{ deviceNo: "C012203203", deviceName: "富邦長安東路3號機", deviceVersion: "C24.11.11", updateDate: '2024-11-11', updateContent: '更新存儲設備', modId: "admin2" },
+  const versionHist = [
+    // 自動提款機
+    { deviceCode: "WIN-1500XE-01", deviceModel: "WIN-1500XE", deviceType: "自動提款機", deviceVersion: "A25.01.01", updateDate: "2025-01-01", updateContent: "初始安裝", modId: "admin" },
+    { deviceCode: "WIN-1500XE-02", deviceModel: "WIN-1500XE", deviceType: "自動提款機", deviceVersion: "A25.01.01", updateDate: "2025-01-01", updateContent: "初始安裝", modId: "admin" },
+    { deviceCode: "WIN-1500XE-03", deviceModel: "WIN-1500XE", deviceType: "自動提款機", deviceVersion: "A24.11.11", updateDate: "2024-11-11", updateContent: "更新軟體版本", modId: "admin" },
 
-]
+    // 循環機
+    { deviceCode: "OKI-RG7-01", deviceModel: "OKI-RG7", deviceType: "循環機", deviceVersion: "A25.01.01", updateDate: "2025-01-01", updateContent: "初始安裝", modId: "admin" },
+	{ deviceCode: "OKI-RG7-01", deviceModel: "OKI-RG7", deviceType: "循環機", deviceVersion: "A25.01.02", updateDate: "2025-01-02", updateContent: "更新軟體版本", modId: "admin" },
+	{ deviceCode: "OKI-RG7-01", deviceModel: "OKI-RG7", deviceType: "循環機", deviceVersion: "A25.01.03", updateDate: "2025-01-03", updateContent: "更新軟體版本", modId: "admin" },
+	{ deviceCode: "OKI-RG7-01", deviceModel: "OKI-RG7", deviceType: "循環機", deviceVersion: "A25.01.04", updateDate: "2025-01-04", updateContent: "更新失敗", modId: "admin" },
+    { deviceCode: "OKI-RG7-02", deviceModel: "OKI-RG7", deviceType: "循環機", deviceVersion: "A25.01.04", updateDate: "2025-01-05", updateContent: "更新軟體版本", modId: "admin" },
+    { deviceCode: "OKI-RG7-03", deviceModel: "OKI-RG7", deviceType: "循環機", deviceVersion: "D25.01.05", updateDate: "2025-01-06", updateContent: "更新軟體版本", modId: "admin" },
+    { deviceCode: "OKI-RG7-04", deviceModel: "OKI-RG7", deviceType: "循環機", deviceVersion: "D25.01.06", updateDate: "2025-01-07", updateContent: "更新軟體版本", modId: "admin" },
+    { deviceCode: "HITACHI-CZ5000-01", deviceModel: "HITACHI-CZ5000", deviceType: "循環機", deviceVersion: "D24.12.12", updateDate: "2024-12-12", updateContent: "已更新", modId: "admin" },
+    { deviceCode: "HITACHI-CZ5000-02", deviceModel: "HITACHI-CZ5000", deviceType: "循環機", deviceVersion: "D24.11.11", updateDate: "2024-11-11", updateContent: "更新失敗", modId: "admin" }
+  ];
+
 
 //設備監控設定 deviceParam.html , divceParamEdit.html
 const deviceParams = [
@@ -278,11 +214,11 @@ const applyDeviceParams = [
 
 // 設備類型
 const deviceTypeList = [
-	{ deviceType: 'ATM系統', paramValue: '15', applyDate: '2025-01-03', modId: "admin2" },
-	{ deviceType: 'TCR系統', paramValue: '20', applyDate: '2025-01-03', modId: "admin2" },
-	{ deviceType: '門禁系統', paramValue: '10', applyDate: '2025-01-03', modId: "admin2" },
-	{ deviceType: '監控系統', paramValue: '30', applyDate: '2025-01-03', modId: "admin2" },
-]
+	{ deviceType: '循環機', paramValue: '20', applyDate: '2025-01-03', modId: "admin2" },
+	{ deviceType: '自動提款機', paramValue: '15', applyDate: '2025-01-03', modId: "admin2" }
+	//{ deviceType: '循環機(HITACHI-CZ5000)', paramValue: '20', applyDate: '2025-01-03', modId: "admin2" },
+
+];
 
 // 選單設定
 const menu = [
@@ -419,27 +355,27 @@ const versionInfo = [
 
 const deviceUserList = [
 	// 退回
-	{ userNo: 'S0001', userName: '宋夯特', status: '退回', department: "BU1", email:'BU1@leosys.com', phoneNo: '0912345670',  modId: 'Admin', cofId: '楊蔥圈' ,groups: ["ATT", "SYSTEM"], note: 'OoOa ?! ' },
-	{ userNo: "S0002", userName: "歐基喔", status: '退回', department: "BU2", email:'BU2@leosys.com', phoneNo: "0912345671",  modId: 'Admin3', cofId: '何牛' ,groups: ["ATT", ], note: 'OoOa ?! ' },
+	{ userNo: 'S0001', userName: '宋夯特', status: '退回', department: "BU1", email:'BU1@leosys.com', phoneNo: '0912345670',  modId: 'Admin', registrationDate: '2025-02-02',cofId: '楊蔥圈' ,groups: ["ATT", "SYSTEM"], note: 'OoOa ?! ' },
+	{ userNo: "S0002", userName: "歐基喔", status: '退回', department: "BU2", email:'BU2@leosys.com', phoneNo: "0912345671",  modId: 'Admin3', registrationDate: '2025-02-02',cofId: '何牛' ,groups: ["ATT", ], note: 'OoOa ?! ' },
 	// ATM
-	{ userNo: 'S0003', userName: '成振宇', status: '核准', department: "BU3", email:'BU3@leosys.com', phoneNo: '0912345672',  modId: 'Admin', cofId: '楊蔥圈' ,groups: ["SYSTEM"], note: 'OoOa ?! ' },
-	{ userNo: 'S0004', userName: '柳軫皓', status: '核准', department: "BU4", email:'BU4@leosys.com', phoneNo: '0912345673',  modId: 'Admin', cofId: '楊蔥圈' ,groups: ['MG'], note: 'OoOa ?! ' },
+	{ userNo: 'S0003', userName: '成振宇', status: '核准', department: "BU3", email:'BU3@leosys.com', phoneNo: '0912345672',  modId: 'Admin', registrationDate: '2025-02-02',cofId: '楊蔥圈' ,groups: ["SYSTEM"], note: 'OoOa ?! ' },
+	{ userNo: 'S0004', userName: '柳軫皓', status: '核准', department: "BU4", email:'BU4@leosys.com', phoneNo: '0912345673',  modId: 'Admin', registrationDate: '2025-02-02',cofId: '楊蔥圈' ,groups: ['MG'], note: 'OoOa ?! ' },
 	// TCR
-	{ userNo: "S0005", userName: "車海印", status: '核准', department: "BU5", email:'BU5@leosys.com', phoneNo: "0912345674",  modId: 'Admin3', cofId: '何牛' ,groups: ['PM'], note: 'OoOa ?! ' },
-	{ userNo: "S0006", userName: "崔鍾仁", status: '核准', department: "BU6", email:'BU6@leosys.com', phoneNo: "0912345675",  modId: 'Admin3', cofId: '何牛' ,groups: ['PM_M', "ATT", "SYSTEM"], note: 'OoOa ?! ' },
+	{ userNo: "S0005", userName: "車海印", status: '核准', department: "BU5", email:'BU5@leosys.com', phoneNo: "0912345674",  modId: 'Admin3', registrationDate: '2025-02-02',cofId: '何牛' ,groups: ['PM'], note: 'OoOa ?! ' },
+	{ userNo: "S0006", userName: "崔鍾仁", status: '核准', department: "BU6", email:'BU6@leosys.com', phoneNo: "0912345675",  modId: 'Admin3', registrationDate: '2025-02-02',cofId: '何牛' ,groups: ['PM_M', "ATT", "SYSTEM"], note: 'OoOa ?! ' },
 ]
 
 // 設備類型
 const deviceStatusList = [
 	{ deviceStatus: '核准' },
 	{ deviceStatus: '退回' },
-	{ deviceStatus: '審核中' },
+	{ deviceStatus: '待覆核' },
 ]
 
 // 設備資料設定覆核 deviceUserCheckList.html
 const deviceUserCheckList = [
-	{ userNo: 'S0007', userName: '孫基焄', status: '審核中', department: "BU7", email:'BU7@leosys.com', phoneNo: "0912345676", registrationDate: '2025-02-02', modId: 'Admin', cofId: '' ,groups: ['TESTER',"ATT", "SYSTEM"], note: 'OoOa ?! ' },
-	{ userNo: "S0008", userName: "韓世美", status: '審核中', department: "BU8", email:'BU8@leosys.com', phoneNo: "0912345677", registrationDate: '2025-01-11', modId: 'Admin3', cofId: '' ,groups: ['TESTER',"ATT", "SYSTEM"], note: 'OoOa ?! ' },
+	{ userNo: 'S0007', userName: '孫基焄', status: '待覆核', department: "BU7", email:'BU7@leosys.com', phoneNo: "0912345676", registrationDate: '2025-02-02', modId: 'Admin', cofId: '' ,groups: ['TESTER',"ATT", "SYSTEM"], note: 'OoOa ?! ' },
+	{ userNo: "S0008", userName: "韓世美", status: '待覆核', department: "BU8", email:'BU8@leosys.com', phoneNo: "0912345677", registrationDate: '2025-01-11', modId: 'Admin3', cofId: '' ,groups: ['TESTER',"ATT", "SYSTEM"], note: 'OoOa ?! ' },
 ]
 
 const deviceDepartmentList = [
