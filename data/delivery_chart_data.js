@@ -17,7 +17,7 @@ const deliveryChartData = {
   labels: generateTimeLabels(),
   datasets: [
     {
-      label: 'ATM系統',
+      label: 'WIN-1500XE',
       backgroundColor: 'rgba(60,141,188,0.9)',
       borderColor: 'rgba(60,141,188,0.8)',
       pointRadius: false,
@@ -32,7 +32,7 @@ const deliveryChartData = {
       ]
     },
     {
-      label: 'TCR系統',
+      label: 'OKI-RG7',
       backgroundColor: 'rgba(210, 214, 222, 1)',
       borderColor: 'rgba(210, 214, 222, 1)',
       pointRadius: false,
@@ -47,7 +47,7 @@ const deliveryChartData = {
       ]
     },
     {
-      label: '門禁系統',
+      label: 'HITACHI-CZ5000',
       backgroundColor: 'rgba(0, 166, 90, 1)',
       borderColor: 'rgba(0, 166, 90, 1)',
       pointRadius: false,
@@ -60,21 +60,6 @@ const deliveryChartData = {
         20, 18, 21, 24, 27, 30, 33, 31, 27, 24, 22, 19, 23, 26, 29, 32, 30, 28, 25, 22, 20, 24, 27, 30,
         33, 31, 28, 25, 22, 20, 18, 22, 25, 28, 30, 27, 24, 21, 19, 23, 26, 30, 33, 31, 28, 25, 22, 20
       ]
-    },
-    {
-      label: '監控系統',
-      backgroundColor: 'rgba(243, 156, 18, 1)',
-      borderColor: 'rgba(243, 156, 18, 1)',
-      pointRadius: false,
-      pointColor: 'rgba(243, 156, 18, 1)',
-      pointStrokeColor: '#f39c12',
-      pointHighlightFill: '#fff',
-      pointHighlightStroke: 'rgba(243,156,18,1)',
-      data: [
-        12, 14, 16, 18, 17, 15, 13, 11, 14, 16, 19, 21, 20, 18, 15, 12, 10, 13, 15, 17, 20, 19, 16, 14,
-        11, 9, 12, 15, 18, 20, 22, 21, 18, 15, 13, 10, 14, 17, 19, 22, 20, 17, 14, 12, 15, 18, 21, 23,
-        24, 22, 19, 16, 13, 11, 14, 16, 18, 21, 20, 17, 14, 12, 15, 17, 20, 23, 21, 18, 15, 13, 11
-      ]
-    }
+    },   
   ]
 };
