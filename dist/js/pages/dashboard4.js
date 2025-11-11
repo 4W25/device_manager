@@ -7,11 +7,11 @@ $(function () {
   var pieChartCanvas = $('#pie-chart').get(0).getContext('2d')
 
   var deviceCounts = {};
-  deviceDataList.forEach(function (device) {
-    if (deviceCounts[device.deviceType]) {
-      deviceCounts[device.deviceType]++;
+  deviceStatusData.forEach(function (device) {
+    if (deviceCounts[device.deviceModel]) {
+      deviceCounts[device.deviceModel]++;
     } else {
-      deviceCounts[device.deviceType] = 1;
+      deviceCounts[device.deviceModel] = 1;
     }
   });
 
