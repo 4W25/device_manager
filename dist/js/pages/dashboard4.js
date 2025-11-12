@@ -6,20 +6,18 @@ $(function () {
   // Get context with jQuery - using jQuery's .get() method.
   var pieChartCanvas = $('#pie-chart').get(0).getContext('2d')
 
-  var deviceCounts = {};
-  deviceStatusData.forEach(function (device) {
-    if (deviceCounts[device.deviceModel]) {
-      deviceCounts[device.deviceModel]++;
-    } else {
-      deviceCounts[device.deviceModel] = 1;
-    }
+  var labels = pieChartData.map(function(item) {
+    return item.deviceModel;
+  });
+  var data = pieChartData.map(function(item) {
+    return item.count;
   });
 
   var pieData = {
-    labels: Object.keys(deviceCounts),
+    labels: labels,
     datasets: [
       {
-        data: Object.values(deviceCounts),
+        data: data,
         backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de']
       }
     ]
