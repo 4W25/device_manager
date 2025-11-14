@@ -154,12 +154,6 @@
                       <label for="heartBeatFreq">心跳頻率<span class="text-danger">*</span></label>
                       <input type="number" id="heartBeatFreq" class="form-control" value="1" min="1">
                     </div>
-                <!--    <div id="moduleDiv" class="form-group">
-                      <label>設備模組</label><span class="text-danger">*</span>
-                      <select id="moduleSelect" class="select2" multiple="multiple" data-placeholder="選擇模組"
-                        style="width: 100%;">
-                      </select>
-                    </div> -->
                     <div class="form-group">
                       <label for="deviceToken">識別碼(token)<span class="text-danger">*</span></label>
                       <div class="d-flex">
@@ -283,7 +277,6 @@
 
     // 獲取 URL 中的 id 參數
     const urlParams = new URLSearchParams(window.location.search);
-    const moduleNames = deviceParams.map(p => p.moduleName);
     const deviceTypeId = urlParams.get('id');
     const isReadOnly = urlParams.get('readonly') === 'true'
 
@@ -309,8 +302,7 @@
 
     if (deviceTypeId) {
       // 根據 deviceTypeCode 查找對應的設備類型
-      const deviceTypeData = deviceTypeDataList.find(d => d.deviceTypeCode === deviceTypeId);
-      const moduleNames = deviceParams.map(p => p.moduleName);
+      const deviceTypeData = deviceTypeList.find(d => d.deviceTypeCode === deviceTypeId);
       const selectedModules = deviceTypeData.moduleSelect;
 
       if (deviceTypeData) {
@@ -318,59 +310,21 @@
         document.getElementById('deviceTypeName').value = deviceTypeData.deviceTypeName;
         document.getElementById('deviceTypeCode').value = deviceTypeData.deviceTypeCode;
         document.getElementById('deviceTypeDesc').value = deviceTypeData.deviceTypeDesc;
-        document.getElementById('status').value = deviceTypeData.status;
+        //document.getElementById('status').value = deviceTypeData.status;
         document.getElementById('heartBeatFreq').value = deviceTypeData.heartBeatFreq;
-        document.getElementById('moduleSelect').value = deviceTypeData.moduleSelect;
+        //document.getElementById('moduleSelect').value = deviceTypeData.moduleSelect;
         document.getElementById('deviceToken').value = deviceTypeData.deviceToken;
         document.getElementById('createId').value = deviceTypeData.createId;
         document.getElementById('createTime').value = deviceTypeData.createTime;
         document.getElementById('modId').value = deviceTypeData.modId;
         document.getElementById('modTime').value = deviceTypeData.modTime;
 
-        setSelectedModules(moduleNames, selectedModules);
       } else {
         console.log('找不到該設備資料');
       }
     } else {
       console.log('未提供設備 ID');
     }
-
-    function setSelectedModules(allModules, selectedModules) {
-      const moduleSelect = document.getElementById('moduleSelect');
-      if (!moduleSelect) return;
-      moduleSelect.innerHTML = ""; // 先清空
-
-      allModules.forEach(moduleName => {
-        const option = document.createElement("option");
-        option.value = moduleName;
-        option.textContent = moduleName;
-
-        // 已被選取的模組
-        if (selectedModules.includes(moduleName)) {
-          option.selected = true;
-        }
-
-        moduleSelect.appendChild(option);
-      });
-    }
-
-    function updateModules() {
-      const moduleSelect = document.getElementById('moduleSelect');
-      const filteredModules = deviceParams
-        .map((device) => device.moduleName);
-
-      moduleSelect.innerHTML = "";
-
-      // 動態新增選項
-      filteredModules.forEach((moduleName) => {
-        const option = document.createElement("option");
-        option.textContent = moduleName;
-        option.value = moduleName;
-        moduleSelect.appendChild(option);
-      });
-    }
-
-
 
     // JavaScript 驗證表單
     function validateForm() {
@@ -392,9 +346,6 @@
         return false;
       } else if (!heartBeatFreq || !heartBeatFreq.value.trim()) {
         alert("請輸入心跳頻率");
-        return false;
-      } else if (!moduleSelect || !moduleSelect.value.trim()) {
-        alert("請選擇設備模組");
         return false;
       } else if (!deviceToken || !deviceToken.value.trim()) {
         alert("請輸入識別碼");

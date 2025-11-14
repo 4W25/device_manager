@@ -170,12 +170,11 @@
   <script>
 
     const tableColumns = [
+      { title: "設備類型" },
+      { title: "型號代碼" },
       { title: "組別編號" },
       { title: "組別名稱" },
-      { title: "設備類型" },
       { title: "組別標籤" },
-      { title: "所屬單位" },
-      { title: "維護人員" },
       { title: "功能", orderable: false }
     ];
 
@@ -183,28 +182,28 @@
     deviceTypeList.forEach((type, index) => {
       const isActive = index === 0;
       createTab(type, isActive);
-      const data = getTableData(type.typeId);
-      initTable(`table-${type.typeId}`, data, type.typeId);
+      const data = getTableData(type.deviceTypeCode);
+      initTable(`table-${type.deviceTypeCode}`, data, type.deviceTypeCode);
     });
 
     //建立 tab 結構
     function createTab(type, isActive) {
       $("#device-tabs").append(`
         <li class="nav-item">
-          <a class="nav-link ${isActive ? "active" : ""}" id="tab-${type.typeId}" data-toggle="pill"
-            href="#pane-${type.typeId}" role="tab" aria-selected="${isActive}">
-           ${type.typeName}
+          <a class="nav-link ${isActive ? "active" : ""}" id="tab-${type.deviceTypeCode}" data-toggle="pill"
+            href="#pane-${type.deviceTypeCode}" role="tab" aria-selected="${isActive}">
+           ${type.deviceTypeName}（${type.deviceTypeCode}）
           </a>
         </li>
       `);
 
       $("#device-tab-content").append(`
-        <div class="tab-pane fade ${isActive ? "show active" : ""}" id="pane-${type.typeId}" role="tabpanel">
+        <div class="tab-pane fade ${isActive ? "show active" : ""}" id="pane-${type.deviceTypeCode}" role="tabpanel">
           <section class="content">
             <div class="container-fluid">
               <div class="card">
                 <div class="card-body">
-                  <table id="table-${type.typeId}" class="table table-bordered table-hover">
+                  <table id="table-${type.deviceTypeCode}" class="table table-bordered table-hover">
                     <thead><tr>${tableColumns.map(col => `<th>${col.title}</th>`).join("")}</tr></thead>
                     <tbody></tbody>
                   </table>
@@ -217,18 +216,17 @@
     }
 
     //取得該設備類型的資料
-    function getTableData(typeId) {
+    function getTableData(typeCode) {
       return deviceGroupList
-        .filter(d => d.typeId === typeId)
+        .filter(d => d.deviceTypeCode === typeCode)
         .map(d => {
-          const organText = `${d.organId} - ${d.organName}`;
+          const deviceType = deviceTypeList.find(t => t.deviceTypeCode === d.deviceTypeCode);
           return [
+            deviceType.deviceTypeName,
+            deviceType.deviceTypeCode,
             d.groupId,
             d.groupName,
-            d.typeName,
             d.groupTag,
-            organText,
-            d.modId,
             `
             <div class="d-flex justify-content-center">
               <div class="mr-1">
@@ -247,7 +245,7 @@
     }
 
     //初始化 DataTable
-    function initTable(tableId, data, typeId) {
+    function initTable(tableId, data, typeCode) {
       $(`#${tableId}`).DataTable({
         data: data,
         columns: tableColumns,
@@ -262,21 +260,17 @@
           text: '<i class="fas fa-pencil-alt"></i> 新增',
           className: 'btn btn-secondary',
           action: function () {
-            window.location.href = `deviceGroupAdd.html?typeId=${typeId}`;
+            window.location.href = `deviceGroupAdd.html?typeCode=${typeCode}`;
           }
         }],
         language: {
-          "lengthMenu": "每頁顯示 _MENU_ 筆",
-          "zeroRecords": "查無資料",
-          "info": "顯示第 _START_ 筆到第 _END_ 筆，共 _TOTAL_ 筆",
-          "infoFiltered": "(從 _MAX_ 筆資料過濾)",
-          "search": "搜尋：",
-          "paginate": {
-            "first": "第一頁",
-            "last": "最後一頁",
-            "next": "下一頁",
-            "previous": "上一頁"
-          },
+          search: "搜尋：",
+          lengthMenu: "每頁顯示 _MENU_ 筆",
+          zeroRecords:"查無資料",
+          info:"顯示第 _START_ 筆到第 _END_ 筆，共 _TOTAL_ 筆",
+          infoEmpty:"",
+          infoFiltered: "", 
+          paginate:{first:"第一頁",last:"最後一頁",next:"下一頁",previous:"上一頁"}
         }
       });
     }

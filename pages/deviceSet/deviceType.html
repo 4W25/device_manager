@@ -11,8 +11,6 @@
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
-  <!-- IonIcons -->
-  <link rel="stylesheet" href="https:ionicons.min.css//code.ionicframework.com/ionicons/2.0.1/css/">
   <!-- DataTables -->
   <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
@@ -215,17 +213,13 @@
             }
           ],
           "language": {
-            "lengthMenu": "每頁顯示 _MENU_ 筆",
-            "zeroRecords": "查無資料",
-            "info": "顯示第 _START_ 筆到第 _END_ 筆，共 _TOTAL_ 筆",
-            "infoFiltered": "(從 _MAX_ 筆資料過濾)",
-            "search": "搜尋：",
-            "paginate": {
-              "first": "第一頁",
-              "last": "最後一頁",
-              "next": "下一頁",
-              "previous": "上一頁"
-            },
+            search: "搜尋：",
+            lengthMenu: "每頁顯示 _MENU_ 筆",
+            zeroRecords:"查無資料",
+            info:"顯示第 _START_ 筆到第 _END_ 筆，共 _TOTAL_ 筆",
+            infoEmpty:"",
+            infoFiltered: "", 
+            paginate:{first:"第一頁",last:"最後一頁",next:"下一頁",previous:"上一頁"}
           }
         }).buttons().container().appendTo(`#${tableId}_wrapper .col-md-6:eq(0)`);
       }
@@ -252,7 +246,7 @@
       const tableBody = document.getElementById("deviceTypeTbody");
       tableBody.innerHTML = ""; // 清空表格
 
-      deviceTypeDataList.sort((a, b) => statusOrder[a.status] - statusOrder[b.status])
+      deviceTypeList.sort((a, b) => statusOrder[a.status] - statusOrder[b.status])
         .forEach(data => {
           const row = document.createElement('tr');
           row.innerHTML = `

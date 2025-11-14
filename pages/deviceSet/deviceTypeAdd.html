@@ -275,26 +275,7 @@
 
   // 獲取 URL 中的 id 參數
   const urlParams = new URLSearchParams(window.location.search);
-  const moduleNames = deviceParams.map(p => p.moduleName);
-  
-  setSelectedModules(moduleNames)
 
-  
-  function setSelectedModules(modules) {
-    const moduleSelect = document.getElementById('moduleSelect');
-    if (!moduleSelect) return; 
-    // 先清空原有的選項
-    moduleSelect.innerHTML = "";
-
-    if (modules && Array.isArray(modules)) {
-        modules.forEach(moduleName => {
-            let option = document.createElement("option");
-            option.value = moduleName;
-            option.textContent = moduleName; // 確保顯示名稱
-            moduleSelect.appendChild(option);
-        });
-    }
-  } 
 
   // JavaScript 驗證表單
   function validateForm() {
@@ -303,7 +284,6 @@
     var deviceTypeCode = document.getElementById("deviceTypeCode");
     var status = document.getElementById("status").value;
     var heartBeatFreq = document.getElementById("heartBeatFreq");
-    var moduleSelect = document.getElementById("moduleSelect");
     var deviceToken = document.getElementById("deviceToken");
     if (!deviceTypeName || !deviceTypeName.value.trim()) {
         alert("請輸入設備類型名稱");
@@ -316,9 +296,6 @@
       return false;
     } else if (!heartBeatFreq || !heartBeatFreq.value.trim()) {
       alert("請輸入心跳頻率");
-      return false;
-    } else if (!moduleSelect || !moduleSelect.value.trim()) { 
-      alert("請選擇設備模組");
       return false;
     } else if (!deviceToken || !deviceToken.value.trim()) {
       alert("請輸入識別碼");

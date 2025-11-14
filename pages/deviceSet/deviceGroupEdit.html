@@ -126,8 +126,7 @@
                     </div>
                     <div class="form-group">
                       <label>設備選擇</label>
-                      <button id="sdbtn" class="btn btn-primary btn-sm d-block readonly-input"
-                        onclick="deviceSelection()">
+                      <button id="sdbtn" class="btn btn-primary btn-sm d-block readonly-input"onclick="deviceSelection()">
                         點擊選擇
                       </button>
                     </div>
@@ -144,30 +143,8 @@
                       <input class="form-control readonly-input" id="groupTag" type="text" placeholder="最多5個字元"
                         maxlength="5">
                     </div>
-                    <div class="form-group">
-                      <label for="inputOrganName">所屬單位</label>
-                      <input id="inputOrganName" class="form-control readonly-input" type="text">
-                    </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="modId">編輯人員</label>
-                      <input class="form-control" id="modId" type="text" disabled="disabled">
-                    </div>
-                  </div>
-                  <!-- /.col -->
-                  <!--<div class="col-md-6">
-                    <div class="form-group">
-                      <label>編輯日期</label>
-                      <input class="form-control" type="text" disabled="disabled">
-                    </div>
-                  </div>
-                  -->
-                  <!-- /.col -->
-                </div>
-                <!-- /.row -->
               </div>
               <!-- /.card-body -->
             </div>
@@ -187,24 +164,17 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label>搜尋</label>
-                      <input id="searchInput" class="form-control" type="text" placeholder="請輸入設備代號或名稱" maxlength="18">
+                      <input id="searchInput" class="form-control" type="text" placeholder="請輸入設備編號或位置" maxlength="18">
                     </div>
                     <!-- /.form-group -->
-                    <div class="form-group">
-                      <button class="btn btn-secondary btn-sm d-block" onclick="filterDevices()">
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-6 d-flex align-items-end">
+                    <div class="form-group w-100">
+                      <button class="btn btn-secondary d-block" onclick="filterDevices()">
                         查詢
                       </button>
                     </div>
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>設備地區</label>
-                      <select id="areaSelect" class="form-control select2bs4" style="width: 100%;">
-                        <option selected="selected" value="">請選擇</option>
-                      </select>
-                    </div>
-                    <!-- /.form-group -->
                   </div>
                   <!-- /.col -->
                 </div>
@@ -305,14 +275,12 @@
 
     function initialData(groupId) {
       let group = deviceGroupList.find(g => g.groupId === groupId);
-      deviceListOfType = deviceList.filter(d => d.typeId === group.typeId); //取得 選擇設備的資料
-      let typeName = deviceTypeList.find(t => t.typeId === group.typeId).typeName; //取得 設備類型
+      deviceListOfType = deviceList.filter(d => d.deviceTypeCode === group.deviceTypeCode); //取得 選擇設備的資料
+      let deviceType = deviceTypeList.find(t => t.deviceTypeCode  === group.deviceTypeCode) //取得 設備類型實體
       document.getElementById('groupId').value = group.groupId;
       document.getElementById('groupName').value = group.groupName;
-      document.getElementById('deviceKind').value = typeName;
+      document.getElementById('deviceKind').value = deviceType.deviceTypeName + '(' + deviceType.deviceTypeCode + ')';
       document.getElementById('groupTag').value = group.groupTag;
-      document.getElementById('modId').value = group.modId;
-      document.getElementById('inputOrganName').value = group.organId + '-' + group.organName;
     }
 
     if (isView) { //檢視頁面   
@@ -326,59 +294,52 @@
       });
       document.getElementById("device-selection").style.display = "none"; //'隱藏'設備列表card
       document.getElementById("confirmButton").style.display = "none"; //'隱藏'確認按鈕
+      //展開'已選擇'設備card
+      expandCard(document.getElementById("device-selected"));
     } else {
       document.querySelectorAll('.readonly-input:not(#groupName):not(#groupTag):not(#sdbtn)').forEach(input => {
         input.disabled = true;
       });
     }
 
-    //選擇設備列表-地區選單
-    let areaSelect = $("#areaSelect");
-    areas.forEach(area => {
-      areaSelect.append(`<option value="${area.Id}">${area.Name}</option>`);
-    });
+    //選擇設備Data
+    function unChoiceDevices() {
+      return deviceListOfType.filter(device => !device.groupIds.includes(currentGroupId));
+    }
 
     //'選擇'設備列表
     initJsGrid("#jsGrid1", {
-      data: deviceListOfType,
+      data: unChoiceDevices(), //顯示未選擇設備
       fields: [
-      {
-          name: "checked", title: "勾選欄位", type: "checkbox", width: 40, align: "center",
-          itemTemplate: function (value, item) {
-            const isDisabled = item.groupIds.includes(currentGroupId);
-            const isChecked = item.isSelected || isDisabled;
-            const $checkbox = $("<input type='checkbox'>")
-              .prop("checked", isChecked)
-              .prop("disabled", isDisabled);
-
-            if (!isDisabled) {
-              $checkbox.on("change", function () {
-                item.isSelected = $(this).prop("checked");
+        { name: "checked", title: "勾選欄位", type: "checkbox", width: 40, align: "center", editing: true,
+          itemTemplate: function(value, item) {
+            let checked = (typeof item.checked !== "undefined")
+              ? item.checked
+              : item.groupIds.includes(currentGroupId);
+            return $("<input>").attr("type", "checkbox")
+              .prop("checked", checked)
+              .on("change", function() {
+                item.checked = this.checked; 
               });
-            }
-
-            return $checkbox;
           }
         },
-        { name: "deviceId", title: "設備代號", type: "text", width: 100 },
-        { name: "deviceName", title: "設備名稱", type: "text", width: 100 },
-        { name: "area", title: "設備地區", type: "select", width: 60, items: areas, valueField: "Id", textField: "Name" },
+        { name: "deviceId", title: "設備代號", type: "text", width: 60 },
+        { name: "deviceLocate", title: "設備位置", type: "text", width: 100 },
         {
-          name: "groupIds", title: "歸屬組別代號", type: "text", width: 100,
+          name: "groupIds", title: "歸屬組別代號", type: "text", width: 150,
           itemTemplate: function (value, item) {
             return isNullOrEmpty(item.groupIds) ? $("<span>").text("尚無組別") : $("<span>").text(value);
           }
         },
-        { name: "version", title: "當前版本", type: "text", width: 40 },
+        { name: "version", title: "當前版本", type: "text", width: 50 },
       ],
     });
 
     //宣告'已選擇'設備列表欄位
     const gridField2 = [
-      { name: "deviceId", title: "設備代號", type: "text", width: 100 },
-      { name: "deviceName", title: "設備名稱", type: "text", width: 100 },
-      { name: "area", title: "設備地區", type: "select", width: 60, items: areas, valueField: "Id", textField: "Name" },
-      { name: "version", title: "當前版本", type: "text", width: 40 },
+      { name: "deviceId", title: "設備代號", type: "text", width: 60 },
+      { name: "deviceLocate", title: "設備位置", type: "text", width: 100 },
+      { name: "version", title: "當前版本", type: "text", width: 60 },
     ]
     //修改頁面時，增加刪除按鈕
     if (!isView) gridField2.push({ type: "control", editButton: false, deleteButton: true });
@@ -396,8 +357,10 @@
           let originalGroupIds = deviceListOfType[deviceIndex].groupIds || [];
           let updatedGroupIds = originalGroupIds.filter(gid => gid != currentGroupId); // 移除 currentGroupId
           deviceListOfType[deviceIndex].groupIds = updatedGroupIds.length > 0 ? updatedGroupIds : []; // 若還有其他 groupId，保留陣列；否則設為 []
+          deviceListOfType[deviceIndex].checked = false;
         }
-        $("#jsGrid1").jsGrid("refresh");
+        $("#jsGrid1").jsGrid("option", "data", unChoiceDevices());
+        $("#jsGrid1").jsGrid("loadData");
       },
     });
 
@@ -407,50 +370,31 @@
       let card = document.getElementById("device-selection");
       expandCard(card);
     }
-    
-    //保留原始勾選設備
-    function syncSelectionsToOriginalData() {
-      $("#jsGrid1").find("tr").each(function () {
-        const deviceId = $(this).find("td").eq(1).text().trim();
-        const $checkbox = $(this).find("input[type=checkbox]");
-        const isChecked = $checkbox.prop("checked");
-        const isDisabled = $checkbox.prop("disabled");
-
-        const device = deviceListOfType.find(d => d.deviceId === deviceId);
-        if (device && !isDisabled) {
-          device.isSelected = isChecked;
-        }
-      });
-    }
 
     //選擇設備card - 點擊搜尋
     function filterDevices() {
-      syncSelectionsToOriginalData();
       let keyword = $("#searchInput").val().trim().toLowerCase();
-      let selectedArea = $("#areaSelect").val();
-
       let filteredData = deviceListOfType.filter(device => {
-        let matchKeyword = keyword === "" || device.deviceId.toLowerCase().includes(keyword) || device.deviceName.toLowerCase().includes(keyword);
-        let matchArea = selectedArea === "" || device.area === selectedArea;
-        return matchKeyword && matchArea;
+        let matchKeyword = keyword === "" || device.deviceId.toLowerCase().includes(keyword) || device.deviceLocate.toLowerCase().includes(keyword);
+        return matchKeyword;
       });
       
-      $("#jsGrid1").jsGrid("option", "data", filteredData);
-      $("#jsGrid1").jsGrid("refresh");
+      $("#jsGrid1").jsGrid("option", "data", filteredData).jsGrid("loadData");
     }
 
     //選擇設備card - 點擊加入
     function addDevices() {
-      let selectedDevices = $("#jsGrid1").jsGrid("option", "data").filter(item => item.isSelected);
+      let selectedDevices = $("#jsGrid1").jsGrid("option", "data").filter(item => item.checked);
       if (selectedDevices.length === 0) {
         alert("請選擇要加入的設備！");
         return;
       }
 
-      // 遍歷選中的設備，將 groupId 設定為當前群組，並清空 isSelected
-      selectedDevices.forEach(item => {
-        item.groupIds.push(currentGroupId); // currentGroupId 為當前組別 ID
-        item.isSelected = false; // 清除選擇狀態
+      // 遍歷設備，將 groupId 設定為當前群組
+      deviceListOfType.forEach(device => {
+        if (selectedDevices.some(selected => selected.deviceId === device.deviceId)) {
+          device.groupIds.push(currentGroupId);
+        }
       });
 
       // 加入已選擇列表
@@ -458,7 +402,7 @@
       selectedList = selectedList.concat(selectedDevices);
 
       $("#jsGrid2").jsGrid("option", "data", selectedList).jsGrid("refresh");
-      $("#jsGrid1").jsGrid("refresh");
+      $("#jsGrid1").jsGrid("option", "data", unChoiceDevices()).jsGrid("loadData");
 
       //展開'已選擇'設備card
       let card = document.getElementById("device-selected");
@@ -486,16 +430,12 @@
       // 獲取左輸入框
       let inputGroupId = document.getElementById("groupId").value;
       let inputGroupName = document.getElementById("groupName").value;
-      let inputOrganName = document.getElementById("inputOrganName").value;
       let selectedList = $("#jsGrid2").jsGrid("option", "data");
       if (isNullOrEmpty(inputGroupId)) {
         alert("請輸入組別編號");
         return false;
       } else if (isNullOrEmpty(inputGroupName)) {
         alert("請輸入組別名稱");
-        return false;
-      } else if (isNullOrEmpty(inputOrganName) || inputOrganName === '單位選擇') {
-        alert("請輸入所屬單位");
         return false;
       } else if (isNullOrEmpty(selectedList)) {
         alert("請選擇要加入的設備");

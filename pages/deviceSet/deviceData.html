@@ -153,61 +153,50 @@
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- 假資料存放區 -->
-<script src="../../data/device_info.js"></script>
+<script src="../../data/deviceType_info.js"></script>
 <!-- 左側欄動態生成 -->
 <script src="../../data/sidebar_menu.js"></script>
 <script src="../../js/sidebar.js"></script>
 <script>
   $(function () {
-    // 將 deviceTypeList 轉換成需要的格式
-    const typeList = deviceTypeList.map((device, index) => ({
-        deviceId: `Device${(index + 1).toString().padStart(2, '0')}`,  // 自動生成設備 ID
-        deviceType: device.deviceType,
-        paramValue: device.paramValue,
-        applyDate: device.applyDate,
-        modId: device.modId
-    }));
-
-    // 整合 deviceDataList 與 deviceDataCheckList
-    const allDeviceDataList = [...deviceDataList, ...deviceDataCheckList];
-
     const tabList = $("#custom-content-below-tab");
     const tabContent = $("#custom-content-below-tabContent");
     tabList.empty();
     tabContent.empty();
 
     // 分頁與內容生成
-    typeList.forEach((device, index) => {
+    deviceTypeList.forEach((device, index) => {
       const isActive = index === 0 ? "active" : "";
-      const deviceId = device.deviceId;
-      const deviceType = device.deviceType;
+      const deviceTypeCode = device.deviceTypeCode;
+      const deviceTypeName = device.deviceTypeName;
 
       // 分頁標籤
       tabList.append(`
         <li class="nav-item">
-          <a class="nav-link ${isActive}" id="tab-${deviceId}" data-toggle="pill" href="#content-${deviceId}" 
-            role="tab" aria-controls="content-${deviceId}" aria-selected="${index === 0}">
-            ${deviceType}
+          <a class="nav-link ${isActive}" id="tab-${deviceTypeCode}" data-toggle="pill" href="#content-${deviceTypeCode}" 
+            role="tab" aria-controls="content-${deviceTypeCode}" aria-selected="${index === 0}">
+            ${deviceTypeName}（${deviceTypeCode}）
           </a>
         </li>
       `);
 
         // 分頁內容
         tabContent.append(`
-          <div class="tab-pane fade show ${isActive}" id="content-${deviceId}" role="tabpanel">
+          <div class="tab-pane fade show ${isActive}" id="content-${deviceTypeCode}" role="tabpanel">
             <section class="content">
               <div class="container-fluid">
                 <div class="row"><div class="col-12">
                   <div class="card"><div class="card-body">
-                    <table id="table-${deviceId}" class="table table-bordered table-hover">
+                    <table id="table-${deviceTypeCode}" class="table table-bordered table-hover">
                       <thead>
                         <tr>
-                          <th>設備編號</th><th>設備名稱</th>
-                          <th>設備類別</th><th>所屬單位</th>
-                          <th>維護人員 / 審核人員</th><th>功能</th>
+                          <th>類型名稱</th><th>型號代碼</th>
+                          <th>設備編號</th>
+                          <th>設備位置</th><th>所屬單位</th>
+                          <th>功能</th>
                         </tr>
                       </thead>
-                      <tbody id="deviceTableBody-${deviceId}"></tbody>
+                      <tbody id="deviceTableBody-${deviceTypeCode}"></tbody>
                     </table>
                   </div></div>
                 </div></div>
@@ -216,42 +205,26 @@
           </div>
         `);
 
-        renderDeviceTable(deviceId, `deviceTableBody-${deviceId}`, deviceType);
-        initializeDataTable(`table-${deviceId}`, deviceType);
+        renderDeviceTable(deviceTypeCode, `deviceTableBody-${deviceTypeCode}`, deviceTypeName);
+        initializeDataTable(`table-${deviceTypeCode}`, deviceTypeCode);
     });
 
     // 通用渲染函數
-    function renderDeviceTable(deviceId, tableBodyId, deviceType) {
+    function renderDeviceTable(deviceTypeCode, tableBodyId, deviceTypeName) {
       const tableBody = document.getElementById(tableBodyId);
-      tableBody.innerHTML = allDeviceDataList
-        .filter(d => d.deviceId === deviceId)
-        .sort((a, b) => (statusMap[a.status]?.order || 99) - (statusMap[b.status]?.order || 99))
-        .map(d => {
-          // 根據狀態設定「修改」按鈕
-          let editButton = "";
-          if (d.status === "審核中") {
-            editButton = `<span class="btn btn-sm btn-secondary disabled" 
-                            style="pointer-events:auto; cursor:pointer;" 
-                            onclick="alert('設備 ${d.deviceNo} 為審核中不得修改')">修改</span>`;
-          } else if (d.status === "退回") {
-            editButton = `<span class="btn btn-sm btn-secondary disabled" 
-                            style="pointer-events:auto; cursor:pointer;" 
-                            onclick="alert('設備 ${d.deviceNo} 為退回不得修改，請重新申請')">修改</span>`;
-          } else {
-            editButton = `<a href="deviceDataEdit.html?id=${d.deviceNo}&deviceType=${deviceType}" 
-                            class="btn btn-sm btn-secondary">修改</a>`;
-          }
-        
+      const deviceList = deviceDataList.filter(d => d.deviceTypeCode === deviceTypeCode);
+
+      tableBody.innerHTML = deviceList .map(d => {
           return `
             <tr>
+              <td>${deviceTypeName}</td>
+              <td>${deviceTypeCode}</td>
               <td>${d.deviceNo}</td>
-              <td>${d.deviceName}</td>
-              <td>${d.deviceType}</td>
+              <td>${d.deviceLocate}</td>
               <td>${d.organId} - ${d.organName}</td>
-              <td>${d.modId} / ${d.cofId}</td>
               <td style="text-align:center;">
-                <a href="deviceDataEdit.html?id=${d.deviceNo}&readonly=true&deviceType=${deviceType}" class="btn btn-sm btn-primary">檢視</a>
-                ${editButton}
+                <a href="deviceDataEdit.html?id=${d.deviceNo}&readonly=true&deviceTypeCode=${deviceTypeCode}" class="btn btn-sm btn-primary">檢視</a>
+                <a href="deviceDataEdit.html?id=${d.deviceNo}&deviceTypeCode=${deviceTypeCode}" class="btn btn-sm btn-secondary">修改</a>
                 <button class="btn btn-sm btn-danger" onclick="deleteDevice('${d.deviceNo}')">刪除</button>
               </td>
             </tr>
@@ -260,43 +233,29 @@
     }
 
     // DataTable 初始化
-    function initializeDataTable(tableId, deviceType) {
+    function initializeDataTable(tableId, deviceTypeCode) {
       $(`#${tableId}`).DataTable({
         responsive: true,
         lengthChange: false,
         autoWidth: false,
         ordering: false,
-        columnDefs: [{
-          targets: 2,
-          render: (data) => `<span style="color:${statusMap[data]?.color || 'black'}">${data}</span>`
-        }],
         buttons: [
           {
-            text: '單一新增',
-            className: 'btn btn-secondary ',
-            action: () => window.location.href = `deviceDataAdd.html?deviceType=${deviceType}`
-          },     
-          {
-            text:'<div class="custom-file">'+
-                    '<input type="file" class="custom-file-input" id="customFile">'+
-                    '<label class="custom-file-label text-left" for="customFile">新增批量上傳(限Excel)</label>'+
-                  '</div>',
-            className: 'btn btn-secondary ',                
-            action: uploadExcel
+            text: '<i class="fas fa-pencil-alt"></i> 新增',
+            className: 'btn btn-primary',
+            action: function () {
+              window.location.href = `deviceDataAdd.html?deviceTypeCode=${deviceTypeCode}`;
+            }
           }
         ],
         language: {
-          "lengthMenu": "每頁顯示 _MENU_ 筆",
-          "zeroRecords": "查無資料",
-          "info": "顯示第 _START_ 筆到第 _END_ 筆，共 _TOTAL_ 筆",
-          "infoFiltered": "(從 _MAX_ 筆資料過濾)",
-          "search": "搜尋：",
-          "paginate": {
-            "first": "第一頁",
-            "last": "最後一頁",
-            "next": "下一頁",
-            "previous": "上一頁"
-          },
+          search: "搜尋：",
+          lengthMenu: "每頁顯示 _MENU_ 筆",
+          zeroRecords:"查無資料",
+          info:"顯示第 _START_ 筆到第 _END_ 筆，共 _TOTAL_ 筆",
+          infoEmpty:"",
+          infoFiltered: "", 
+          paginate:{first:"第一頁",last:"最後一頁",next:"下一頁",previous:"上一頁"}
         }
       }).buttons().container().appendTo(`#${tableId}_wrapper .col-md-6:eq(0)`);
     }

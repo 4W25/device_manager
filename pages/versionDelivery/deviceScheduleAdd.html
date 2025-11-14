@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -121,6 +120,10 @@
                       <input class="form-control" id="scheduleId" type="text" placeholder="系統自動產生" disabled="disabled">
                     </div>
                     <div class="form-group">
+                      <label for="deviceKind">設備類型</label>
+                      <input type="text" id="deviceKind" class="form-control" disabled="disabled">
+                    </div>
+                    <div class="form-group">
                       <label for="scheduleDate">排程日期<span class="text-danger">*必填</span></label>
                       <div class="input-group date" id="scheduleDate" data-target-input="nearest">
                         <input type="text" id="inputScheduleDate" class="form-control datetimepicker-input"
@@ -138,10 +141,6 @@
                       <select id="sendVersion" class="form-control select2" onchange="">
                         <option selected disabled>軟體版本選擇</option>
                       </select>
-                    </div>
-                    <div class="form-group">
-                      <label for="deviceKind">設備類型</label>
-                      <input type="text" id="deviceKind" class="form-control" disabled="disabled">
                     </div>
                   </div>
                 </div>
@@ -182,8 +181,8 @@
                   <!-- 左 -->
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label>組別選擇</label>
-                      <button class="btn btn-primary btn-sm d-block" onclick="groupSelection()">
+                      <label>設備選擇</label>
+                      <button class="btn btn-primary btn-sm d-block" onclick="deviceSelection()">
                         點擊選擇
                       </button>
                     </div>
@@ -191,39 +190,21 @@
                   <!-- 右 -->
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="inputOrganName">所屬單位<span class="text-danger">*必填</span></label>
-                      <select id="inputOrganName" class="form-control select2" onchange="">
-                        <option selected disabled>單位選擇</option>
-                      </select>
+                      <label>組別選擇</label>
+                      <button class="btn btn-primary btn-sm d-block" onclick="groupSelection()">
+                        點擊選擇
+                      </button>
                     </div>
                   </div>
-                </div>
-                <div class="row"> <!-- 第五行 -->
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="modId">編輯人員</label>
-                      <input class="form-control" id="modId" type="text" disabled="disabled">
-                    </div>
-                  </div>
-                  <!-- /.col -->
-                  <!--<div class="col-md-6">
-                    <div class="form-group">
-                      <label>編輯日期</label>
-                      <input class="form-control" type="text" disabled="disabled">
-                    </div>
-                  </div>
-                  -->
-                  <!-- /.col -->
                 </div>
                 <!-- /.row -->
               </div>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
-            <div id="group-selection" class="card card-gray collapsed-card">
+            <div id="device-selection" class="card card-gray collapsed-card">
               <div class="card-header">
-                <h3 class="card-title">選擇組別</h3>
-
+                <h3 class="card-title">選擇設備</h3>
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-plus"></i>
@@ -236,12 +217,71 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label>搜尋</label>
-                      <input id="searchInput" class="form-control" type="text" placeholder="請輸入排程代號或名稱或標籤"
-                        maxlength="18">
+                      <input id="searchDevice" class="form-control" type="text" placeholder="請輸入設備編號或位置" maxlength="18">
                     </div>
                     <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-6 d-flex align-items-end">
+                    <div class="form-group w-100">
+                      <button class="btn btn-secondary d-block" onclick="filterDevices()">
+                        查詢
+                      </button>
+                    </div>
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+                <div id="device1"></div>
+                <!-- /#jsGrid1 區塊 -->
+                <div class="d-flex justify-content-center mt-2">
+                  <button class="btn btn-secondary" onclick="addDevices()">選擇加入</button>
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- 已選擇設備-->
+            <div id="device-selected" class="card card-gray collapsed-card">
+              <div class="card-header">
+                <h3 class="card-title">已選擇設備</h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div id="device2"></div>
+                <!-- /#jsGrid2 區塊 -->
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <div id="group-selection" class="card card-gray collapsed-card">
+              <div class="card-header">
+                <h3 class="card-title">選擇組別</h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
                     <div class="form-group">
-                      <button class="btn btn-secondary btn-sm d-block" onclick="filterGroups()">
+                      <label>搜尋</label>
+                      <input id="searchGroup" class="form-control" type="text" placeholder="請輸入組別編號或名稱或標籤" maxlength="18">
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-6 d-flex align-items-end">
+                    <div class="form-group w-100">
+                      <button class="btn btn-secondary d-block" onclick="filterGroups()">
                         查詢
                       </button>
                     </div>
@@ -258,7 +298,7 @@
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
-            <div id="device-selected" class="card card-gray collapsed-card">
+            <div id="group-selected" class="card card-gray collapsed-card">
               <div class="card-header">
                 <h3 class="card-title">已選擇組別</h3>
                 <div class="card-tools">
@@ -319,6 +359,8 @@
   <!-- Tempusdominus Bootstrap 4 -->
   <script src="../../plugins/moment/moment.min.js"></script>
   <script src="../../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+  <!-- 自訂義jsGrid --> 
+  <script src="../../js/jsGridInit.js"></script>
   <!-- 假資料存放區 -->
   <script src="../../data/device_group.js"></script>
   <!-- 左側欄動態生成 -->
@@ -328,11 +370,13 @@
   <script>
     let urlParams = new URLSearchParams(window.location.search);
     let currentSchedule = {};      //宣告排程物件
+    currentSchedule.deviceIds = []; //宣告排程設備
     currentSchedule.groupIds = []; //宣告排程組別
     let timePeriodList = [];       //宣告可排程時段
-    let typeId = urlParams.get('typeId');
-    const deviceGroupOfType = deviceGroupList.filter(d => d.typeId === typeId); //取得當前類型的組別list
-    const typeName = deviceTypeList.find(t => t.typeId === typeId) ? deviceTypeList.find(t => t.typeId === typeId).typeName : null;
+    let typeCode = urlParams.get('typeCode');
+    const deviceListOfType = deviceList.filter(d => d.deviceTypeCode === typeCode); //取得當前類型的設備list
+    const deviceGroupOfType = deviceGroupList.filter(d => d.deviceTypeCode === typeCode); //取得當前類型的組別list
+    const typeName = deviceTypeList.find(t => t.deviceTypeCode === typeCode) ? deviceTypeList.find(t => t.deviceTypeCode === typeCode).deviceTypeName : null;
 
     $(function () {
       //Initialize Select2 Elements
@@ -344,17 +388,17 @@
       })
 
       // 設備類型欄位
-      $("#deviceKind").val(typeName);     
-      //排程日期
+      $("#deviceKind").val(typeName + '( ' + typeCode + ' )');
+      // 排程日期
       $('#scheduleDate').datetimepicker({
         format: 'YYYY-MM-DD'
       });
-      //排程時段-選擇開始時刻
+      // 排程時段-選擇開始時刻
       $('#startTimePicker').datetimepicker({
         format: 'HH:mm',
         stepping: 30
       });
-      //排程時段-選擇結束時刻
+      // 排程時段-選擇結束時刻
       $('#endTimePicker').datetimepicker({
         format: 'HH:mm',
         stepping: 30
@@ -363,18 +407,9 @@
 
     // 派送版本
     const sendVersionSelect = $("#sendVersion");
-    versionList.filter(v => v.typeId === typeId).forEach(version => {
+    versionList.filter(v => v.deviceTypeCode === typeCode).forEach(version => {
       sendVersionSelect.append(`<option value="${version.versionId}">${version.version}</option>`);
     })
-
-    // 所屬單位
-    const selectOrganName = document.getElementById('inputOrganName');
-    organList.forEach(organ => {
-      let option = document.createElement("option");
-      option.value = organ.organName; // 設定 value 為 organName
-      option.textContent = `${organ.organId} - ${organ.organName}`; // 顯示 organId - organName
-      selectOrganName.appendChild(option);
-    });
 
     //新增排程時段
     function addTimePeriod() {
@@ -409,6 +444,96 @@
       $('#endTime').val('');
     }
 
+    //選擇設備Data
+    function unChoiceDevices() {
+      return deviceListOfType.filter(device => !currentSchedule.deviceIds.includes(device.deviceId));
+    }
+
+    //'選擇'設備列表
+    initJsGrid("#device1", {
+      data: unChoiceDevices(), //顯示未選擇設備
+      fields: [
+        { name: "checked", title: "勾選欄位", type: "checkbox", width: 40, align: "center", editing: true,
+          itemTemplate: function(value, item) {
+            let checked = (typeof item.checked !== "undefined")
+              ? item.checked
+              : currentSchedule.deviceIds.includes(item.deviceId);
+            return $("<input>").attr("type", "checkbox")
+              .prop("checked", checked)
+              .on("change", function() {
+                item.checked = this.checked; 
+              });
+          }
+        },
+        { name: "deviceId", title: "設備編號", type: "text", width: 100 },
+        { name: "deviceLocate", title: "設備位置", type: "text", width: 100 },
+        { name: "version", title: "當前版本", type: "text", width: 40 },
+      ],
+    });
+
+    //'已選擇'設備列表
+    initJsGrid("#device2", {
+      data: deviceListOfType.filter(device => currentSchedule.deviceIds.includes(device.deviceId)), //顯示當前組別的設備
+      fields: [
+        { name: "deviceId", title: "設備代號", type: "text", width: 100 },
+        { name: "deviceLocate", title: "設備位置", type: "text", width: 100 },
+        { name: "version", title: "當前版本", type: "text", width: 40 },
+        { type: "control", editButton: false, deleteButton: true }
+      ],
+      onItemDeleted: function (args) {
+        let device = args.item;
+        currentSchedule.deviceIds = currentSchedule.deviceIds.filter(id => id != device.deviceId);
+        device.checked = false;
+        $("#device1").jsGrid("option", "data", unChoiceDevices()).jsGrid("loadData");
+      },
+    });
+
+    //設備組別card - 點擊設備選擇
+    function deviceSelection() {
+      let card = document.getElementById("device-selection");
+      expandCard(card);
+    }
+
+    //選擇設備card - 點擊搜尋
+    function filterDevices() {
+      let keyword = $("#searchDevice").val().trim().toLowerCase();
+      let filteredData = unChoiceDevices().filter(device => {
+        let matchKeyword = keyword === "" ||  (device.deviceId && device.deviceId.toLowerCase().includes(keyword)) || (device.deviceLocate && device.deviceLocate.toLowerCase().includes(keyword));
+        return matchKeyword;
+      });
+    
+      $("#device1").jsGrid("option", "data", filteredData).jsGrid("loadData");
+    }
+
+    //選擇設備card - 點擊加入
+    function addDevices() {
+      let selectedDevices = $("#device1").jsGrid("option", "data").filter(item => item.checked);
+      if (selectedDevices.length === 0) {
+        alert("請選擇要加入的設備！");
+        return;
+      }
+      
+      // 遍歷選中的設備
+      selectedDevices.forEach(item => {
+        if (!currentSchedule.deviceIds.includes(item.deviceId))
+          currentSchedule.deviceIds.push(item.deviceId);
+      });
+
+      // 加入已選擇列表
+      let selectedList = $("#device2").jsGrid("option", "data").concat(selectedDevices); 
+      $("#device2").jsGrid("option", "data", selectedList).jsGrid("refresh");
+      $("#device1").jsGrid("option", "data", unChoiceDevices()).jsGrid("loadData");
+
+      //展開'已選擇'設備card
+      let card = document.getElementById("device-selected");
+      expandCard(card);
+    }
+
+    //選擇組別Data
+    function unChoiceGroups() {
+      return deviceGroupOfType.filter(group => !currentSchedule.groupIds.includes(group.groupId));
+    }
+
     //'選擇'組別列表
     $("#jsGrid1").jsGrid({
       height: "auto",
@@ -421,21 +546,21 @@
       pageNextText: "下一頁",
       pagerFormat: "頁數: {first} {prev} {pages} {next} {last} &nbsp;&nbsp; 第 {pageIndex} / {pageCount} 頁",
       noDataContent: "無資料",
-      data: deviceGroupOfType,
+      data: unChoiceGroups(),
       fields: [
-        {
-          name: "checked", title: "勾選欄位", type: "checkbox", width: 40, align: "center",
-          itemTemplate: function (value, item) {
-            let $checkbox = $("<input>").attr("type", "checkbox")
-              .prop("checked", item.isSelected || currentSchedule.groupIds.includes(item.groupId))
-              .prop("disabled", currentSchedule.groupIds.includes(item.groupId));
-            $checkbox.on("change", function () {
-              item.isSelected = $(this).prop("checked");
-            });
-            return $checkbox;
+        { name: "checked", title: "勾選欄位", type: "checkbox", width: 40, align: "center", editing: true,
+          itemTemplate: function(value, item) {
+            let checked = (typeof item.checked !== "undefined")
+              ? item.checked
+              : currentSchedule.groupIds.includes(item.groupId);
+            return $("<input>").attr("type", "checkbox")
+              .prop("checked", checked)
+              .on("change", function() {
+                item.checked = this.checked; 
+              });
           }
         },
-        { name: "groupId", title: "組別代號", type: "text", width: 100 },
+        { name: "groupId", title: "組別編號", type: "text", width: 100 },
         { name: "groupName", title: "組別名稱", type: "text", width: 100 },
         { name: "groupTag", title: "組別標籤", type: "text", width: 60 },
         { name: "lastVersion", title: "上次派送版本", type: "text", width: 60 },
@@ -472,9 +597,11 @@
       noDataContent: "無資料",
       data: deviceGroupOfType.filter(group => currentSchedule.groupIds.includes(group.groupId)), //顯示當前組別的設備
       fields: [
-        { name: "groupId", title: "組別代號", type: "text", width: 100 },
+        { name: "groupId", title: "組別編號", type: "text", width: 100 },
         { name: "groupName", title: "組別名稱", type: "text", width: 100 },
-        { name: "groupTag", title: "組別標籤", type: "text", width: 100 },
+        { name: "groupTag", title: "組別標籤", type: "text", width: 60 },
+        { name: "lastVersion", title: "上次派送版本", type: "text", width: 60 },
+        { name: "lastSendDate", title: "上次派送日期", type: "text", width: 60 },
         { type: "control", editButton: false, deleteButtion: true }
       ],
 
@@ -496,7 +623,8 @@
       onItemDeleted: function (args) {
         let group = args.item;
         currentSchedule.groupIds = currentSchedule.groupIds.filter(id => id != group.groupId);
-        $("#jsGrid1").jsGrid("refresh");
+        group.checked = false;
+        $("#jsGrid1").jsGrid("option", "data", unChoiceGroups()).jsGrid("loadData");
       },
       deleteConfirm: "確定要刪除嗎？"
     });
@@ -510,18 +638,18 @@
 
     //選擇組別card - 點擊搜尋
     function filterGroups() {
-      let keyword = $("#searchInput").val().trim().toLowerCase();
-      let filteredData = deviceGroupOfType.filter(group => {
+      let keyword = $("#searchGroup").val().trim().toLowerCase();
+      let filteredData = unChoiceGroups().filter(group => {
         let matchKeyword = keyword === "" || group.groupId.toLowerCase().includes(keyword) || group.groupName.toLowerCase().includes(keyword) || group.groupTag.toLowerCase().includes(keyword);
         return matchKeyword;
       });
 
-      $("#jsGrid1").jsGrid("option", "data", filteredData);
+      $("#jsGrid1").jsGrid("option", "data", filteredData).jsGrid("loadata");
     }
 
     //選擇組別card - 點擊加入
     function addGroups() {
-      let selectedGroups = $("#jsGrid1").jsGrid("option", "data").filter(item => item.isSelected);
+      let selectedGroups = $("#jsGrid1").jsGrid("option", "data").filter(item => item.checked);
       if (selectedGroups.length === 0) {
         alert("請選擇要加入的組別！");
         return;
@@ -531,17 +659,16 @@
       selectedGroups.forEach(item => {
         if (!currentSchedule.groupIds.includes(item.groupId))
           currentSchedule.groupIds.push(item.groupId);
-        item.isSelected = false; // 清除勾選狀態
       });
 
       // 更新已選清單
       let selectedList = $("#jsGrid2").jsGrid("option", "data").concat(selectedGroups);
 
       $("#jsGrid2").jsGrid("option", "data", selectedList).jsGrid("refresh");
-      $("#jsGrid1").jsGrid("refresh");
+      $("#jsGrid1").jsGrid("option", "data", unChoiceGroups()).jsGrid("loadData");
 
       //展開'已選擇'組別card
-      let card = document.getElementById("device-selected");
+      let card = document.getElementById("group-selected");
       expandCard(card);
     }
 
@@ -566,8 +693,8 @@
       // 獲取左輸入框
       let inputSendVersion = document.getElementById("sendVersion").value;
       let inputScheduleDate = document.getElementById("inputScheduleDate").value;
-      let inputOrganName = document.getElementById("inputOrganName").value;
-      let selectedList = $("#jsGrid2").jsGrid("option", "data");
+      let selectedDeviceList = $("#device2").jsGrid("option", "data");
+      let selectedGroupList = $("#jsGrid2").jsGrid("option", "data");
       if (isNullOrEmpty(inputSendVersion) || inputSendVersion === '軟體版本選擇') {
         alert("請選擇派送版本");
         return false;
@@ -576,13 +703,9 @@
         return false;
       } else if (isNullOrEmpty(timePeriodList)) {
         alert("請設定排程時段");
-        console.log(JSON.stringify(timePeriodList));
         return false;
-      } else if (isNullOrEmpty(inputOrganName) || inputOrganName === '單位選擇') {
-        alert("請輸入所屬單位");
-        return false;
-      } else if (isNullOrEmpty(selectedList)) {
-        alert("請選擇要加入的組別");
+      } else if (isNullOrEmpty(selectedDeviceList) && isNullOrEmpty(selectedGroupList)) {
+        alert("請選擇要加入的設備或組別");
         return false;
       }
       // 所有驗證通過

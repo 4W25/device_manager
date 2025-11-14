@@ -1,38 +1,23 @@
-/*設備組別'用到的模擬資料*/
+/*設備組別、軟體排程用到的模擬資料*/
 
 //設備類型
 const deviceTypeList = [
-    {typeId: 'Device01', typeName: 'ATM系統'},
-    {typeId: 'Device02', typeName: 'TCR系統'},
-    {typeId: 'Device03', typeName: '門禁系統'},
-    {typeId: 'Device04', typeName: '監控系統'}
-]
-
-//單位選擇
-const organList = [
-  {organId:'0123419',organName:'富邦中山分行'},
-  {organId:'0123420',organName:'富邦信義分行'},
-  {organId:'0123421',organName:'富邦桃園分行'},
-  {organId:'0123422',organName:'富邦南屯分行'},
-  {organId:'0123423',organName:'富邦板橋分行'},
-  {organId:'0123424',organName:'富邦永和分行'},
-  {organId:'0123425',organName:'富邦頭份分行'},
-  {organId:'0123426',organName:'富邦新竹分行'},
-  {organId:'0123427',organName:'富邦員林分行'},
-  {organId:'0123428',organName:'富邦草屯分行'},
-  {organId:'0123425',organName:'富邦頭份分行'},
-  {organId:'0123503',organName:'富邦北屯分行'},
-  {organId:'0123605',organName:'松山機場'},
-  {organId:'0123607',organName:'中和科技大樓'},
-  {organId:'0123610',organName:'台南工業區'},
-  {organId:'0123612',organName:'楠梓加工出口區'},
-  {organId:'0123614',organName:'屏東科技園區'},
-  {organId:'0123701',organName:'中壢監控站'},
-  {organId:'0123703',organName:'信義監控中心'},
-  {organId:'0123706',organName:'苓雅監控中心'},
-]
+	{ deviceTypeName: "循環機", deviceTypeCode:'OKI-RG7' },
+  { deviceTypeName: "自動提款機", deviceTypeCode:'WIN-1500XE' },
+  { deviceTypeName: "循環機", deviceTypeCode:'HITACHI-CZ5000'}
+];
 
 //設備資料
+const deviceList = [
+	// 循環機(OKI-RG7)
+	{ deviceId: 'A012001601', deviceLocate: '台北市-大眾門市', deviceTypeCode: "OKI-RG7", organId: '0120016', organName: '營運中心', groupIds: ['GR_OKI_TPE2500002','GR_OKI_TPE2500001'], groupName: "循環機OKI-RG7_台北區1組", version: "A25.04.01", createDataDate: '2025-07-08', ip: '0.16.10.0' },
+	{ deviceId: 'A012001602', deviceLocate: '台北市-中崙門市', deviceTypeCode: "OKI-RG7", organId: '0120016', organName: '營運中心', groupIds: [], groupName: "尚未", version: "A22.10.15", createDataDate: '2025-03-15', ip: '05.05.0.05' },
+	{ deviceId: 'A012001603', deviceLocate: '新北市-大庭門市', deviceTypeCode: "OKI-RG7", organId: '0120016', organName: '營運中心', groupIds: [], groupName: "尚未", version: "A23.06.22", createDataDate: '2024-12-31', ip: '164.11.20.18' },
+	{ deviceId: 'A012200901', deviceLocate: '台中市-大時代門市', deviceTypeCode: "OKI-RG7", organId: '0120016', organName: '營運中心', groupIds: ['GR_OKI_TPE2500001'], groupName: "尚未", version: "A25.10.01", createDataDate: '2024-10-22', ip: '162.15.0.04' },
+	{ deviceId: 'A012200902', deviceLocate: '高雄市-中雅門市', deviceTypeCode: "OKI-RG7", organId: '0120016', organName: '營運中心', groupIds: [], groupName: "尚未", version: "A24.07.01", createDataDate: '2024-06-10', ip: '0.0.0.0' },
+
+]
+/*
 const deviceList = [
     // ATM
     { deviceId: "ATM00001", deviceName: "內湖國眾機台", area: "TPE", typeId: "Device01", typeName: "ATM系統", groupIds: [],            groupName: "尚未", version: "A25.04.01"},
@@ -78,17 +63,22 @@ const deviceList = [
     { deviceId: "SCADA00009", deviceName: "宜蘭分行3號機", area: "YLN", typeId: "Device04", typeName: "監控系統", groupIds: ['SCADAYLN0008'], groupName: 'SCADA_宜蘭_8組', version: "C24.12.12"},
 
 ]
+*/
 
 //設備組別資料
 const deviceGroupList = [
-  // 🏧 ATM 系統（13 組）
-  { groupId: 'ATMTEST0001', groupName: 'ATM_測試組', groupTag: '測試組', typeId: 'Device01', typeName: 'ATM系統', organId: '0123419', organName: '富邦松山分行', modId: 'Admin', lastVersion: 'A25.05.01', lastSendDate: '2025-06-01' },
-  { groupId: 'ATMTPE0001', groupName: 'ATM_台北_1組', groupTag: '台北_松山區', typeId: 'Device01', typeName: 'ATM系統', organId: '0123419', organName: '富邦松山分行', modId: 'Admin', lastVersion: 'A25.05.01', lastSendDate: '2025-06-01' },
-  { groupId: 'ATMTPE0002', groupName: 'ATM_台北_2組', groupTag: '台北_信義區', typeId: 'Device01', typeName: 'ATM系統', organId: '0123420', organName: '富邦信義分行', modId: 'Admin', lastVersion: 'A25.05.01', lastSendDate: '2025-06-02' },
-  { groupId: 'ATMTAO0003', groupName: 'ATM_桃園_3組', groupTag: '桃園_中壢區', typeId: 'Device01', typeName: 'ATM系統', organId: '0123421', organName: '富邦桃園分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
-  { groupId: 'ATMTXG0004', groupName: 'ATM_台中_4組', groupTag: '台中_南屯區', typeId: 'Device01', typeName: 'ATM系統', organId: '0123422', organName: '富邦南屯分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
-  { groupId: 'ATMNWT0005', groupName: 'ATM_新北_5組', groupTag: '新北_板橋區', typeId: 'Device01', typeName: 'ATM系統', organId: '0123423', organName: '富邦板橋分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
-  { groupId: 'ATMNWT0006', groupName: 'ATM_新北_6組', groupTag: '新北_永和區', typeId: 'Device01', typeName: 'ATM系統', organId: '0123424', organName: '富邦永和分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
+  // 循環機(OKI-RG7)
+  { groupId: 'GR_OKI_TPE2500001', groupName: '循環機OKI-RG7_測試組', groupTag: '測試組', deviceTypeCode: "OKI-RG7", modId: 'Admin', lastVersion: 'A25.05.01', lastSendDate: '2025-06-01' },
+  { groupId: 'GR_OKI_TPE2500002', groupName: '循環機OKI-RG7_台北區1組', groupTag: '台北組', deviceTypeCode: "OKI-RG7", modId: 'Admin', lastVersion: 'A25.05.01', lastSendDate: '2025-06-01' },
+
+
+  /*  
+  { groupId: 'ATMTPE0001', groupName: 'ATM_台北_1組', groupTag: '台北_松山區', deviceTypeCode: "OKI-RG7", typeName: 'ATM系統', organId: '0123419', organName: '富邦松山分行', modId: 'Admin', lastVersion: 'A25.05.01', lastSendDate: '2025-06-01' },
+  { groupId: 'ATMTPE0002', groupName: 'ATM_台北_2組', groupTag: '台北_信義區', deviceTypeCode: "OKI-RG7", typeName: 'ATM系統', organId: '0123420', organName: '富邦信義分行', modId: 'Admin', lastVersion: 'A25.05.01', lastSendDate: '2025-06-02' },
+  { groupId: 'ATMTAO0003', groupName: 'ATM_桃園_3組', groupTag: '桃園_中壢區', deviceTypeCode: "OKI-RG7", typeName: 'ATM系統', organId: '0123421', organName: '富邦桃園分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
+  { groupId: 'ATMTXG0004', groupName: 'ATM_台中_4組', groupTag: '台中_南屯區', deviceTypeCode: "OKI-RG7", typeName: 'ATM系統', organId: '0123422', organName: '富邦南屯分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
+  { groupId: 'ATMNWT0005', groupName: 'ATM_新北_5組', groupTag: '新北_板橋區', deviceTypeCode: "OKI-RG7", typeName: 'ATM系統', organId: '0123423', organName: '富邦板橋分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
+  { groupId: 'ATMNWT0006', groupName: 'ATM_新北_6組', groupTag: '新北_永和區', deviceTypeCode: "OKI-RG7", typeName: 'ATM系統', organId: '0123424', organName: '富邦永和分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
   { groupId: 'ATMMIA0007', groupName: 'ATM_苗栗_7組', groupTag: '苗栗_頭份區', typeId: 'Device01', typeName: 'ATM系統', organId: '0123425', organName: '富邦頭份分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
   { groupId: 'ATMHSZ0008', groupName: 'ATM_新竹_8組', groupTag: '新竹_東區', typeId: 'Device01', typeName: 'ATM系統', organId: '0123426', organName: '富邦新竹分行', modId: 'Admin', lastVersion: 'A25.05.01', lastSendDate: '2025-06-01' },
   { groupId: 'ATMCHA0009', groupName: 'ATM_彰化_9組', groupTag: '彰化_員林區', typeId: 'Device01', typeName: 'ATM系統', organId: '0123427', organName: '富邦員林分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
@@ -130,15 +120,17 @@ const deviceGroupList = [
   { groupId: 'SCADAPTG0007', groupName: 'SCADA_屏東_7組', groupTag: '屏東_屏東市', typeId: 'Device04', typeName: '監控系統', organId: '0123707', organName: '屏東監控站', modId: 'Admin', lastVersion: '', lastSendDate: '' },
   { groupId: 'SCADAYLN0008', groupName: 'SCADA_宜蘭_8組', groupTag: '宜蘭_宜蘭市', typeId: 'Device04', typeName: '監控系統', organId: '0123708', organName: '宜蘭監控中心', modId: 'Admin', lastVersion: '', lastSendDate: '' },
   { groupId: 'SCADATAO0009', groupName: 'SCADA_桃園_9組', groupTag: '桃園_桃園區', typeId: 'Device04', typeName: '監控系統', organId: '0123709', organName: '桃園監控總站', modId: 'Admin', lastVersion: '', lastSendDate: '' }
+*/
 ];
 
 //軟體版本資料
 const versionList = [
-    // ATM 系統 Device01
-    { versionId: "A250401", version: "A25.04.01", typeId: "Device01", versionName: "ATM 4月更新", modId: "Admin", createdAt: "2025-04-01" },
-    { versionId: "A250501", version: "A25.05.01", typeId: "Device01", versionName: "ATM 5月更新", modId: "Admin", createdAt: "2025-05-01" },
-    { versionId: "A250601", version: "A25.06.01", typeId: "Device01", versionName: "ATM 6月更新", modId: "Admin", createdAt: "2025-06-01" },
+    // 循環機(OKI-RG7)
+    { versionId: "A250401", version: "A25.04.01", deviceTypeCode:'OKI-RG7', versionName: "ATM 4月更新", modId: "Admin", createdAt: "2025-04-01" },
+    { versionId: "A250501", version: "A25.05.01", deviceTypeCode:'OKI-RG7', versionName: "ATM 5月更新", modId: "Admin", createdAt: "2025-05-01" },
+    { versionId: "A250601", version: "A25.06.01", deviceTypeCode:'OKI-RG7', versionName: "ATM 6月更新", modId: "Admin", createdAt: "2025-06-01" },
   
+    /*
     // TCR 系統 Device02
     { versionId: "T250101", version: "T25.01.01", typeId: "Device02", versionName: "TCR 1月更新", modId: "Admin", createdAt: "2025-01-01" },
     { versionId: "T250401", version: "T25.04.01", typeId: "Device02", versionName: "TCR 4月更新", modId: "Admin", createdAt: "2025-04-01" },
@@ -155,15 +147,15 @@ const versionList = [
     { versionId: "C250312", version: "C25.03.12", typeId: "Device04", versionName: "監控3月維護", modId: "Admin", createdAt: "2025-03-12" },
     { versionId: "C250511", version: "C25.05.11", typeId: "Device04", versionName: "監控五月升級", modId: "Admin", createdAt: "2025-05-11" },
     { versionId: "C250703", version: "C25.07.03", typeId: "Device04", versionName: "SCADA 7月版本", modId: "Admin", createdAt: "2025-07-03" }
+    */
   ];
 
 
 //設備軟體排程資料
 const deviceScheduleList = [
-    // ATM 系統
-    { scheduleId:'ATMA250101250001', groupIds: ['ATMTEST0001','ATMTPE0001','ATMHSZ0008'], typeId: 'Device01', sendVersionId: "A250501", sendVersion: 'A25.05.01', scheduleDate: '2025-06-01', timePeriod: [{ start: "10:00", end: "12:00" }, { start: "19:00", end: "21:00" },{ start: "01:00", end: "05:00" }], organId:'0123419', modId:'Admin' },
-    { scheduleId:'ATMA250101250002', groupIds: ['ATMTPE0002'], typeId: 'Device01', sendVersionId: "A250501", sendVersion: 'A25.05.01', scheduleDate: '2025-06-02', timePeriod: [{ start: "10:00", end: "12:00" }], organId:'0123420', modId:'Admin' },
-  
+    // 循環機(OKI-RG7)
+    { scheduleId:'SCH_OKI_A250101250001', deviceIds:['A012200902'], groupIds: ['GR_OKI_TPE2500001'], deviceTypeCode:'OKI-RG7', sendVersionId: "A250501", sendVersion: 'A25.05.01', scheduleDate: '2025-06-01', timePeriod: [{ start: "10:00", end: "12:00" }, { start: "19:00", end: "21:00" },{ start: "01:00", end: "05:00" }]},
+  /*
     // TCR 系統
     { scheduleId:'TCRT250101250001', groupIds: ['TCRTXG0003'], typeId: 'Device02', sendVersionId: "T250101", sendVersion: 'T25.01.01', scheduleDate: '2025-06-03', timePeriod: [{ start: "14:00", end: "16:00" }], organId:'0123503', modId:'Admin' },
   
@@ -178,6 +170,7 @@ const deviceScheduleList = [
     { scheduleId:'SCADAC250101250001', groupIds: ['SCADATAO0001', 'SCADATAO0002'], typeId: 'Device04', sendVersion: 'C25.03.12', scheduleDate: '2025-06-09', timePeriod: [{ start: "09:00", end: "11:00" }], organId:'0123701', modId:'Admin' },
     { scheduleId:'SCADAC250312250002', groupIds: ['SCADATPE0003'], typeId: 'Device04', sendVersion: 'C25.05.11', scheduleDate: '2025-06-10', timePeriod: [{ start: "10:00", end: "12:00" }], organId:'0123703', modId:'Admin' },
     { scheduleId:'SCADAC250703250003', groupIds: ['SCADAKHH0006'], typeId: 'Device04', sendVersion: 'C25.07.03', scheduleDate: '2025-06-11', timePeriod: [{ start: "14:00", end: "16:00" }], organId:'0123706', modId:'Admin' }
+  */
   ];
 
 const areas = [
@@ -193,3 +186,28 @@ const areas = [
     { Name: "高雄", Id: "KHH" },
     { Name: "宜蘭", Id: "YLN" },
 ]
+
+/*
+//單位選擇
+const organList = [
+  {organId:'0123419',organName:'富邦中山分行'},
+  {organId:'0123420',organName:'富邦信義分行'},
+  {organId:'0123421',organName:'富邦桃園分行'},
+  {organId:'0123422',organName:'富邦南屯分行'},
+  {organId:'0123423',organName:'富邦板橋分行'},
+  {organId:'0123424',organName:'富邦永和分行'},
+  {organId:'0123425',organName:'富邦頭份分行'},
+  {organId:'0123426',organName:'富邦新竹分行'},
+  {organId:'0123427',organName:'富邦員林分行'},
+  {organId:'0123428',organName:'富邦草屯分行'},
+  {organId:'0123425',organName:'富邦頭份分行'},
+  {organId:'0123503',organName:'富邦北屯分行'},
+  {organId:'0123605',organName:'松山機場'},
+  {organId:'0123607',organName:'中和科技大樓'},
+  {organId:'0123610',organName:'台南工業區'},
+  {organId:'0123612',organName:'楠梓加工出口區'},
+  {organId:'0123614',organName:'屏東科技園區'},
+  {organId:'0123701',organName:'中壢監控站'},
+  {organId:'0123703',organName:'信義監控中心'},
+  {organId:'0123706',organName:'苓雅監控中心'},
+]*/
