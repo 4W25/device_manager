@@ -19,7 +19,7 @@ const sidebarMenu = [
 		subMenu: [
 			{ id: "item4", name: '設備狀態查詢', href: basePath +'pages/deviceMonitor/deviceStatusQuery.html', order: 0 },
 			{ id: "item5", name: '交易紀錄查詢', href: basePath +'pages/deviceMonitor/deviceTransDataQuery.html', order: 1 },
-            { id: "item6", name: '遠端檔案下載', href: basePath +'pages/deviceMonitor/deviceDownload.html', order: 2 },
+            { id: "item6", name: '遠端檔案下載', href: basePath +'pages/deviceMonitor/deviceFileDownload.html', order: 2 },
 	    //	{ id: "item6", name: '設備監控參數設定', href: basePath +'pages/deviceMonitor/deviceParam.html', order: 2 },
 		//	{ id: "item7", name: '設備交易代碼設定', href: basePath +'pages/deviceMonitor/deviceTransactionCode.html', order: 3 },
 		]
