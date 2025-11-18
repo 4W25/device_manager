@@ -90,9 +90,8 @@
                       <th>設備型號</th>
                       <th>設備編號</th>
                       <th>版號</th>
+					  <th>狀態</th>
                       <th>更新日期</th>
-                      <th>更新內容</th>
-                      <th>更新人員</th>
                     </tr>
                   </thead>
                   <tbody id="deviceTableBody"></tbody>
@@ -147,17 +146,23 @@ $(function () {
   const filteredList = deviceCode
     ? versionHist.filter(v => v.deviceCode === deviceCode)
     : versionHist;
+	
 
   if (filteredList.length > 0) {
     filteredList.forEach(v => {
       const row = document.createElement('tr');
+	  	          // 根據狀態選擇 badge 顏色
+          const badgeClass =
+            v.deviceStatus === "未派送" ? "badge-warning" :
+            v.deviceStatus === "已更新" ? "badge-success" :
+            v.deviceStatus === "更新失敗" ? "badge-danger" :
+            "badge-secondary";
       row.innerHTML = `
         <td>${v.deviceModel}</td>
         <td>${v.deviceCode}</td>
         <td>${v.deviceVersion}</td>
+		              <td><span class="badge ${badgeClass}">${v.deviceStatus}</span></td>
         <td>${v.updateDate}</td>
-        <td>${v.updateContent}</td>
-        <td>${v.modId}</td>
       `;
       tableBody.appendChild(row);
     });
@@ -165,35 +170,28 @@ $(function () {
     console.log('找不到該設備資料');
   }
 
+
+// 待用功能 下載:"buttons": [{extend: "copy",filename: getExportFilename},{extend: "csv",filename: getExportFilename},{extend: "excel",filename: getExportFilename},{extend: "pdf",filename: getExportFilename},{extend: "print",filename: getExportFilename}]
   $("#example1").DataTable({
     "responsive": true,
         "lengthChange": false, 
         "autoWidth": false,
         "ordering": false,
 		"searching": false,
-      "buttons": [
-    {
-      extend: "copy",
-      filename: getExportFilename
-    },
-    {
-      extend: "csv",
-      filename: getExportFilename
-    },
-    {
-      extend: "excel",
-      filename: getExportFilename
-    },
-    {
-      extend: "pdf",
-      filename: getExportFilename
-    },
-    {
-      extend: "print",
-      filename: getExportFilename
-    }
-  ]
-  }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+		"language": {
+          "lengthMenu": "每頁顯示 _MENU_ 筆",
+          "zeroRecords": "查無資料",
+          "info": "顯示第 _START_ 筆到第 _END_ 筆，共 _TOTAL_ 筆",
+          "infoFiltered": "(從 _MAX_ 筆資料過濾)",
+		  "search": "搜尋：",
+          "paginate": {
+            "first": "第一頁",
+            "last": "最後一頁",
+            "next": "下一頁",
+            "previous": "上一頁"
+          },
+        }
+		}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
   window.cancelAndReturn = function() {
     window.location.href = `deviceStatusQuery.html${deviceType ? '?deviceType=' + encodeURIComponent(deviceType) : ''}`;

@@ -31,8 +31,9 @@ const sidebarMenu = [
 		order: 2,
 		subMenu: [
 			{ id: "item8", name: '軟體版本管理', href: basePath +'pages/versionDelivery/deviceSWVerSetting.html', order: 0 },
-			{ id: "item9", name: '軟體派送排程', href: basePath +'pages/versionDelivery/deviceSchedule.html', order: 1 },
-			{ id: "item10", name: '派送紀錄查詢', href: basePath +'pages/versionDelivery/deviceVerUpdateQuery.html', order: 2 }
+			{ id: "item9", name: '軟體版本管理覆核', href: basePath +'pages/versionDelivery/deviceSWVerSettingReview.html', order: 1 },
+			{ id: "item10", name: '軟體派送排程', href: basePath +'pages/versionDelivery/deviceSchedule.html', order: 2 },
+			{ id: "item11", name: '派送紀錄查詢', href: basePath +'pages/versionDelivery/deviceVerUpdateQuery.html', order: 3 }
 		]
 	},
 	{
