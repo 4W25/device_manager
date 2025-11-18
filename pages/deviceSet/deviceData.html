@@ -128,8 +128,6 @@
   </footer> 
 </div>
 
-<input type="file" id="hiddenFileInput" class="d-none" accept=".xlsx,.xls">
-
 <!-- jQuery -->
 <script src="../../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
@@ -259,45 +257,7 @@
         }
       }).buttons().container().appendTo(`#${tableId}_wrapper .col-md-6:eq(0)`);
     }
-    
-    // Excel 上傳模擬
-    function uploadExcel() {
-      const input = $('<input>', {
-        type: 'file',
-        accept: '.xlsx, .xls',
-        class: 'd-none',
-        change: function (event) {
-          const file = event.target.files[0];
-          if (file) {
-            const fileName = file.name;
-            const extension = fileName.split('.').pop().toLowerCase();
-            if (extension === 'xlsx' || extension === 'xls') {
-              $('label[for="customFile"]').text(fileName);
-
-              // 模擬送出
-              const formData = new FormData();
-              formData.append('file', file);
-
-              // 模擬 ajax 上傳
-              $.ajax({
-                url: '/api/device/batch-upload', // TODO: 替換成實際 API
-                method: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: () => alert("上傳成功！"),
-                error: () => alert("上傳失敗，請確認檔案格式與內容")
-              });
-
-            } else {
-              alert('錯誤：只允許上傳 Excel 文件 (.xls, .xlsx)');
-            }
-          }
-        }
-      });
-      input.appendTo('body').click();
-    }
-
+  
     // 載入時自動選中對應分頁
     const urlParams = new URLSearchParams(window.location.search);
     const selectedType = urlParams.get("deviceType");
