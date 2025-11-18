@@ -3,30 +3,35 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>設備版本軟體設定</title>
+<title>軟體版本管理</title>
 
 <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
 <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+
 <style>
-  .nav-tabs { margin-bottom: 20px; }
-  .badge-status { padding: .35em .6em; border-radius: .25rem; color: #fff; }
+.nav-tabs { margin-bottom: 20px; }
+.badge-status { padding: .35em .6em; border-radius: .25rem; color: #fff; }
 </style>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
-  <!-- 省略 navbar / sidebar（和你原本模板相同） -->
+  <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <ul class="navbar-nav">
-      <li class="nav-item"><a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a></li>
+      <li class="nav-item"><a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a></li>
       <li class="nav-item d-none d-sm-inline-block"><a href="../../index.html" class="nav-link">回首頁</a></li>
     </ul>
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item"><a class="nav-link" data-widget="fullscreen" href="#" role="button"><i class="fas fa-expand-arrows-alt"></i></a></li>
+      <li class="nav-item"><a class="nav-link" data-widget="fullscreen" href="#"><i class="fas fa-expand-arrows-alt"></i></a></li>
     </ul>
   </nav>
 
+  <!-- Sidebar -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <a href="../../index.html" class="brand-link"><img src="../../dist/img/device01.png" class="brand-image img-circle elevation-3" style="opacity:.8"><span class="brand-text font-weight-light">自動化設備管理平臺</span></a>
     <div class="sidebar">
@@ -38,15 +43,16 @@
     </div>
   </aside>
 
+  <!-- Content Wrapper -->
   <div class="content-wrapper">
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6"><h1>設備版本軟體設定總覽頁</h1></div>
+          <div class="col-sm-6"><h1>軟體版本管理總覽頁</h1></div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="../../index.html">首頁</a></li>
-              <li class="breadcrumb-item active">設備軟體派送管理 / 設備版本軟體設定</li>
+              <li class="breadcrumb-item active">軟體派送管理 / 軟體版本管理</li>
             </ol>
           </div>
         </div>
@@ -56,7 +62,7 @@
     <section class="content">
       <div class="container-fluid">
         <div class="card">
-          <div class="card-header"><h3 class="card-title"><i class="fas fa-th-large"></i> 設備版本軟體設定表</h3></div>
+          <div class="card-header"><h3 class="card-title"><i class="fas fa-th-large"></i> 軟體版本管理表</h3></div>
           <div class="card-body">
             <ul class="nav nav-tabs" id="device-tabs" role="tablist"></ul>
             <div class="tab-content" id="device-tabContent"></div>
@@ -72,28 +78,27 @@
   </footer>
 </div>
 
-<!-- 更新狀態 Modal -->
+<!-- Modal: 狀態提示 -->
 <div class="modal fade" id="modal-status" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header"><h5 class="modal-title">更新狀態</h5><button type="button" class="close" data-dismiss="modal">&times;</button></div>
+      <div class="modal-header"><h5 class="modal-title">狀態提示</h5><button type="button" class="close" data-dismiss="modal">&times;</button></div>
       <div class="modal-body" id="modal-status-body"></div>
       <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button></div>
     </div>
   </div>
 </div>
 
-<!-- 上傳程式 Modal -->
-<div class="modal fade" id="uploadProgramModal" tabindex="-1" aria-labelledby="uploadProgramLabel" aria-hidden="true">
+<!-- Modal: 上傳程式 -->
+<div class="modal fade" id="uploadProgramModal" tabindex="-1">
   <div class="modal-dialog" role="document">
     <form id="uploadProgramForm" enctype="multipart/form-data" class="modal-content">
-      <div class="modal-header"><h5 class="modal-title" id="uploadProgramLabel">上傳程式檔案</h5><button type="button" class="close" data-dismiss="modal">&times;</button></div>
+      <div class="modal-header"><h5 class="modal-title">上傳程式檔案</h5><button type="button" class="close" data-dismiss="modal">&times;</button></div>
       <div class="modal-body">
         <div class="form-group">
           <label for="modalDeviceType">設備類型</label>
           <input type="text" id="modalDeviceType" class="form-control" disabled>
         </div>
-
         <div class="form-group">
           <label for="modalProgramFile">選擇程式檔案 (僅允許 .zip)</label>
           <div class="input-group">
@@ -103,48 +108,32 @@
             </div>
           </div>
         </div>
-
         <div class="form-group">
           <label for="modalPreviousVer">前置程式版號（可選）</label>
-          <select id="modalPreviousVer" class="form-control">
-            <option value="">無</option>
-            <!-- 選項由 JS 往下注入（從 versionInfo.verNo 取得） -->
-          </select>
+          <select id="modalPreviousVer" class="form-control"><option value="">無</option></select>
         </div>
-
         <div class="form-group">
           <label for="modalIsMandatory">是否必要更新</label>
           <select id="modalIsMandatory" class="form-control">
-            <option value="">請選擇</option>
-            <option value="是">是</option>
-            <option value="否">否</option>
+            <option value="">請選擇</option><option value="是">是</option><option value="否">否</option>
           </select>
         </div>
-
         <div class="form-group">
           <label for="modalUpdateCategory">更新類別</label>
           <select id="modalUpdateCategory" class="form-control">
-            <option value="">請選擇</option>
-            <option value="程式">程式</option>
-            <option value="資料">資料</option>
-            <option value="新聞">新聞</option>
+            <option value="">請選擇</option><option value="程式">程式</option><option value="資料">資料</option><option value="新聞">新聞</option>
           </select>
         </div>
-
         <div class="form-group">
           <label for="modalProgramVersion">上傳程式版號</label>
           <input type="text" id="modalProgramVersion" name="programVersion" class="form-control" placeholder="輸入程式版本">
         </div>
-
         <div class="form-group">
           <label for="modalDescription">說明</label>
           <textarea id="modalDescription" name="description" class="form-control" rows="3" placeholder="可輸入上傳用途、版本說明..."></textarea>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-        <button type="submit" class="btn btn-primary">開始上傳</button>
-      </div>
+      <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button><button type="submit" class="btn btn-primary">開始上傳</button></div>
     </form>
   </div>
 </div>
@@ -154,265 +143,164 @@
 <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../../plugins/select2/js/select2.full.min.js"></script>
 <script src="../../dist/js/adminlte.min.js"></script>
-
-<!-- 請確保 device_info.js 已先載入並且內含：
-     deviceTypeList (陣列), versionInfo (陣列), statusMap (物件)
-     以及你將 paste 的 JSON 物件 deviceSWVerSettingScripts（見交付） -->
-<script src="../../js/sidebar.js"></script> 
-<script src="../../data/sidebar_menu.js"></script> 
+<script src="../../js/sidebar.js"></script>
+<script src="../../data/sidebar_menu.js"></script>
 <script src="../../data/device_info.js"></script>
 
 <script>
-/* 這個區塊會在你把 JSON paste 進 device_info.js 並將 deviceSWVerSettingScripts.mainScript 注入時運行。
-   若你直接把下方 script 的內容貼到 device_info.js 的 deviceSWVerSettingScripts.mainScript，
-   也可以。為了清楚，我在 JSON 也給出同樣內容。 */
-(function () {
-  // 確保必須的變數存在
-  if (typeof deviceTypeList === 'undefined' || typeof versionInfo === 'undefined' || typeof statusMap === 'undefined') {
-    console.error('請先載入 device_info.js 並包含 deviceTypeList, versionInfo, statusMap');
-    return;
+(function(){
+  if(typeof deviceTypeList==='undefined'||typeof versionInfo==='undefined'||typeof statusMap==='undefined'){console.error('請先載入 device_info.js 並包含 deviceTypeList, versionInfo, statusMap');return;}
+  const createdTables={};
+
+  function buildTabs(){
+    const tabList=$('#device-tabs').empty(); const tabContent=$('#device-tabContent').empty();
+    deviceTypeList.forEach((d,idx)=>{
+      const verNoKey='Device'+String(idx+1).padStart(2,'0'); const active=idx===0?'active':'';
+      const tabId=`tab-${verNoKey}`; const contentId=`content-${verNoKey}`;
+      tabList.append(`<li class="nav-item"><a class="nav-link ${active}" id="${tabId}" data-toggle="pill" href="#${contentId}" role="tab" aria-controls="${contentId}" aria-selected="${idx===0}">${d.deviceType}</a></li>`);
+      tabContent.append(`<div class="tab-pane fade ${active?'show active':''}" id="${contentId}" role="tabpanel" aria-labelledby="${tabId}"><section class="content p-2"><div class="row mb-2"><div class="col-12 text-end"><button class="btn btn-primary btn-upload">上傳程式</button></div></div><table id="table-${verNoKey}" class="table table-bordered table-hover"><thead><tr><th>設備類型</th><th>軟體版號</th><th>上傳時間</th><th>是否必要更新</th><th>前置版本</th><th>更新類型</th><th>說明</th><th>狀態</th><th>功能</th></tr></thead><tbody id="deviceTableBody-${verNoKey}"></tbody></table></section></div>`);
+      renderDeviceTable(verNoKey,`deviceTableBody-${verNoKey}`,d.deviceType);
+    });
+
+    $('a[data-toggle="pill"]').on('shown.bs.tab',function(e){
+      const href=$(e.target).attr('href'); const $content=$(href); const table=$content.find('table').attr('id');
+      if(table&&!createdTables[table]){createdTables[table]=initializeDataTable(table);}else if(table&&createdTables[table]){createdTables[table].columns.adjust();}
+      const curDeviceType=$(e.target).text(); $('#modalDeviceType').val(curDeviceType); populatePreviousVerSelect(curDeviceType);
+    });
+    const firstTab=$('#device-tabs a.nav-link').first(); if(firstTab.length) firstTab.tab('show');
   }
 
-  // state
-  const createdTables = {}; // tableId => DataTable instance
+  function renderDeviceTable(verNo,tableBodyId,deviceType){
+    const tableBody=document.getElementById(tableBodyId); tableBody.innerHTML='';
+    const filtered=versionInfo.filter(v=>v.deviceType===deviceType);
+    const latestMap={};
+    filtered.forEach(row=>{const exist=latestMap[row.verNo]; if(!exist||new Date(row.updateTime)>new Date(exist.updateTime)) latestMap[row.verNo]=row;});
+    Object.values(latestMap).sort((a,b)=>new Date(b.updateTime)-new Date(a.updateTime)).forEach(data=>{
+      const statusKey=data.status||'待覆核';
+      const badgeClass=`badge`;
+      const badgeColor=statusKey==='待覆核'?'badge-warning':statusKey==='核准'?'badge-success':statusKey==='退回'?'badge-danger':'badge-secondary';
+      let downloadBtn='';
+      if(data.fileBase64){ const filename=data.originalFileName||`${data.verNo}.zip`; downloadBtn=`<a href="data:application/zip;base64,${data.fileBase64}" download="${filename}" class="btn btn-sm btn-success"><i class="fas fa-download"></i></a>`;}
+      else if(data.filePath) downloadBtn=`<a href="${data.filePath}" download class="btn btn-sm btn-success"><i class="fas fa-download"></i></a>`; 
+      else downloadBtn=`<button class="btn btn-sm btn-secondary" disabled><i class="fas fa-download"></i> 無檔案</button>`;
 
-  // 建置 tab 與內容
-  function buildTabs() {
-    const tabList = $('#device-tabs').empty();
-    const tabContent = $('#device-tabContent').empty();
-
-    deviceTypeList.forEach((d, idx) => {
-      const verNoKey = `Device${String(idx+1).padStart(2,'0')}`;
-      const active = idx === 0 ? 'active' : '';
-      const tabId = `tab-${verNoKey}`;
-      const contentId = `content-${verNoKey}`;
-
-      tabList.append(`
-        <li class="nav-item">
-          <a class="nav-link ${active}" id="${tabId}" data-toggle="pill" href="#${contentId}" role="tab" aria-controls="${contentId}" aria-selected="${idx===0}">${d.deviceType}</a>
-        </li>
-      `);
-
-      tabContent.append(`
-        <div class="tab-pane fade ${active ? 'show active' : ''}" id="${contentId}" role="tabpanel" aria-labelledby="${tabId}">
-          <section class="content p-2">
-            <div class="row mb-2">
-              <div class="col-12 text-end">
-                <button class="btn btn-primary btn-upload" data-target="#uploadProgramModal">上傳程式</button>
-              </div>
-            </div>
-            <table id="table-${verNoKey}" class="table table-bordered table-hover">
-              <thead>
-                <tr>
-                  <th>設備類型</th>
-                  <th>軟體版號</th>
-                  <th>上傳時間</th>
-                  <th>是否必要更新</th>
-                  <th>前置版本</th>
-                  <th>更新類型</th>
-                  <th>說明</th>
-                  <th>狀態</th>
-                  <th>下載</th>
-                </tr>
-              </thead>
-              <tbody id="deviceTableBody-${verNoKey}"></tbody>
-            </table>
-          </section>
-        </div>
-      `);
-
-      renderDeviceTable(verNoKey, `deviceTableBody-${verNoKey}`, d.deviceType);
-    });
-
-    // 當 tab 顯示時，初始化 DataTable（避免在隱藏元素初始化問題）
-    $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
-      const href = $(e.target).attr('href'); // like #content-Device01
-      const $content = $(href);
-      const table = $content.find('table').attr('id');
-      if (table && !createdTables[table]) {
-        createdTables[table] = initializeDataTable(table);
-      } else if (table && createdTables[table]) {
-        // 調整 columns
-        createdTables[table].columns.adjust();
-      }
-      // 自動帶入 modal 的設備類型為目前 tab 名稱
-      const curDeviceType = $(e.target).text();
-      $('#modalDeviceType').val(curDeviceType);
-      populatePreviousVerSelect(curDeviceType);
-    });
-
-    // 觸發初始化第一個 tab 的表格
-    const firstTab = $('#device-tabs a.nav-link').first();
-    if (firstTab.length) firstTab.tab('show');
-  }
-
-  // render table body (每個 verNo 只取最新的 updateTime)
-  function renderDeviceTable(verNo, tableBodyId, deviceType) {
-    const tableBody = document.getElementById(tableBodyId);
-    tableBody.innerHTML = '';
-
-    const filtered = versionInfo.filter(v => v.deviceType === deviceType);
-    // 以 verNo 分組取最新
-    const latestMap = {};
-    filtered.forEach(row => {
-      const exist = latestMap[row.verNo];
-      if (!exist || new Date(row.updateTime) > new Date(exist.updateTime)) latestMap[row.verNo] = row;
-    });
-
-    Object.values(latestMap).sort((a,b) => new Date(b.updateTime) - new Date(a.updateTime)).forEach(data => {
-      const statusKey = data.status || '審核中';
-      const statusCfg = statusMap[statusKey] || { color: 'secondary' };
-      const badgeClass = `badge-status`;
-      const badgeStyle = `background:${statusCfg.color};`;
-      const row = `
+      tableBody.insertAdjacentHTML('beforeend',`
         <tr>
           <td>${escapeHtml(data.deviceType)}</td>
           <td>${escapeHtml(data.verNo)}</td>
           <td>${escapeHtml(data.updateTime)}</td>
-          <td>${escapeHtml(data.isMandatory || '')}</td>
-          <td>${escapeHtml(data.previousVer || '')}</td>
-          <td>${escapeHtml(data.updateType || '')}</td>
-          <td>${escapeHtml(data.releaseNotes || '')}</td>
-          <td><span class="${badgeClass}" style="${badgeStyle}">${escapeHtml(statusKey)}</span></td>
-          <td>${renderDownloadButton(data)}</td>
+          <td>${escapeHtml(data.isMandatory||'')}</td>
+          <td>${escapeHtml(data.previousVer||'')}</td>
+          <td>${escapeHtml(data.updateType||'')}</td>
+          <td>${escapeHtml(data.releaseNotes||'')}</td>
+          <td><span class="badge ${badgeColor}">${escapeHtml(statusKey)}</span></td>
+          <td class="text-center">
+            <button class="btn btn-sm btn-primary" onclick="viewSWVer('${data.verNo}','${deviceType}')">檢視</button>
+            <button class="btn btn-sm btn-success" onclick="editSWVer('${data.verNo}','${deviceType}')">修改</button>
+            <button class="btn btn-sm btn-danger" onclick="deleteSWVer('${data.verNo}','${deviceType}')">刪除</button>
+            ${downloadBtn}
+          </td>
         </tr>
-      `;
-      tableBody.insertAdjacentHTML('beforeend', row);
+      `);
     });
   }
 
-  function renderDownloadButton(data) {
-    // 假設 data.filePath 或 data.fileBase64 都可能存在；後端情況不同你可調整
-    if (data.fileBase64) {
-      // fileBase64 需要一個檔名
-      const filename = data.originalFileName || `${data.verNo}.zip`;
-      // 下載用 data URI，注意：若檔案很大不建議在前端直接處理
-      return `<a href="data:application/zip;base64,${data.fileBase64}" download="${filename}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> 下載</a>`;
-    } else if (data.filePath) {
-      return `<a href="${data.filePath}" download class="btn btn-sm btn-success"><i class="fas fa-download"></i> 下載</a>`;
-    } else {
-      return `<button class="btn btn-sm btn-secondary" disabled><i class="fas fa-download"></i> 無檔案</button>`;
-    }
+  function initializeDataTable(tableId){
+    return $(`#${tableId}`).DataTable({responsive:true,lengthChange:false,autoWidth:false,ordering:false,searching:false,language:{lengthMenu:"每頁顯示 _MENU_ 筆",zeroRecords:"查無資料",info:"顯示第 _START_ 筆到第 _END_ 筆，共 _TOTAL_ 筆",infoFiltered:"(從 _MAX_ 筆資料過濾)",paginate:{first:"第一頁",last:"最後一頁",next:"下一頁",previous:"上一頁"}}});
   }
 
-  // DataTable 初始化（不啟用 buttons）
-  function initializeDataTable(tableId) {
-    return $(`#${tableId}`).DataTable({
-      responsive: true,
-      lengthChange: false,
-      autoWidth: false,
-      ordering: false,
-      searching: false,
-      language: {
-        lengthMenu: "每頁顯示 _MENU_ 筆",
-        zeroRecords: "查無資料",
-        info: "顯示第 _START_ 筆到第 _END_ 筆，共 _TOTAL_ 筆",
-        infoFiltered: "(從 _MAX_ 筆資料過濾)",
-        paginate: { first: "第一頁", last: "最後一頁", next: "下一頁", previous: "上一頁" }
-      }
-    });
-  }
+  function escapeHtml(text){if(text==null)return'';return String(text).replace(/[&<>"'`=\/]/g,function(s){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','/':'&#x2F;','`':'&#x60;','=':'&#x3D;'}[s];});}
 
-  // Escape 防 XSS（簡單）
-  function escapeHtml(text){ if (text==null) return ''; return String(text).replace(/[&<>"'`=\/]/g, function(s){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','/':'&#x2F;','`':'&#x60;','=':'&#x3D;'}[s]; }); }
+  function populatePreviousVerSelect(deviceType){const select=$('#modalPreviousVer').empty();select.append('<option value="">無</option>');const verSet=new Set();versionInfo.filter(v=>v.deviceType===deviceType).forEach(v=>{if(!verSet.has(v.verNo)){verSet.add(v.verNo);select.append(`<option value="${escapeHtml(v.verNo)}">${escapeHtml(v.verNo)}</option>`);}});}
 
-  // populate 前置版本下拉（從 versionInfo 的 verNo 欄位，僅該設備類型）
-  function populatePreviousVerSelect(deviceType) {
-    const select = $('#modalPreviousVer').empty();
-    select.append(`<option value="">無</option>`);
-    const verSet = new Set();
-    versionInfo.filter(v => v.deviceType === deviceType).forEach(v => {
-      if (!verSet.has(v.verNo)) { verSet.add(v.verNo); select.append(`<option value="${escapeHtml(v.verNo)}">${escapeHtml(v.verNo)}</option>`); }
-    });
-  }
+  // 模擬操作函數
+  window.viewSWVer=(verNo,deviceType)=>{alert(`檢視 ${deviceType} / ${verNo} （需自行實作 Modal）`);}
+  window.editSWVer=(verNo,deviceType)=>{alert(`修改 ${deviceType} / ${verNo} （需連接後端）`);}
+  window.deleteSWVer=(verNo,deviceType)=>{alert(`刪除 ${deviceType} / ${verNo} （需連接後端）`);}
 
-  // 檔案選擇檢查（只檢查是否為 zip，**不清空 input**，若非 zip 則 alert）
-  function handleFileSelect(e) {
-    const input = e.target;
-    const label = $('#modalProgramFileLabel');
-    const file = input.files && input.files[0];
-    if (file) {
-      label.text(file.name);
-      if (!file.name.toLowerCase().endsWith('.zip')) {
-        alert('請上傳 .zip 檔案');
-        // 不清空 input（依你要求），只是通知並不接受上傳
-        // 若要阻止送出，可以在 submit 時再次檢查
-      }
-    } else {
-      label.text('選擇檔案');
-    }
-  }
-
-  // Modal open (由按鈕觸發)
-  function bindUploadButtons() {
-    $(document).on('click', '.btn-upload', function () {
-      // 取得當前頁籤的設備類型（從 active tab 的文字）
-      const activeTabText = $('#device-tabs a.nav-link.active').text() || '';
+  $(function(){buildTabs();
+    $('.btn-upload').on('click',function(){
+      const activeTabText=$('#device-tabs a.nav-link.active').text()||'';
       $('#modalDeviceType').val(activeTabText);
       populatePreviousVerSelect(activeTabText);
-      // reset other modal fields
-      $('#modalProgramFile').val(null);
-      $('#modalProgramFileLabel').text('選擇檔案');
-      $('#modalPreviousVer').val('');
-      $('#modalIsMandatory').val('');
-      $('#modalUpdateCategory').val('');
-      $('#modalProgramVersion').val('');
-      $('#modalDescription').val('');
+      $('#modalProgramFile').val(null); $('#modalProgramFileLabel').text('選擇檔案');
+      $('#modalPreviousVer').val(''); $('#modalIsMandatory').val(''); $('#modalUpdateCategory').val('');
+      $('#modalProgramVersion').val(''); $('#modalDescription').val('');
       $('#uploadProgramModal').modal('show');
     });
 
-    $('#modalProgramFile').on('change', handleFileSelect);
+    $('#modalProgramFile').on('change',function(e){
+      const file=e.target.files&&e.target.files[0];
+      if(file){$('#modalProgramFileLabel').text(file.name); if(!file.name.toLowerCase().endsWith('.zip')) alert('請上傳 .zip 檔案');}
+      else $('#modalProgramFileLabel').text('選擇檔案');
+    });
 
-    // 表單提交
-    $('#uploadProgramForm').on('submit', function (e) {
+    $('#uploadProgramForm').on('submit',function(e){
       e.preventDefault();
-      const curDeviceType = $('#modalDeviceType').val();
-      const fileInput = document.getElementById('modalProgramFile');
-      const file = fileInput.files && fileInput.files[0];
-      if (!file) { alert('請選擇要上傳的 ZIP 檔案'); return; }
-      if (!file.name.toLowerCase().endsWith('.zip')) { alert('僅接受 .zip 檔案'); return; }
-
-      // 讀取檔案轉 base64，上傳或發送 Ajax（示範）
-      const reader = new FileReader();
-      reader.onload = function () {
-        const base64 = reader.result.split(',')[1]; // 去掉前綴 data:...
-        const payload = {
-          deviceType: curDeviceType,
-          originalFileName: file.name,
-          fileBase64: base64,
-          previousVer: $('#modalPreviousVer').val(),
-          isMandatory: $('#modalIsMandatory').val(),
-          updateType: $('#modalUpdateCategory').val(),
-          programVersion: $('#modalProgramVersion').val(),
-          description: $('#modalDescription').val(),
-          status: '審核中',
-          uploadTime: (new Date()).toISOString()
-        };
-        // TODO: call backend API to store payload (MSSQL)
-        console.log('要傳到後端的 payload 範例：', payload);
+      const curDeviceType=$('#modalDeviceType').val();
+      const fileInput=document.getElementById('modalProgramFile'); const file=fileInput.files&&fileInput.files[0];
+      if(!file){alert('請選擇要上傳的 ZIP 檔案');return;}
+      if(!file.name.toLowerCase().endsWith('.zip')){alert('僅接受 .zip 檔案');return;}
+      const reader=new FileReader();
+      reader.onload=function(){
+        const base64=reader.result.split(',')[1];
+        const payload={deviceType:curDeviceType,originalFileName:file.name,fileBase64:base64,previousVer:$('#modalPreviousVer').val(),isMandatory:$('#modalIsMandatory').val(),updateType:$('#modalUpdateCategory').val(),programVersion:$('#modalProgramVersion').val(),description:$('#modalDescription').val(),status:'待覆核',uploadTime:(new Date()).toISOString()};
+        console.log('要傳到後端的 payload 範例：',payload);
         $('#uploadProgramModal').modal('hide');
-        $('#modal-status-body').html(`<p>上傳成功（模擬）。設備：${escapeHtml(curDeviceType)}，檔案：${escapeHtml(file.name)}，狀態：審核中</p>`);
+        $('#modal-status-body').html(`<p>上傳成功（模擬）。設備：${escapeHtml(curDeviceType)}，檔案：${escapeHtml(file.name)}，狀態：待覆核</p>`);
         $('#modal-status').modal('show');
+      };       reader.onload=function(){
+        const base64=reader.result.split(',')[1];
+        const payload={
+          deviceType:curDeviceType,
+          originalFileName:file.name,
+          fileBase64:base64,
+          previousVer:$('#modalPreviousVer').val(),
+          isMandatory:$('#modalIsMandatory').val(),
+          updateType:$('#modalUpdateCategory').val(),
+          programVersion:$('#modalProgramVersion').val(),
+          description:$('#modalDescription').val(),
+          status:'待覆核',
+          updateTime:(new Date()).toISOString()
+        };
+
+        console.log('要傳到後端的 payload 範例：',payload);
+
+        // 模擬更新前端表格
+        versionInfo.push({
+          deviceType:payload.deviceType,
+          verNo:payload.programVersion,
+          updateTime:payload.updateTime,
+          isMandatory:payload.isMandatory,
+          previousVer:payload.previousVer,
+          updateType:payload.updateType,
+          releaseNotes:payload.description,
+          status:payload.status,
+          fileBase64:payload.fileBase64,
+          originalFileName:payload.originalFileName
+        });
+
+        $('#uploadProgramModal').modal('hide');
+        $('#modal-status-body').html(`<p>上傳成功（模擬）。設備：${escapeHtml(curDeviceType)}，檔案：${escapeHtml(file.name)}，狀態：待覆核</p>`);
+        $('#modal-status').modal('show');
+
+        // 重新渲染對應表格
+        const activeTabId=$('#device-tabs a.nav-link.active').attr('id');
+        if(activeTabId){
+          const tableId='table-'+activeTabId.replace('tab-','Device');
+          const tableBodyId='deviceTableBody-'+activeTabId.replace('tab-','Device');
+          renderDeviceTable(activeTabId.replace('tab-','Device'),tableBodyId,curDeviceType);
+          if(createdTables[tableId]) createdTables[tableId].columns.adjust().draw();
+        }
       };
       reader.readAsDataURL(file);
     });
-  }
-
-  // 初始化
-  $(function () {
-    buildTabs();
-    bindUploadButtons();
-    // 若 URL 有 deviceType 參數，顯示該 tab
-    const urlParams = new URLSearchParams(window.location.search);
-    const selectedType = urlParams.get("deviceType");
-    if (selectedType) {
-      const target = $(`#device-tabs a.nav-link`).filter(function(){ return $(this).text() === selectedType; }).first();
-      if (target.length) target.tab('show');
-    }
   });
-
 })();
 </script>
 </body>
 </html>
+
