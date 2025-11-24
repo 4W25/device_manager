@@ -116,34 +116,34 @@ const deviceDataEditList = [
 // 設備狀態查詢 deviceStatusQuery.html
 const deviceStatusData = [
 	// ATM
-	{  deviceLocation: "全家楊鑫店", deviceCode: "7f4b2a93-1b7a-4c81-9e3a-1e0e45f2a6c3", deviceId: "Device01", deviceModel: "WIN-1500XE", deviceType: "自動提款機(WIN-1500XE)", deviceStatus: "未派送", deviceVersion: "A25.01.01", updateDate: '2025-01-01', updateVersion: 0, modId: "admin" },
-	{  deviceLocation: "7-11匯揚門市", deviceCode: "3a91e9b5-dbc0-4e09-b9f8-80c2a4a4f7e9",deviceId: "Device01", deviceModel:"WIN-1500XE", deviceType: "自動提款機(WIN-1500XE)", deviceStatus: "已派送", deviceVersion: "A25.01.01", updateDate: '2025-01-01', updateVersion: 0, modId: "admin" },
-	{  deviceLocation: "7-11大眾門市", deviceCode: "a0246f9e-ef8b-46fb-b9b2-70b7f44d6b25",deviceId: "Device01", deviceModel:"WIN-1500XE", deviceType: "自動提款機(WIN-1500XE)", deviceStatus: "已更新", deviceVersion: "A24.11.11", updateDate: '2024-11-11', updateVersion: 1, modId: "admin" },
-	{  deviceLocation: "全家堤頂店", deviceCode: "8c67a3d9-7b51-4db1-84fa-63eecb1f7d28",deviceId: "Device01", deviceModel:"OKI-RG7", deviceType: "循環機(OKI-RG7)", deviceStatus: "更新失敗", deviceVersion: "A25.01.01", updateDate: '2025-01-01', updateVersion: 1, modId: "admin" },
-	{  deviceLocation: "7-11大眾門市", deviceCode: "d42c54e7-6c32-4a2e-83ff-f8f0e5b9372e",deviceId: "Device01", deviceModel:"OKI-RG7", deviceType: "循環機(OKI-RG7)", deviceStatus: "未派送", deviceVersion: "A25.01.01", updateDate: '2025-01-01', updateVersion: 1, modId: "admin" },
-	{  deviceLocation: "7-11匯揚門市", deviceCode: "54a8c2f5-5d0b-4b73-b4f2-148d9c6c2a3f",deviceId: "Device01", deviceModel:"OKI-RG7", deviceType: "循環機(OKI-RG7)", deviceStatus: "已派送", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateVersion: 0, modId: "admin" },
-	{  deviceLocation: "全家楊鑫店", deviceCode: "9e8b6a0d-9434-46a1-a6cf-8f1ab90b224a",deviceId: "Device01", deviceModel:"OKI-RG7", deviceType: "循環機(OKI-RG7)", deviceStatus: "已更新", deviceVersion: "D25.01.01", updateDate: '2025-01-01', updateVersion: 0, modId: "admin" },
-	{  deviceLocation: "富邦公庫處ATM2", deviceCode: "6e92d27b-5053-4a6b-bfb4-1e97a1a7d55f", deviceModel:"HITACHI-CZ5000",deviceId: "Device01", deviceType: "循環機(HITACHI-CZ5000)", deviceStatus: "已更新", deviceVersion: "D24.12.12", updateDate: '2024-12-12', updateVersion: 0, modId: "admin" },
-	{  deviceLocation: "富邦公庫處ATM3", deviceCode: "f18a4a2e-76c1-4d55-9473-25b3a55f0a67", deviceModel:"HITACHI-CZ5000",deviceId: "Device01", deviceType: "循環機(HITACHI-CZ5000)", deviceStatus: "更新失敗", deviceVersion: "D24.11.11", updateDate: '2024-11-11', updateVersion: 0, modId: "admin" },
+	{  deviceLocation: "全家楊鑫店", unit:"富邦濟南分行", deviceCode: "7f4b2a93", deviceId: "Device01", deviceName:"自動提款機", deviceModel: "WIN-1500XE", deviceType: "自動提款機(WIN-1500XE)", deviceStatus: "未派送", deviceVersion: "A25.01.01", updateTime: '2025-01-01', updateVersion: 0, modId: "admin" },
+	{  deviceLocation: "7-11匯揚門市", unit:"富邦濟南分行", deviceCode: "3a91e9b5",deviceId: "Device01", deviceName:"自動提款機", deviceModel:"WIN-1500XE", deviceType: "自動提款機(WIN-1500XE)", deviceStatus: "已派送", deviceVersion: "A25.01.01", updateTime: '2025-01-01', updateVersion: 0, modId: "admin" },
+	{  deviceLocation: "7-11大眾門市", unit:"富邦濟南分行", deviceCode: "a0246f9e",deviceId: "Device01", deviceName:"自動提款機", deviceModel:"WIN-1500XE", deviceType: "自動提款機(WIN-1500XE)", deviceStatus: "已更新", deviceVersion: "A24.11.11", updateTime: '2024-11-11', updateVersion: 1, modId: "admin" },
+	{  deviceLocation: "全家堤頂店", unit:"富邦長安東路分行", deviceCode: "8c67a3d9",deviceId: "Device01", deviceName:"循環機", deviceModel:"OKI-RG7", deviceType: "循環機(OKI-RG7)", deviceStatus: "更新失敗", deviceVersion: "A25.01.01", updateTime: '2025-01-01', updateVersion: 1, modId: "admin" },
+	{  deviceLocation: "7-11大眾門市", unit:"富邦長安東路分行", deviceCode: "d42c54e7",deviceId: "Device01", deviceName:"循環機", deviceModel:"OKI-RG7", deviceType: "循環機(OKI-RG7)", deviceStatus: "未派送", deviceVersion: "A25.01.01", updateTime: '2025-01-01', updateVersion: 1, modId: "admin" },
+	{  deviceLocation: "7-11匯揚門市", unit:"富邦長安東路分行", deviceCode: "54a8c2f5",deviceId: "Device01", deviceName:"循環機", deviceModel:"OKI-RG7", deviceType: "循環機(OKI-RG7)", deviceStatus: "已派送", deviceVersion: "D25.01.01", updateTime: '2025-01-01', updateVersion: 0, modId: "admin" },
+	{  deviceLocation: "全家楊鑫店", unit:"富邦長安東路分行", deviceCode: "9e8b6a0d",deviceId: "Device01", deviceName:"循環機", deviceModel:"OKI-RG7", deviceType: "循環機(OKI-RG7)", deviceStatus: "已更新", deviceVersion: "D25.01.01", updateTime: '2025-01-01', updateVersion: 0, modId: "admin" },
+	{  deviceLocation: "富邦公庫處ATM2", unit:"富邦營業部", deviceCode: "6e92d27b", deviceName:"循環機", deviceModel:"HITACHI-CZ5000",deviceId: "Device01", deviceType: "循環機(HITACHI-CZ5000)", deviceStatus: "已更新", deviceVersion: "D24.12.12", updateTime: '2024-12-12', updateVersion: 0, modId: "admin" },
+	{  deviceLocation: "富邦公庫處ATM3", unit:"富邦營業部", deviceCode: "f18a4a2e", deviceName:"循環機", deviceModel:"HITACHI-CZ5000",deviceId: "Device01", deviceType: "循環機(HITACHI-CZ5000)", deviceStatus: "更新失敗", deviceVersion: "D24.11.11", updateTime: '2024-11-11', updateVersion: 0, modId: "admin" },
 ]
 
 // updateVersionHist.更新紀錄
   const versionHist = [
     // 自動提款機
-    { deviceCode: "7f4b2a93-1b7a-4c81-9e3a-1e0e45f2a6c3", deviceModel: "WIN-1500XE", deviceType: "自動提款機(WIN-1500XE)", deviceVersion: "A25.01.01", updateDate: "2025-01-01", deviceStatus: "未派送", modId: "admin" },
-    { deviceCode: "3a91e9b5-dbc0-4e09-b9f8-80c2a4a4f7e9", deviceModel: "WIN-1500XE", deviceType: "自動提款機(WIN-1500XE)", deviceVersion: "A25.01.01", updateDate: "2025-01-01", deviceStatus: "未派送", modId: "admin" },
-    { deviceCode: "a0246f9e-ef8b-46fb-b9b2-70b7f44d6b25", deviceModel: "WIN-1500XE", deviceType: "自動提款機(WIN-1500XE)", deviceVersion: "A24.11.11", updateDate: "2024-11-11", deviceStatus: "已派送", modId: "admin" },
+    { deviceCode: "7f4b2a93", deviceModel: "WIN-1500XE", deviceType: "自動提款機(WIN-1500XE)", deviceVersion: "A25.01.01", updateTime: "2025-01-01", deviceStatus: "未派送", modId: "admin" },
+    { deviceCode: "3a91e9b5", deviceModel: "WIN-1500XE", deviceType: "自動提款機(WIN-1500XE)", deviceVersion: "A25.01.01", updateTime: "2025-01-01", deviceStatus: "未派送", modId: "admin" },
+    { deviceCode: "a0246f9e", deviceModel: "WIN-1500XE", deviceType: "自動提款機(WIN-1500XE)", deviceVersion: "A24.11.11", updateTime: "2024-11-11", deviceStatus: "已派送", modId: "admin" },
 
     // 循環機
-    { deviceCode: "8c67a3d9-7b51-4db1-84fa-63eecb1f7d28", deviceModel: "OKI-RG7", deviceType: "循環機(OKI-RG7)", deviceVersion: "A25.01.01", updateDate: "2025-01-01", deviceStatus: "已更新", modId: "admin" },
-	{ deviceCode: "8c67a3d9-7b51-4db1-84fa-63eecb1f7d28", deviceModel: "OKI-RG7", deviceType: "循環機(OKI-RG7)", deviceVersion: "A25.01.02", updateDate: "2025-01-02", deviceStatus: "已更新", modId: "admin" },
-	{ deviceCode: "8c67a3d9-7b51-4db1-84fa-63eecb1f7d28", deviceModel: "OKI-RG7", deviceType: "循環機(OKI-RG7)", deviceVersion: "A25.01.03", updateDate: "2025-01-03", deviceStatus: "已更新", modId: "admin" },
-	{ deviceCode: "8c67a3d9-7b51-4db1-84fa-63eecb1f7d28", deviceModel: "OKI-RG7", deviceType: "循環機(OKI-RG7)", deviceVersion: "A25.01.04", updateDate: "2025-01-04", deviceStatus: "已更新", modId: "admin" },
-    { deviceCode: "d42c54e7-6c32-4a2e-83ff-f8f0e5b9372e", deviceModel: "OKI-RG7", deviceType: "循環機(OKI-RG7)", deviceVersion: "A25.01.04", updateDate: "2025-01-05", deviceStatus: "已更新", modId: "admin" },
-    { deviceCode: "54a8c2f5-5d0b-4b73-b4f2-148d9c6c2a3f", deviceModel: "OKI-RG7", deviceType: "循環機(OKI-RG7)", deviceVersion: "D25.01.05", updateDate: "2025-01-06", deviceStatus: "已更新", modId: "admin" },
-    { deviceCode: "9e8b6a0d-9434-46a1-a6cf-8f1ab90b224a", deviceModel: "OKI-RG7", deviceType: "循環機(OKI-RG7)", deviceVersion: "D25.01.06", updateDate: "2025-01-07", deviceStatus: "已更新", modId: "admin" },
-    { deviceCode: "6e92d27b-5053-4a6b-bfb4-1e97a1a7d55f", deviceModel: "HITACHI-CZ5000", deviceType: "循環機(HITACHI-CZ5000)", deviceVersion: "D24.12.12", updateDate: "2024-12-12", deviceStatus: "已更新", modId: "admin" },
-    { deviceCode: "f18a4a2e-76c1-4d55-9473-25b3a55f0a67", deviceModel: "HITACHI-CZ5000", deviceType: "循環機(HITACHI-CZ5000)", deviceVersion: "D24.11.11", updateDate: "2024-11-11", deviceStatus: "更新失敗", modId: "admin" }
+    { deviceCode: "8c67a3d9", deviceModel: "OKI-RG7", deviceType: "循環機(OKI-RG7)", deviceVersion: "A25.01.01", updateTime: "2025-01-01", deviceStatus: "已更新", modId: "admin" },
+	{ deviceCode: "8c67a3d9", deviceModel: "OKI-RG7", deviceType: "循環機(OKI-RG7)", deviceVersion: "A25.01.02", updateTime: "2025-01-02", deviceStatus: "已更新", modId: "admin" },
+	{ deviceCode: "8c67a3d9", deviceModel: "OKI-RG7", deviceType: "循環機(OKI-RG7)", deviceVersion: "A25.01.03", updateTime: "2025-01-03", deviceStatus: "已更新", modId: "admin" },
+	{ deviceCode: "8c67a3d9", deviceModel: "OKI-RG7", deviceType: "循環機(OKI-RG7)", deviceVersion: "A25.01.04", updateTime: "2025-01-04", deviceStatus: "已更新", modId: "admin" },
+    { deviceCode: "d42c54e7", deviceModel: "OKI-RG7", deviceType: "循環機(OKI-RG7)", deviceVersion: "A25.01.04", updateTime: "2025-01-05", deviceStatus: "已更新", modId: "admin" },
+    { deviceCode: "54a8c2f5", deviceModel: "OKI-RG7", deviceType: "循環機(OKI-RG7)", deviceVersion: "D25.01.05", updateTime: "2025-01-06", deviceStatus: "已更新", modId: "admin" },
+    { deviceCode: "9e8b6a0d", deviceModel: "OKI-RG7", deviceType: "循環機(OKI-RG7)", deviceVersion: "D25.01.06", updateTime: "2025-01-07", deviceStatus: "已更新", modId: "admin" },
+    { deviceCode: "6e92d27b", deviceModel: "HITACHI-CZ5000", deviceType: "循環機(HITACHI-CZ5000)", deviceVersion: "D24.12.12", updateTime: "2024-12-12", deviceStatus: "已更新", modId: "admin" },
+    { deviceCode: "f18a4a2e", deviceModel: "HITACHI-CZ5000", deviceType: "循環機(HITACHI-CZ5000)", deviceVersion: "D24.11.11", updateTime: "2024-11-11", deviceStatus: "更新失敗", modId: "admin" }
   ];
 
 
@@ -226,59 +226,50 @@ const menu = [
 
 // device_info.js
 const deviceUpdatesData = [
-	{ deviceId: "ATM001", deviceType: "ATM系統", lastVer: "無", isMandatory: "Y", previousVer: "無", verNo: "atm_v1.0.0", releaseNotes: "初版", updateTime: "2024/2/1 00:00:00", location: "atm_tpe_01_001" },
-	{ deviceId: "ATM002", deviceType: "ATM系統", lastVer: "無", isMandatory: "Y", previousVer: "無", verNo: "atm_v1.0.0", releaseNotes: "初版", updateTime: "2024/2/1 00:00:00", location: "atm_txg_01_001" },
-	{ deviceId: "ATM003", deviceType: "ATM系統", lastVer: "無", isMandatory: "Y", previousVer: "無", verNo: "atm_v1.0.0", releaseNotes: "初版", updateTime: "2024/2/1 00:00:00", location: "atm_khh_01_001" },
-	{ deviceId: "ATM004", deviceType: "ATM系統", lastVer: "無", isMandatory: "Y", previousVer: "無", verNo: "atm_v1.0.0", releaseNotes: "初版", updateTime: "2024/2/1 00:00:00", location: "atm_hsz_01_001" },
-	{ deviceId: "ATM005", deviceType: "ATM系統", lastVer: "無", isMandatory: "Y", previousVer: "無", verNo: "atm_v1.0.0", releaseNotes: "初版", updateTime: "2024/2/1 00:00:00", location: "atm_tnn_01_001" },
-	{ deviceId: "ATM006", deviceType: "ATM系統", lastVer: "無", isMandatory: "Y", previousVer: "無", verNo: "atm_v1.0.0", releaseNotes: "初版", updateTime: "2024/2/1 00:00:00", location: "atm_cyi_01_001" },
-	{ deviceId: "ATM003", deviceType: "ATM系統", lastVer: "atm_v1.0.0", isMandatory: "N", previousVer: "無", verNo: "atm_v1.0.5", releaseNotes: "補丁：小幅修正", updateTime: "2024/2/5 00:00:00", location: "atm_khh_01_001" },
-	{ deviceId: "ATM001", deviceType: "ATM系統", lastVer: "atm_v1.0.0", isMandatory: "N", previousVer: "無", verNo: "atm_v1.0.6", releaseNotes: "補丁：小幅修正", updateTime: "2024/2/6 00:00:00", location: "atm_tpe_01_001" },
-	{ deviceId: "ATM001", deviceType: "ATM系統", lastVer: "atm_v1.0.6", isMandatory: "N", previousVer: "無", verNo: "atm_v1.0.7", releaseNotes: "補丁：小幅修正", updateTime: "2024/2/7 00:00:00", location: "atm_tpe_01_001" },
-	{ deviceId: "ATM001", deviceType: "ATM系統", lastVer: "atm_v1.0.7", isMandatory: "Y", previousVer: "atm_v1.0.7", verNo: "atm_v1.1.0", releaseNotes: "更新：安全性修正", updateTime: "2024/2/8 00:00:00", location: "atm_tpe_01_001" },
-	{ deviceId: "ATM002", deviceType: "ATM系統", lastVer: "atm_v1.0.0", isMandatory: "N", previousVer: "無", verNo: "atm_v1.0.7", releaseNotes: "補丁：小幅修正", updateTime: "2024/2/8 00:00:00", location: "atm_txg_01_001" },
-	{ deviceId: "ATM003", deviceType: "ATM系統", lastVer: "atm_v1.0.5", isMandatory: "N", previousVer: "無", verNo: "atm_v1.0.7", releaseNotes: "補丁：小幅修正", updateTime: "2024/2/8 00:00:00", location: "atm_khh_01_001" },
-	{ deviceId: "ATM004", deviceType: "ATM系統", lastVer: "atm_v1.0.0", isMandatory: "N", previousVer: "無", verNo: "atm_v1.0.7", releaseNotes: "補丁：小幅修正", updateTime: "2024/2/8 00:00:00", location: "atm_hsz_01_001" },
-	{ deviceId: "ATM005", deviceType: "ATM系統", lastVer: "atm_v1.0.0", isMandatory: "N", previousVer: "無", verNo: "atm_v1.0.7", releaseNotes: "補丁：小幅修正", updateTime: "2024/2/8 00:00:00", location: "atm_tnn_01_001" },
-	{ deviceId: "ATM006", deviceType: "ATM系統", lastVer: "atm_v1.0.0", isMandatory: "N", previousVer: "無", verNo: "atm_v1.0.7", releaseNotes: "補丁：小幅修正", updateTime: "2024/2/8 00:00:00", location: "atm_cyi_01_001" },
-	{ deviceId: "ATM002", deviceType: "ATM系統", lastVer: "atm_v1.0.7", isMandatory: "Y", previousVer: "atm_v1.0.7", verNo: "atm_v1.1.0", releaseNotes: "更新：安全性修正", updateTime: "2024/2/8 00:30:00", location: "atm_txg_01_001" },
-	{ deviceId: "ATM003", deviceType: "ATM系統", lastVer: "atm_v1.0.7", isMandatory: "Y", previousVer: "atm_v1.0.7", verNo: "atm_v1.1.0", releaseNotes: "更新：安全性修正", updateTime: "2024/2/8 00:30:00", location: "atm_khh_01_001" },
-	{ deviceId: "ATM004", deviceType: "ATM系統", lastVer: "atm_v1.0.7", isMandatory: "Y", previousVer: "atm_v1.0.7", verNo: "atm_v1.1.0", releaseNotes: "更新：安全性修正", updateTime: "2024/2/8 00:30:00", location: "atm_hsz_01_001" },
-	{ deviceId: "ATM005", deviceType: "ATM系統", lastVer: "atm_v1.0.7", isMandatory: "Y", previousVer: "atm_v1.0.7", verNo: "atm_v1.1.0", releaseNotes: "更新：安全性修正", updateTime: "2024/2/8 00:30:00", location: "atm_tnn_01_001" },
-	{ deviceId: "ATM006", deviceType: "ATM系統", lastVer: "atm_v1.0.7", isMandatory: "Y", previousVer: "atm_v1.0.7", verNo: "atm_v1.1.0", releaseNotes: "更新：安全性修正", updateTime: "2024/2/8 00:30:00", location: "atm_cyi_01_001" },
-	{ deviceId: "ATM001", deviceType: "ATM系統", lastVer: "atm_v1.1.0", isMandatory: "Y", previousVer: "無", verNo: "atm_v2.0.0", releaseNotes: "重大功能改版", updateTime: "2024/2/10 03:30:00", location: "atm_tpe_01_001" },
-	{ deviceId: "ATM002", deviceType: "ATM系統", lastVer: "atm_v1.1.0", isMandatory: "Y", previousVer: "無", verNo: "atm_v2.0.0", releaseNotes: "重大功能改版", updateTime: "2024/2/10 03:30:00", location: "atm_txg_01_001" },
-	{ deviceId: "ATM003", deviceType: "ATM系統", lastVer: "atm_v1.1.0", isMandatory: "Y", previousVer: "無", verNo: "atm_v2.0.0", releaseNotes: "重大功能改版", updateTime: "2024/2/10 03:30:00", location: "atm_khh_01_001" },
-	{ deviceId: "ATM004", deviceType: "ATM系統", lastVer: "atm_v1.1.0", isMandatory: "Y", previousVer: "無", verNo: "atm_v2.0.0", releaseNotes: "重大功能改版", updateTime: "2024/2/10 03:30:00", location: "atm_hsz_01_001" },
-	{ deviceId: "ATM005", deviceType: "ATM系統", lastVer: "atm_v1.1.0", isMandatory: "Y", previousVer: "無", verNo: "atm_v2.0.0", releaseNotes: "重大功能改版", updateTime: "2024/2/10 03:30:00", location: "atm_tnn_01_001" },
-	{ deviceId: "ATM006", deviceType: "ATM系統", lastVer: "atm_v1.1.0", isMandatory: "Y", previousVer: "無", verNo: "atm_v2.0.0", releaseNotes: "重大功能改版", updateTime: "2024/2/10 03:30:00", location: "atm_cyi_01_001" }
+	{ deviceName:"循環機", deviceModel:"OKI-RG7", deviceCode:"8c67a3d9", unit:"富邦濟南分行", deviceLocation:"全家01店", deviceId: "ATM001", deviceType: "循環機(OKI-RG7)", lastVer: "無", isMandatory: "Y", previousVer: "無", verNo: "atm_v1.0.0", releaseNotes: "初版", updateTime: "2024/2/1 00:00:00", status: "已派送" },
+
+	{ deviceName:"循環機", deviceModel:"OKI-RG7", deviceCode:"8c67a3d9", unit:"富邦濟南分行", deviceLocation:"全家01店", deviceId: "ATM003", deviceType: "循環機(OKI-RG7)", lastVer: "atm_v1.0.0", isMandatory: "N", previousVer: "無", verNo: "atm_v1.0.5", releaseNotes: "補丁：小幅修正", updateTime: "2024/2/5 00:00:00", status: "已派送" },
+	{ deviceName:"循環機", deviceModel:"OKI-RG7", deviceCode:"8c67a3d9", unit:"富邦濟南分行", deviceLocation:"全家01店", deviceId: "ATM001", deviceType: "循環機(OKI-RG7)", lastVer: "atm_v1.0.5", isMandatory: "N", previousVer: "無", verNo: "atm_v1.0.6", releaseNotes: "補丁：小幅修正", updateTime: "2024/2/6 00:00:00", status: "已派送" },
+	{ deviceName:"循環機", deviceModel:"OKI-RG7", deviceCode:"8c67a3d9", unit:"富邦濟南分行", deviceLocation:"全家01店", deviceId: "ATM001", deviceType: "循環機(OKI-RG7)", lastVer: "atm_v1.0.6", isMandatory: "N", previousVer: "無", verNo: "atm_v1.0.7", releaseNotes: "補丁：小幅修正", updateTime: "2024/2/7 00:00:00", status: "已派送" },
+	{ deviceName:"循環機", deviceModel:"OKI-RG7", deviceCode:"8c67a3d9", unit:"富邦濟南分行", deviceLocation:"全家01店", deviceId: "ATM001", deviceType: "循環機(OKI-RG7)", lastVer: "atm_v1.0.7", isMandatory: "Y", previousVer: "atm_v1.0.7", verNo: "atm_v1.1.0", releaseNotes: "更新：安全性修正", updateTime: "2024/2/8 00:00:00", status: "已派送" },
+	{ deviceName:"循環機", deviceModel:"OKI-RG7", deviceCode:"d42c54e7", unit:"富邦長安東路分行", deviceLocation:"7-11 01店", deviceId: "ATM006", deviceType: "循環機(OKI-RG7)", lastVer: "atm_v1.0.0", isMandatory: "N", previousVer: "無", verNo: "atm_v1.1.0", releaseNotes: "補丁：小幅修正", updateTime: "2024/2/8 00:00:00", status: "已派送" },
+	{ deviceName:"循環機", deviceModel:"OKI-RG7", deviceCode:"d42c54e7", unit:"富邦長安東路分行", deviceLocation:"7-11 01店", deviceId: "ATM001", deviceType: "循環機(OKI-RG7)", lastVer: "atm_v1.1.0", isMandatory: "Y", previousVer: "無", verNo: "atm_v2.0.0", releaseNotes: "重大功能改版", updateTime: "2024/2/10 03:30:00", status: "已派送" },
+	{ deviceName:"自動提款機", deviceModel:"WIN-1500XE", deviceCode:"6e92d27b", deviceLocation: "富邦公庫處ATM2", unit:"富邦營業部", deviceId: "ATM005", deviceType: "自動提款機(WIN-1500XE)", lastVer: "atm_v1.1.0", isMandatory: "Y", previousVer: "無", verNo: "atm_v2.0.0", releaseNotes: "重大功能改版", updateTime: "2024/2/10 03:30:00", status: "已派送" },
+	{ deviceName:"循環機", deviceModel:"HITACHI-CZ5000", deviceCode:"a0246f9e", deviceLocation: "7-11大眾門市", unit:"富邦濟南分行", deviceId: "ATM006", deviceType: "循環機(HITACHI-CZ5000)", lastVer: "atm_v1.1.0", isMandatory: "Y", previousVer: "無", verNo: "atm_v2.0.0", releaseNotes: "重大功能改版", updateTime: "2024/2/10 03:30:00", status: "已派送" }
 ];
 
 const deviceTransDataQuery = [
-	{ deviceCode: "7f4b2a93-1b7a-4c81-9e3a-1e0e45f2a6c3", deviceType: "自動提款機(WIN-1500XE)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 10:00:00", transType: "版本更新", updateStatus: "成功", transStatus: "成功", transDetail: "初版安裝", verNo: "atm_v1.0.0" },
-	{ deviceCode: "7f4b2a93-1b7a-4c81-9e3a-1e0e45f2a6c3", deviceType: "自動提款機(WIN-1500XE)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 10:05:00", transType: "版本更新", updateStatus: "成功", transStatus: "成功", transDetail: "初版安裝", verNo: "atm_v1.0.0" },
-	{ deviceCode: "7f4b2a93-1b7a-4c81-9e3a-1e0e45f2a6c3", deviceType: "自動提款機(WIN-1500XE)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 10:10:00", transType: "版本更新", updateStatus: "成功", transStatus: "成功", transDetail: "初版安裝", verNo: "atm_v1.0.0" },
-	{ deviceCode: "7f4b2a93-1b7a-4c81-9e3a-1e0e45f2a6c3", deviceType: "自動提款機(WIN-1500XE)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 10:15:00", transType: "存款", updateStatus: "成功", transStatus: "成功", transDetail: "存款金額: 5000", verNo: "atm_v1.0.0" },
-	{ deviceCode: "7f4b2a93-1b7a-4c81-9e3a-1e0e45f2a6c3", deviceType: "自動提款機(WIN-1500XE)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 10:20:00", transType: "存款", updateStatus: "成功", transStatus: "成功", transDetail: "存款金額: 8000", verNo: "atm_v1.0.0" },
-	{ deviceCode: "8c67a3d9-7b51-4db1-84fa-63eecb1f7d28", deviceType: "循環機(OKI-RG7)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 10:25:00", transType: "存款", updateStatus: "成功", transStatus: "成功", transDetail: "存款金額: 12000", verNo: "atm_v1.0.0" },
-	{ deviceCode: "8c67a3d9-7b51-4db1-84fa-63eecb1f7d28", deviceType: "循環機(OKI-RG7)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 10:30:00", transType: "版本更新", updateStatus: "成功", transStatus: "成功", transDetail: "更新：安全性修正", verNo: "atm_v1.1.1" },
-	{ deviceCode: "8c67a3d9-7b51-4db1-84fa-63eecb1f7d28", deviceType: "循環機(OKI-RG7)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 10:35:00", transType: "版本更新", updateStatus: "成功", transStatus: "成功", transDetail: "更新：安全性修正", verNo: "atm_v1.1.2" },
-	{ deviceCode: "8c67a3d9-7b51-4db1-84fa-63eecb1f7d28", deviceType: "循環機(OKI-RG7)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 10:40:00", transType: "版本更新", updateStatus: "成功", transStatus: "成功", transDetail: "更新：安全性修正", verNo: "atm_v1.1.3" },
-	{ deviceCode: "8c67a3d9-7b51-4db1-84fa-63eecb1f7d28", deviceType: "循環機(OKI-RG7)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 10:45:00", transType: "提款", updateStatus: "成功", transStatus: "成功", transDetail: "提款金額: 3000", verNo: "atm_v1.1.3" },
-	{ deviceCode: "8c67a3d9-7b51-4db1-84fa-63eecb1f7d28", deviceType: "循環機(OKI-RG7)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 10:50:00", transType: "提款", updateStatus: "成功", transStatus: "成功", transDetail: "提款金額: 5000", verNo: "atm_v1.1.3" },
-	{ deviceCode: "8c67a3d9-7b51-4db1-84fa-63eecb1f7d28", deviceType: "循環機(OKI-RG7)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 10:55:00", transType: "提款", updateStatus: "成功", transStatus: "成功", transDetail: "提款金額: 7000", verNo: "atm_v1.1.3" },
-	//{ deviceCode: "d42c54e7-6c32-4a2e-83ff-f8f0e5b9372e", deviceType: "循環機(OKI-RG7)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 11:00:00", transType: "版本更新", updateStatus: "成功", transStatus: "成功", transDetail: "版本更新至 atm_v2.0.0", verNo: "atm_v2.0.0" },
-	//{ deviceCode: "d42c54e7-6c32-4a2e-83ff-f8f0e5b9372e", deviceType: "循環機(OKI-RG7)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 11:05:00", transType: "版本更新", updateStatus: "成功", transStatus: "成功", transDetail: "版本更新至 atm_v2.0.0", verNo: "atm_v2.0.0" },
-	//{ deviceCode: "d42c54e7-6c32-4a2e-83ff-f8f0e5b9372e", deviceType: "循環機(OKI-RG7)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 11:10:00", transType: "版本更新", updateStatus: "成功", transStatus: "成功", transDetail: "版本更新至 atm_v2.0.0", verNo: "atm_v2.0.0" },
-	{ deviceCode: "6e92d27b-5053-4a6b-bfb4-1e97a1a7d55f", deviceType: "循環機(HITACHI-CZ5000)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 11:15:00", transType: "存款", updateStatus: "成功", transStatus: "成功", transDetail: "存款金額: 5000", verNo: "atm_v2.0.0" },
-	{ deviceCode: "6e92d27b-5053-4a6b-bfb4-1e97a1a7d55f", deviceType: "循環機(HITACHI-CZ5000)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 11:20:00", transType: "存款", updateStatus: "成功", transStatus: "成功", transDetail: "存款金額: 8000", verNo: "atm_v2.0.0" },
-	{ deviceCode: "6e92d27b-5053-4a6b-bfb4-1e97a1a7d55f", deviceType: "循環機(HITACHI-CZ5000)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 11:25:00", transType: "存款", updateStatus: "成功", transStatus: "成功", transDetail: "存款金額: 12000", verNo: "atm_v2.0.0" },
+	{  deviceLocation: "全家楊鑫店", unit:"富邦濟南分行",  deviceName: "自動提款機", deviceModel: "WIN-1500XE", deviceCode: "7f4b2a93", deviceType: "自動提款機(WIN-1500XE)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 10:00:00", transType: "版本更新", updateStatus: "成功", transStatus: "成功", transDetail: "初版安裝", verNo: "atm_v1.0.0" },
+	{  deviceLocation: "全家楊鑫店", unit:"富邦濟南分行",  deviceName: "自動提款機", deviceModel: "WIN-1500XE", deviceCode: "7f4b2a93",  deviceType: "自動提款機(WIN-1500XE)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 10:05:00", transType: "版本更新", updateStatus: "成功", transStatus: "成功", transDetail: "初版安裝", verNo: "atm_v1.0.0" },
+	{  deviceLocation: "全家楊鑫店", unit:"富邦濟南分行",  deviceName: "自動提款機", deviceModel: "WIN-1500XE", deviceCode: "7f4b2a93",  deviceType: "自動提款機(WIN-1500XE)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 10:10:00", transType: "版本更新", updateStatus: "成功", transStatus: "成功", transDetail: "初版安裝", verNo: "atm_v1.0.0" },
+	{  deviceLocation: "全家楊鑫店", unit:"富邦濟南分行",  deviceName: "自動提款機", deviceModel: "WIN-1500XE", deviceCode: "7f4b2a93", deviceType: "自動提款機(WIN-1500XE)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 10:15:00", transType: "存款", updateStatus: "成功", transStatus: "成功", transDetail: "存款金額: 5000", verNo: "atm_v1.0.0" },
+	{  deviceLocation: "全家楊鑫店", unit:"富邦濟南分行",  deviceName: "自動提款機", deviceModel: "WIN-1500XE", deviceCode: "7f4b2a93", deviceType: "自動提款機(WIN-1500XE)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 10:20:00", transType: "存款", updateStatus: "成功", transStatus: "成功", transDetail: "存款金額: 8000", verNo: "atm_v1.0.0" },
+	{  deviceLocation: "全家堤頂店", unit:"富邦長安東路分行",  deviceName: "循環機", deviceModel: "OKI-RG7", deviceCode: "8c67a3d9", deviceType: "循環機(OKI-RG7)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 10:25:00", transType: "存款", updateStatus: "成功", transStatus: "成功", transDetail: "存款金額: 12000", verNo: "atm_v1.0.0" },
+	{  deviceLocation: "全家堤頂店", unit:"富邦長安東路分行",  deviceName: "循環機", deviceModel: "OKI-RG7", deviceCode: "8c67a3d9", deviceType: "循環機(OKI-RG7)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 10:30:00", transType: "版本更新", updateStatus: "成功", transStatus: "成功", transDetail: "更新：安全性修正", verNo: "atm_v1.1.1" },
+	{  deviceLocation: "全家堤頂店", unit:"富邦長安東路分行",  deviceName: "循環機", deviceModel: "OKI-RG7", deviceCode: "8c67a3d9", deviceType: "循環機(OKI-RG7)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 10:35:00", transType: "版本更新", updateStatus: "成功", transStatus: "成功", transDetail: "更新：安全性修正", verNo: "atm_v1.1.2" },
+	{  deviceLocation: "全家堤頂店", unit:"富邦長安東路分行",  deviceName: "循環機", deviceModel: "OKI-RG7", deviceCode: "8c67a3d9", deviceType: "循環機(OKI-RG7)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 10:40:00", transType: "版本更新", updateStatus: "成功", transStatus: "成功", transDetail: "更新：安全性修正", verNo: "atm_v1.1.3" },
+	{  deviceLocation: "全家堤頂店", unit:"富邦長安東路分行",  deviceName: "循環機", deviceModel: "OKI-RG7", deviceCode: "8c67a3d9", deviceType: "循環機(OKI-RG7)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 10:45:00", transType: "提款", updateStatus: "成功", transStatus: "成功", transDetail: "提款金額: 3000", verNo: "atm_v1.1.3" },
+	{  deviceLocation: "全家堤頂店", unit:"富邦長安東路分行", deviceName: "循環機", deviceModel: "OKI-RG7", deviceCode: "8c67a3d9", deviceType: "循環機(OKI-RG7)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 10:50:00", transType: "提款", updateStatus: "成功", transStatus: "成功", transDetail: "提款金額: 5000", verNo: "atm_v1.1.3" },
+	{  deviceLocation: "全家堤頂店", unit:"富邦長安東路分行",  deviceName: "循環機", deviceModel: "OKI-RG7", deviceCode: "8c67a3d9", deviceType: "循環機(OKI-RG7)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 10:55:00", transType: "提款", updateStatus: "成功", transStatus: "成功", transDetail: "提款金額: 7000", verNo: "atm_v1.1.3" },
+	//{ deviceCode: "d42c54e7", deviceType: "循環機(OKI-RG7)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 11:00:00", transType: "版本更新", updateStatus: "成功", transStatus: "成功", transDetail: "版本更新至 atm_v2.0.0", verNo: "atm_v2.0.0" },
+	//{ deviceCode: "d42c54e7", deviceType: "循環機(OKI-RG7)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 11:05:00", transType: "版本更新", updateStatus: "成功", transStatus: "成功", transDetail: "版本更新至 atm_v2.0.0", verNo: "atm_v2.0.0" },
+	//{ deviceCode: "d42c54e7", deviceType: "循環機(OKI-RG7)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 11:10:00", transType: "版本更新", updateStatus: "成功", transStatus: "成功", transDetail: "版本更新至 atm_v2.0.0", verNo: "atm_v2.0.0" },
+	{  deviceLocation: "7-11大眾門市", unit:"富邦長安東路分行",   deviceName: "循環機", deviceModel: "HITACHI-CZ5000", deviceCode: "6e92d27b", deviceType: "循環機(HITACHI-CZ5000)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 11:15:00", transType: "存款", updateStatus: "成功", transStatus: "成功", transDetail: "存款金額: 5000", verNo: "atm_v2.0.0" },
+	{  deviceLocation: "7-11大眾門市", unit:"富邦長安東路分行",   deviceName: "循環機", deviceModel: "HITACHI-CZ5000", deviceCode: "6e92d27b", deviceType: "循環機(HITACHI-CZ5000)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 11:20:00", transType: "存款", updateStatus: "成功", transStatus: "成功", transDetail: "存款金額: 8000", verNo: "atm_v2.0.0" },
+	{  deviceLocation: "7-11大眾門市", unit:"富邦長安東路分行",  deviceName: "循環機", deviceModel: "HITACHI-CZ5000", deviceCode: "6e92d27b", deviceType: "循環機(HITACHI-CZ5000)", updateTime: "2025/2/11 10:00:00", transTime: "2025/2/11 11:25:00", transType: "存款", updateStatus: "成功", transStatus: "成功", transDetail: "存款金額: 12000", verNo: "atm_v2.0.0" },
 ];
 
+
+
+
+
+
+
+
 const versionInfo = [
-	{ deviceType: "循環機(OKI-RG7)", verNo: "atm_v1.0.0", updateTime: "2024/1/31 00:00:00", isMandatory: "Y", previousVer: "無", updateType: "程式", releaseNotes: "初版發布", status:"核准",uploadUser: "王小明", fileName: "OKI-RG7-01_atm_v1.0.0.zip", fileBase64: "UEsDBBQACAgIAMZ..." },
-	{ deviceType: "循環機(OKI-RG7)", verNo: "atm_v1.0.5", updateTime: "2024/2/3 00:00:00", isMandatory: "N", previousVer: "無", updateType: "資料", releaseNotes: "補丁：小幅修正", status:"核准",uploadUser: "王小明", fileName: "OKI-RG7-01_atm_v1.0.5.zip", fileBase64: "UEsDBBQACAgIAMZ..." },
-	{
+	{  deviceName: "循環機", deviceModel: "OKI-RG7", deviceType: "循環機(OKI-RG7)", verNo: "atm_v1.0.0", updateTime: "2024/1/31 00:00:00", isMandatory: "Y", previousVer: "無", updateType: "程式", releaseNotes: "初版發布", status:"核准",uploadUser: "王小明", fileName: "OKI-RG7-01_atm_v1.0.0.zip", fileBase64: "UEsDBBQACAgIAMZ..." },
+	{  deviceName: "循環機", deviceModel: "OKI-RG7", deviceType: "循環機(OKI-RG7)", verNo: "atm_v1.0.5", updateTime: "2024/2/3 00:00:00", isMandatory: "N", previousVer: "無", updateType: "資料", releaseNotes: "補丁：小幅修正", status:"核准",uploadUser: "王小明", fileName: "OKI-RG7-01_atm_v1.0.5.zip", fileBase64: "UEsDBBQACAgIAMZ..." },
+	{  deviceName: "循環機", deviceModel: "OKI-RG7",
 		deviceType: "循環機(OKI-RG7)",
 		verNo: "atm_v1.0.6",
 		updateTime: "2024/2/4 00:00:00",
@@ -287,7 +278,7 @@ const versionInfo = [
 		updateType: "資料",
 		releaseNotes: "補丁：小幅修正", status:"核准",uploadUser: "王小明", fileName: "OKI-RG7-01_atm_v1.0.6.zip", fileBase64: "UEsDBBQACAgIAMZ..."
 	},
-	{
+	{  deviceName: "循環機", deviceModel: "OKI-RG7",
 		deviceType: "循環機(OKI-RG7)",
 		verNo: "atm_v1.0.7",
 		updateTime: "2024/2/5 00:00:00",
@@ -296,7 +287,7 @@ const versionInfo = [
 		updateType: "新聞",
 		releaseNotes: "補丁：小幅修正", status:"核准",uploadUser: "王小明", fileName: "OKI-RG7-01_atm_v1.0.7.zip", fileBase64: "UEsDBBQACAgIAMZ..."
 	},
-	{
+	{  deviceName: "循環機", deviceModel: "OKI-RG7",
 		deviceType: "循環機(OKI-RG7)",
 		verNo: "atm_v1.1.0",
 		updateTime: "2024/2/6 00:00:00",
@@ -305,7 +296,7 @@ const versionInfo = [
 		updateType: "程式",
 		releaseNotes: "更新：安全性修正", status:"核准",uploadUser: "王小明", fileName: "OKI-RG7-01_atm_v1.0.7.zip", fileBase64: "UEsDBBQACAgIAMZ..."
 	},
-	{
+	{  deviceName: "循環機", deviceModel: "OKI-RG7",
 		deviceType: "循環機(OKI-RG7)",
 		verNo: "atm_v2.0.0",
 		updateTime: "2024/2/8 00:00:00",
@@ -314,7 +305,7 @@ const versionInfo = [
 		updateType: "程式",
 		releaseNotes: "重大改版", status:"核准",uploadUser: "王小明", fileName: "OKI-RG7-01_atm_v2.0.0.zip", fileBase64: "UEsDBBQACAgIAMZ..."
 	},
-	  {
+	  {  deviceName: "循環機", deviceModel: "OKI-RG7",
     id: "CHK001",
     deviceType: "循環機(OKI-RG7)",
     verNo: "v1.2.3",
@@ -328,7 +319,7 @@ const versionInfo = [
     fileName: "OKI-RG7_v1.2.3.zip",
     fileBase64: "UEsDBBQACAgIAMZ..." // 你可以放真 base64
   },
-  {
+  {  deviceName: "循環機", deviceModel: "OKI-RG7",
     id: "CHK002",
     deviceType: "循環機(OKI-RG7)",
     verNo: "v3.1.0",
@@ -342,7 +333,7 @@ const versionInfo = [
     fileName: "OKI-RG7_v3.1.0.zip",
     fileBase64: "UEsDBBQACAgICC..." 
   },
-    {
+    {  deviceName: "自動提款機", deviceModel: "WIN-1500XE",
     id: "CHK003",
     deviceType: "自動提款機(WIN-1500XE)",
     verNo: "v2.2.2",
@@ -360,7 +351,7 @@ const versionInfo = [
 
 // 軟體版本覆核假資料
 const deviceSWVerCheckList = [
- 	  {
+ 	  {  deviceName: "循環機", deviceModel: "OKI-RG7",
     id: "CHK001",
     deviceType: "循環機(OKI-RG7)",
     verNo: "v1.2.3",
@@ -374,7 +365,7 @@ const deviceSWVerCheckList = [
     fileName: "OKI-RG7_v1.2.3.zip",
     fileBase64: "UEsDBBQACAgIAMZ..." // 你可以放真 base64
   },
-  {
+  {  deviceName: "循環機", deviceModel: "OKI-RG7",
     id: "CHK002",
     deviceType: "循環機(OKI-RG7)",
     verNo: "v3.1.0",
@@ -388,7 +379,7 @@ const deviceSWVerCheckList = [
     fileName: "OKI-RG7_v3.1.0.zip",
     fileBase64: "UEsDBBQACAgICC..." 
   },
-    {
+    {  deviceName: "自動提款機", deviceModel: "WIN-1500XE",
     id: "CHK003",
     deviceType: "自動提款機(WIN-1500XE)",
     verNo: "v2.2.2",
