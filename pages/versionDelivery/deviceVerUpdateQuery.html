@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>設備版本更新紀錄查詢</title>
+<title>派送紀錄查詢</title>
 
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -68,13 +68,13 @@
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1>設備版本更新紀錄查詢</h1>
+							<h1>派送紀錄查詢總覽頁</h1>
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
 								<li class="breadcrumb-item"><a
 									href="../../index.html">首頁</a></li>
-								<li class="breadcrumb-item active">設備軟體派送管理 / 設備版本更新紀錄查詢</li>
+								<li class="breadcrumb-item active">設備軟體派送管理 / 派送紀錄查詢</li>
 							</ol>
 						</div>
 					</div>
@@ -88,7 +88,7 @@
 							<div class="card">
 								<div class="card-header">
 									<h3 class="card-title">
-										<i class="fas fa-th-large"></i> 設備版本更新紀錄查詢表
+										<i class="fas fa-th-large"></i> 派送紀錄總覽頁
 									</h3>
 								</div>
 								<div class="card-body">
@@ -165,7 +165,7 @@
   $(function () {
     // 將 deviceTypeList 轉換成需要的格式
     const typeList = deviceTypeList.map((device, index) => ({
-        deviceId: `Device${(index + 1).toString().padStart(2, '0')}`,  // 自動生成設備 ID
+        deviceCode: `Device${(index + 1).toString().padStart(2, '0')}`,  // 自動生成設備 ID
         deviceType: device.deviceType,
         paramValue: device.paramValue,
         applyDate: device.applyDate,
@@ -184,8 +184,8 @@
         // 自動生成分頁
         tabList.append(`
             <li class="nav-item">
-              <a class="nav-link ${isActive}" id="tab-${device.deviceId}" data-toggle="pill" href="#content-${device.deviceId}" 
-                 role="tab" aria-controls="content-${device.deviceId}" aria-selected="${index === 0}">
+              <a class="nav-link ${isActive}" id="tab-${device.deviceCode}" data-toggle="pill" href="#content-${device.deviceCode}" 
+                 role="tab" aria-controls="content-${device.deviceCode}" aria-selected="${index === 0}">
                 ${device.deviceType}
               </a>
             </li>
@@ -193,30 +193,28 @@
 
         // 自動生成內容區域
         tabContent.append(`
-            <div class="tab-pane fade show ${isActive}" id="content-${device.deviceId}" 
-                 role="tabpanel" aria-labelledby="tab-${device.deviceId}">
+            <div class="tab-pane fade show ${isActive}" id="content-${device.deviceCode}" 
+                 role="tabpanel" aria-labelledby="tab-${device.deviceCode}">
               <section class="content">
                 <div class="container-fluid">
                   <div class="row">
                     <div class="col-12">
                       <div class="card">
                         <div class="card-body">
-                          <table id="table-${device.deviceId}" class="table table-bordered table-hover">
+                          <table id="table-${device.deviceCode}" class="table table-bordered table-hover">
                             <thead>
                               <tr>
+								<th>類型名稱</th>
+                                <th>型號代碼</th>
                                 <th>設備編號</th>
-                                <th>設備類型</th>
-                                <th>更新前版本</th>
-                                <th>是否必要更新</th>
-                                <th>前置版本</th>
-                                <th>更新軟體版本號</th>
-                                <th>更新內容描述</th>
-                                <th>查詢更新紀錄</th>
-                                <th>更新時間</th>
-                                <th>設備位置</th>
+								<th>位置</th>
+								<th>所屬單位</th>
+                                <th>當前版本</th>
+                                <th>最新更新時間</th>
+								<th>查詢</th>
                               </tr>
                             </thead>
-                            <tbody id="deviceTableBody-${device.deviceId}"></tbody>
+                            <tbody id="deviceTableBody-${device.deviceCode}"></tbody>
                           </table>
                         </div>
                       </div>
@@ -228,9 +226,9 @@
         `);
         
         // 渲染設備表格
-        renderDeviceTable(device.deviceId, `deviceTableBody-${device.deviceId}`, device.deviceType);
+        renderDeviceTable(device.deviceCode, `deviceTableBody-${device.deviceCode}`, device.deviceType);
         // 初始化 DataTable
-        initializeDataTable(`table-${device.deviceId}`, device.deviceType);
+        initializeDataTable(`table-${device.deviceCode}`, device.deviceType);
         
     });    
 
@@ -261,7 +259,7 @@
 //     });
 // }
 
-function renderDeviceTable(deviceId, tableBodyId, deviceType) {
+function renderDeviceTable(deviceCode, tableBodyId, deviceType) {
   const tableBody = document.getElementById(tableBodyId);
   tableBody.innerHTML = ""; // 清空表格
 
@@ -272,9 +270,9 @@ function renderDeviceTable(deviceId, tableBodyId, deviceType) {
   const latestDataMap = {};
 
   filteredData.forEach(data => {
-    const existing = latestDataMap[data.deviceId];
+    const existing = latestDataMap[data.deviceCode];
     if (!existing || new Date(data.updateTime) > new Date(existing.updateTime)) {
-      latestDataMap[data.deviceId] = data;
+      latestDataMap[data.deviceCode] = data;
     }
   });
 
@@ -284,53 +282,48 @@ function renderDeviceTable(deviceId, tableBodyId, deviceType) {
     .forEach(data => {
       const row = `
         <tr>
-       <td>${data.deviceId}</td>
-       <td>${data.deviceType}</td>
-       <td>${data.lastVer}</td>
-       <td>${data.isMandatory}</td>
-       <td>${data.previousVer}</td>
+	   <td>${data.deviceName}</td>
+       <td>${data.deviceModel}</td>
+       <td>${data.deviceCode}</td>
+       <td>${data.deviceLocation}</td>
+	   <td>${data.unit}</td>
        <td>${data.verNo}</td>
-       <td>${data.releaseNotes}</td>
-       <td class="project-actions text-center"> <a class="btn btn-primary btn-sm" href="deviceVerUpdateHist.html?id=${data.deviceId}&deviceType=${data.deviceType}">查詢</a></td>
        <td>${data.updateTime}</td>
-       <td>${data.location}</td>
+	   <td class="project-actions text-center"> <a class="btn btn-primary btn-sm" href="deviceVerUpdateHist.html?id=${data.deviceCode}&deviceType=${data.deviceType}">查詢</a></td>
+
         </tr>
       `;
       tableBody.innerHTML += row;
     });
+	
+	
+	
 }
-
-
-function initializeDataTable(tableId, deviceType) {
-  $(`#${tableId}`).DataTable({
-    responsive: true,
-    lengthChange: true,
-	ordering: false,
-    autoWidth: false,
-    buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
-    language: {
-      "lengthMenu": "每頁顯示 _MENU_ 筆",
-      "zeroRecords": "查無資料",
-      "info": "顯示第 _START_ 筆到第 _END_ 筆，共 _TOTAL_ 筆",
-      "infoEmpty": "無資料",
-      "infoFiltered": "(從 _MAX_ 筆資料過濾)",
-      "search": "搜尋：",
-      "paginate": {
-        "first": "第一頁",
-        "last": "最後一頁",
-        "next": "下一頁",
-        "previous": "上一頁"
-      },
-    }
-  }).buttons().container().appendTo(`#${tableId}_wrapper .col-md-6:eq(0)`);
-}
+  function initializeDataTable(tableId){
+    return $(`#${tableId}`).DataTable({
+      responsive:true,
+      lengthChange:false,
+      autoWidth:false,
+      ordering:false,
+      searching:true,
+      language:{
+		"search": "搜尋：",
+        lengthMenu:"每頁顯示 _MENU_ 筆",
+        zeroRecords:"查無資料",
+        info:"顯示第 _START_ 筆到第 _END_ 筆，共 _TOTAL_ 筆",
+        infoEmpty:"顯示 0 筆資料",
+        infoFiltered:"(從 _MAX_ 筆資料過濾)",
+        paginate:{first:"第一頁",last:"最後一頁",next:"下一頁",previous:"上一頁"}
+      }
+    });
+  }
 
     const urlParams = new URLSearchParams(window.location.search);
     const selectedType = urlParams.get("deviceType");
     if (selectedType) {
       const selectedTab = typeList.find(t => t.deviceType === selectedType);
       if (selectedTab) {
-        $(`#tab-${selectedTab.deviceId}`).tab('show');
+        $(`#tab-${selectedTab.deviceCode}`).tab('show');
         setTimeout(() => {
         }, 0); // 確保頁面分頁渲染完成後再觸發切換
       }

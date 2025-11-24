@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>設備交易紀錄查詢</title>
+<title>交易紀錄查詢</title>
 
 <link rel="stylesheet"	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 <link rel="stylesheet"	href="../../plugins/fontawesome-free/css/all.min.css">
@@ -63,13 +63,13 @@
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1>設備交易紀錄查詢</h1>
+							<h1>交易紀錄查詢</h1>
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
 								<li class="breadcrumb-item"><a
 									href="../../index.html">首頁</a></li>
-								<li class="breadcrumb-item active">設備監控管理 / 設備交易紀錄查詢</li>
+								<li class="breadcrumb-item active">設備監控管理 / 交易紀錄查詢</li>
 							</ol>
 						</div>
 					</div>
@@ -83,7 +83,7 @@
 							<div class="card">
 								<div class="card-header">
 									<h3 class="card-title">
-										<i class="fas fa-th-large"></i> 設備交易紀錄查詢表
+										<i class="fas fa-th-large"></i> 交易紀錄查詢表
 									</h3>
 								</div>
 								<div class="card-body">
@@ -193,9 +193,12 @@
                           <table id="table-${device.deviceCode}" class="table table-bordered table-hover">
                             <thead>
                               <tr>
+								<th>類型名稱</th>
+                                <th>型號代碼</th>
                                 <th>設備編號</th>
-                                <th>設備類型</th>
-                                <th>上傳資料時間</th>
+								<th>位置</th>
+								<th>所屬單位</th>
+                                <th>最後上傳資料時間</th>
                                 <th>詳細資料</th>
                               </tr>
                             </thead>
@@ -267,10 +270,13 @@ function renderDeviceTable(deviceCode, tableBodyId, deviceType) {
     .forEach(data => {
       const row = `
         <tr>
+	   <td>${data.deviceName}</td>
+	   <td>${data.deviceModel}</td>
        <td>${data.deviceCode}</td>
-       <td>${data.deviceType}</td>
-       <td>${data.updateTime}</td>
-       <td class="project-actions text-center"> <a class="btn btn-primary btn-sm" href="deviceTransDataHist.html?id=${data.deviceCode}&deviceType=${data.deviceType}">查詢</a></td>
+	   </td><td>${data.deviceLocation}</td>
+	   </td><td>${data.unit}</td>
+	   <td>${data.updateTime}</td>
+	   <td class="project-actions text-center"> <a class="btn btn-primary btn-sm" href="deviceTransDataHist.html?id=${data.deviceCode}&deviceType=${data.deviceType}">查詢</a></td>
         </tr>
       `;
       tableBody.innerHTML += row;
@@ -284,7 +290,7 @@ function initializeDataTable(tableId, deviceType) {
         "lengthChange": false, 
         "autoWidth": false,
         "ordering": false,
-		"searching": false,
+		"searching": true,
 		"language": {
           "lengthMenu": "每頁顯示 _MENU_ 筆",
           "zeroRecords": "查無資料",

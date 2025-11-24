@@ -92,12 +92,12 @@
     <section class="content">
       <div class="container-fluid">
 
-        <!-- 顯示該設備資訊 -->
+        <!-- 顯示該設備資訊 
         <div class="device-info">
           <div><span>設備編號：</span><span id="deviceCode">8c67a3d9-7b51-4db1-84fa-63eecb1f7d28</span></div>
           <div><span>設備型號：</span><span id="deviceType">循環機(OKI-RG7)</span></div>
           <div><span>軟體版本：</span><span id="deviceSWVer">A25.01.01</span></div>
-        </div>
+        </div> -->
 
         <!-- 上半部：上傳檔案列表 -->
         <div class="card table-section">
@@ -108,10 +108,11 @@
             <table id="uploadTable" class="table table-bordered table-hover">
               <thead>
               <tr>
-                <th>檔案編號</th>
+                <th>類型名稱</th>
+                <th>型號代碼</th>
+                <th>設備編號</th>
                 <th>檔案名稱</th>
                 <th>上傳時間</th>
-                <th>上傳者</th>
                 <th>操作</th>
               </tr>
               </thead>
@@ -130,7 +131,7 @@
           </div>
         </div>
 		-->
-<!-- 下半部：詳細交易資料（textarea，預設收合） -->
+<!-- 下半部：詳細交易資料（textarea，預設收合） 
 <div class="card table-section">
   <div class="card-header bg-light">
     <span class="section-title"><i class="fas fa-database"></i> 檔案原始內容</span>
@@ -139,7 +140,7 @@
     <textarea id="detailArea" readonly style="display:none; width:100%; height:300px;"></textarea>
   </div>
 </div>
-
+-->
 
 
         <div>
@@ -181,18 +182,18 @@
   // === 假資料：CSV / JSON / TXT ===
   const uploadList = [
     { 
-      id: 'UPL-001', name: 'ATM001_20251101.csv', time: '2025-11-01 23:30:00', user: 'userA', count: 3, status: '成功', 
+        deviceName: "循環機", deviceModel: "OKI-RG7", deviceCode: "8c67a3d9-7b51-4db1-84fa-63eecb1f7d28",  id: 'UPL-001', name: 'ATM001_20251101.csv', time: '2025-11-01 23:30:00', user: 'userA', count: 3, status: '成功', 
       base64: btoa(unescape(encodeURIComponent('交易序號,交易時間,交易類型,金額,交易狀態,訊息\n1,2025-11-01 10:25:01,存款,5000,成功,交易完成\n2,2025-11-01 10:26:18,提款,1000,成功,交易完成')))
     },
     { 
-      id: 'UPL-002', name: 'ATM001_20251102.json', time: '2025-11-02 23:30:00', user: 'userA', count: 2, status: '成功', 
+        deviceName: "循環機", deviceModel: "OKI-RG7", deviceCode: "8c67a3d9-7b51-4db1-84fa-63eecb1f7d28", id: 'UPL-002', name: 'ATM001_20251102.json', time: '2025-11-02 23:30:00', user: 'userA', count: 2, status: '成功', 
       base64: btoa(unescape(encodeURIComponent(JSON.stringify([
         { seq: 1, time: '2025-11-02 09:56:12', type: '存款', amount: 3000, status: '成功', msg: '交易完成' },
         { seq: 2, time: '2025-11-02 09:57:33', type: '提款', amount: 1000, status: '成功', msg: '交易完成' }
       ], null, 2))))
     },
     { 
-      id: 'UPL-003', name: 'ATM001_20251103.txt', time: '2025-11-03 23:30:00', user: 'userA', count: 2, status: '成功', 
+       deviceName: "循環機", deviceModel: "OKI-RG7", deviceCode: "8c67a3d9-7b51-4db1-84fa-63eecb1f7d28",  id: 'UPL-003', name: 'ATM001_20251103.txt', time: '2025-11-03 23:30:00', user: 'userA', count: 2, status: '成功', 
       base64: btoa(unescape(encodeURIComponent('這是一個純文字檔案範例\n第1行\n第2行\n第3行')))
     }
   ];
@@ -201,10 +202,13 @@
     const uploadTable = $('#uploadTable').DataTable({
       data: uploadList,
       columns: [
-        { data: 'id' },
+        //{ data: 'id' },
+		{ data: 'deviceName' },
+		{ data: 'deviceModel' },
+		{ data: 'deviceCode' },
         { data: 'name' },
         { data: 'time' },
-        { data: 'user' },
+        //{ data: 'user' },
 //        { data: 'count' },
 // === 修改 DataTables 按鈕 render ===
 {

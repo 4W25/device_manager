@@ -143,6 +143,8 @@
             <table id="table-${verNoKey}" class="table table-bordered table-hover review-table">
               <thead>
                 <tr>
+				  <th>類型名稱</th>
+				  <th>型號代碼</th>
                   <th>版本號</th>
                   <th>上傳者</th>
                   <th>上傳時間</th>
@@ -176,6 +178,8 @@
       .forEach(item=>{
         tbody.append(`
           <tr data-id="${item.id}">
+		  <td>${item.deviceName}</td>
+		  <td>${item.deviceModel}</td>
             <td>${item.verNo}</td>
             <td>${item.uploadUser}</td>
             <td>${item.updateTime}</td>
@@ -196,7 +200,7 @@
       lengthChange:false,
       autoWidth:false,
       ordering:false,
-      searching:false,
+      searching:true,
       language:{
         lengthMenu:"每頁顯示 _MENU_ 筆",
         zeroRecords:"查無資料",

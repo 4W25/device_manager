@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>更新紀錄查詢</title>
+	<title>派送紀錄查詢</title>
 
 	<!-- Google Font: Source Sans Pro -->
 	<link rel="stylesheet"
@@ -33,7 +33,7 @@
 				<li class="nav-item"><a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
 							class="fas fa-bars"></i></a></li>
 				<li class="nav-item d-none d-sm-inline-block"><a href="deviceStatusQuery.html"
-						class="nav-link">返回設備狀態查詢</a></li>
+						class="nav-link">返回派送紀錄查詢</a></li>
 			</ul>
 
 			<!-- Right navbar links -->
@@ -83,12 +83,12 @@
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1>更新紀錄查詢</h1>
+							<h1>派送紀錄詳細頁</h1>
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
 								<li class="breadcrumb-item"><a href="../../index.html">首頁</a></li>
-								<li class="breadcrumb-item active">設備軟體派送管理 / 設備版本更新紀錄查詢 / 更新紀錄查詢</li>
+								<li class="breadcrumb-item active">設備軟體派送管理 / 派送紀錄查詢 / 派送紀錄詳細頁</li>
 							</ol>
 						</div>
 					</div>
@@ -102,21 +102,23 @@
 						<div class="col-12">
 							<div class="card">
 								<div class="card-header">
-									<h3 class="card-title">更新紀錄表</h3>
+									<h3 class="card-title">派送紀錄詳細頁</h3>
 								</div>
 								<div class="card-body">
 									<table id="example1" class="table table-bordered table-hover">
 										<thead>
 											<tr>
+												<th>類型名稱</th>
+												<th>型號代碼</th>
 												<th>設備編號</th>
-												<th>設備類型</th>
+												<th>位置</th>
+												<th>所屬單位</th>
 												<th>更新前版本</th>
-												<th>是否必要更新</th>
-												<th>前置版本</th>
+												<th>更新時間</th>
 												<th>更新軟體版本號</th>
 												<th>更新內容描述</th>
-												<th>更新時間</th>
-												<th>設備位置</th>
+												<th>狀態</th>
+
 											</tr>
 										</thead>
 										<tbody id="deviceTableBody"></tbody>
@@ -174,7 +176,6 @@
 		$(function () {
 			$("#example1").DataTable({
 				"responsive": true, "lengthChange": false, "ordering": false, "autoWidth": false,
-				"buttons": ["copy", "csv", "excel", "pdf", "print"],
 				"language": {
 					"lengthMenu": "每頁顯示 _MENU_ 筆",
 					"zeroRecords": "查無資料",
@@ -205,28 +206,35 @@
 		const urlParams = new URLSearchParams(window.location.search);
 		const Type = urlParams.get('deviceType')
 		const deviceNum = urlParams.get('id');
+
 		console.log('@@deviceNum', deviceNum)
 
 		if (!deviceNum) {
 			console.log('未提供設備編號參數');
 		} else {
 			// 使用 filter 找到所有符合條件的資料
-			const versionDataList = deviceUpdatesData.filter(v => v.deviceId === deviceNum);
+			const versionDataList = deviceUpdatesData.filter(v => v.deviceCode === deviceNum);
 			if (versionDataList.length > 0) {
 				const tableBody = document.getElementById('deviceTableBody');
 				versionDataList.forEach(versionData => {
 					// 動態生成表格列
 					const row = document.createElement('tr');
+		const statusKey=versionData.status||'已派送';
+		const badgeColor=statusKey==='已派送'?'badge-warning':statusKey==='未派送'?'badge-success':statusKey==='派送失敗'?'badge-danger':'badge-secondary';
 					row.innerHTML = `
-          <td>${versionData.deviceId}</td>
-          <td>${versionData.deviceType}</td>
+		  <td>${versionData.deviceName}</td>
+          <td>${versionData.deviceModel}</td>
+          <td>${versionData.deviceCode}</td>
+          <td>${versionData.deviceLocation}</td>
+          <td>${versionData.unit}</td>
+
           <td>${versionData.lastVer}</td>
-          <td>${versionData.isMandatory}</td>
-          <td>${versionData.previousVer}</td>
+
+          <td>${versionData.updateTime}</td>
           <td>${versionData.verNo}</td>
           <td>${versionData.releaseNotes}</td>
-          <td>${versionData.updateTime}</td>
-          <td>${versionData.location}</td>
+		  <td><span class="badge ${badgeColor}">${statusKey}</span></td>
+
       `;
 					tableBody.appendChild(row);
 				});

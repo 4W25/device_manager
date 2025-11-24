@@ -222,12 +222,13 @@
                           <table id="table-${device.deviceId}" class="table table-bordered table-hover">
                             <thead>
                               <tr>
-                                <th>設備型號</th>
+								<th>類型名稱</th>
+                                <th>型號代碼</th>
                                 <th>設備編號</th>
-                                <th>狀態</th>
-                                <th>目前版本</th>
-                                <th>更新紀錄</th>
+                                <th>當前版本</th>
+                                <th>更新時間</th>
                                 <th>位置</th>
+								<th>所屬單位</th>
                               </tr>
                             </thead>
                             <tbody id="deviceTableBody-${device.deviceId}"></tbody>
@@ -268,12 +269,14 @@
 
           // 根據 updateVersion 判斷按鈕顯示內容
 		            row.innerHTML = `
+			  <td>${data.deviceName}</td>
               <td>${data.deviceModel}</td>
               <td>${data.deviceCode}</td>
-              <td><span class="badge ${badgeClass}">${data.deviceStatus}</span></td>
-              <td>${data.deviceVersion}</td>
-              <td class="project-actions text-center"> <a class="btn btn-primary btn-sm" href="updateVersionHist.html?id=${data.deviceCode}&deviceType=${data.deviceType}">查詢</a>
+			  <td>${data.deviceVersion}</td>
+			  <td>${data.updateTime}</td>
               </td><td>${data.deviceLocation}</td>
+			  </td><td>${data.unit}</td>
+
           `;
           tableBody.appendChild(row);
       });
@@ -286,7 +289,7 @@
         "lengthChange": false, 
         "autoWidth": false,
         "ordering": false,
-		"searching": false,
+		"searching": true,
 		"order": [
             [0, "asc"], // 型號
             [1, "asc"], // 編號
