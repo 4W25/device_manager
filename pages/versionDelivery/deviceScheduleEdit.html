@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -70,11 +71,11 @@
         </div>
 
         <!-- Sidebar Menu -->
-				<nav class="mt-2">
-					<ul id="sidebarMenu" class="nav nav-pills nav-sidebar flex-column"
-						data-widget="treeview" role="menu" data-accordion="false">
-					</ul>
-				</nav>
+        <nav class="mt-2">
+          <ul id="sidebarMenu" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+            data-accordion="false">
+          </ul>
+        </nav>
       </div>
     </aside>
 
@@ -112,7 +113,16 @@
                 </div>
               </div>
               <div class="card-body">
-                <div class="row"> <!-- 第一、二行 -->
+                <div class="row"> <!-- 第一行 -->
+                  <!-- 左 -->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="deviceKind">設備類型</label>
+                      <input type="text" id="deviceKind" class="form-control" disabled="disabled">
+                    </div>
+                  </div>
+                </div>
+                <div class="row"> <!-- 第二、三行 -->
                   <!-- 左 -->
                   <div class="col-md-6">
                     <div class="form-group">
@@ -120,14 +130,11 @@
                       <input class="form-control" id="scheduleId" type="text" placeholder="系統自動產生" disabled="disabled">
                     </div>
                     <div class="form-group">
-                      <label for="deviceKind">設備類型</label>
-                      <input type="text" id="deviceKind" class="form-control" disabled="disabled">
-                    </div>
-                    <div class="form-group">
                       <label for="scheduleDate">排程日期<span class="text-danger">*必填</span></label>
                       <div class="input-group date" id="scheduleDate" data-target-input="nearest">
-                        <input type="text" id="inputScheduleDate" class="form-control datetimepicker-input readonly-input"
-                          data-target="#scheduleDate" placeholder="YYYY-MM-DD" />
+                        <input type="text" id="inputScheduleDate"
+                          class="form-control datetimepicker-input readonly-input" data-target="#scheduleDate"
+                          placeholder="YYYY-MM-DD" />
                         <div class="input-group-append" data-target="#scheduleDate" data-toggle="datetimepicker">
                           <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
@@ -142,9 +149,29 @@
                         <option selected disabled>軟體版本選擇</option>
                       </select>
                     </div>
+                    <div class="form-group">
+                      <label class="font-weight-bold d-block">派送方式<span class="text-danger">*必填</span></label>
+                      <div class="d-flex flex-wrap">
+                        <div class="custom-control custom-radio mr-4">
+                          <input type="radio" id="dispatchTypePush" name="dispatchType"
+                            class="custom-control-input readonly-input" value="PUSH">
+                          <label class="custom-control-label" for="dispatchTypePush">由系統派送</label>
+                        </div>
+                        <div class="custom-control custom-radio mr-4">
+                          <input type="radio" id="dispatchTypePull" name="dispatchType"
+                            class="custom-control-input readonly-input" value="PULL">
+                          <label class="custom-control-label" for="dispatchTypePull">設備自行拉取</label>
+                        </div>
+                        <div class="custom-control custom-radio mr-4">
+                          <input type="radio" id="dispatchTypeBoth" name="dispatchType"
+                            class="custom-control-input readonly-input" value="BOTH">
+                          <label class="custom-control-label" for="dispatchTypeBoth">不拘</label>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="row"> <!-- 第三行 -->
+                <div class="row"> <!-- 第四行 -->
                   <!-- 左 -->
                   <div class="col-md-6">
                     <div class="form-group">
@@ -165,7 +192,8 @@
                             <div class="input-group-text"><i class="far fa-clock"></i></div>
                           </div>
                         </div>
-                        <button type="button" id="addTimeBtn" class="btn btn-primary btn-sm readonly-input" onclick="addTimePeriod()">新增</button>
+                        <button type="button" id="addTimeBtn" class="btn btn-primary btn-sm readonly-input"
+                          onclick="addTimePeriod()">新增</button>
                       </div>
                     </div>
                   </div>
@@ -177,12 +205,13 @@
                     </div>
                   </div>
                 </div>
-                <div class="row"> <!-- 第四行 -->
+                <div class="row"> <!-- 第五行 -->
                   <!-- 左 -->
                   <div class="col-md-6">
                     <div class="form-group">
                       <label>設備選擇</label>
-                      <button id="sdbtn" class="btn btn-primary btn-sm d-block readonly-input" onclick="deviceSelection()">
+                      <button id="sdbtn" class="btn btn-primary btn-sm d-block readonly-input"
+                        onclick="deviceSelection()">
                         點擊選擇
                       </button>
                     </div>
@@ -191,7 +220,8 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label>組別選擇</label>
-                      <button id="sgbtn" class="btn btn-primary btn-sm d-block readonly-input" onclick="groupSelection()">
+                      <button id="sgbtn" class="btn btn-primary btn-sm d-block readonly-input"
+                        onclick="groupSelection()">
                         點擊選擇
                       </button>
                     </div>
@@ -274,7 +304,8 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label>搜尋</label>
-                      <input id="searchGroup" class="form-control" type="text" placeholder="請輸入組別編號或名稱或標籤" maxlength="18">
+                      <input id="searchGroup" class="form-control" type="text" placeholder="請輸入組別編號或名稱或標籤"
+                        maxlength="18">
                     </div>
                     <!-- /.form-group -->
                   </div>
@@ -359,13 +390,13 @@
   <!-- Tempusdominus Bootstrap 4 -->
   <script src="../../plugins/moment/moment.min.js"></script>
   <script src="../../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-  <!-- 自訂義jsGrid --> 
+  <!-- 自訂義jsGrid -->
   <script src="../../js/jsGridInit.js"></script>
   <!-- 假資料存放區 -->
   <script src="../../data/device_group.js"></script>
   <!-- 左側欄動態生成 -->
   <script src="../../data/sidebar_menu.js"></script>
-	<script src="../../js/sidebar.js"></script>
+  <script src="../../js/sidebar.js"></script>
   <!-- Page specific script -->
   <script>
     let urlParams = new URLSearchParams(window.location.search);
@@ -405,14 +436,18 @@
 
     function initialData(scheduleId) {
       currentSchedule = deviceScheduleList.find(s => s.scheduleId === scheduleId);
-      deviceListOfType = deviceList.filter(d => d.deviceTypeCode === currentSchedule.deviceTypeCode); 
+      deviceListOfType = deviceList.filter(d => d.deviceTypeCode === currentSchedule.deviceTypeCode);
       deviceGroupOfType = deviceGroupList.filter(d => d.deviceTypeCode === currentSchedule.deviceTypeCode);
       timePeriodList = currentSchedule.timePeriod;
-      let deviceType = deviceTypeList.find(t => t.deviceTypeCode  === currentSchedule.deviceTypeCode) //取得 設備類型實體
+      let deviceType = deviceTypeList.find(t => t.deviceTypeCode === currentSchedule.deviceTypeCode) //取得 設備類型實體
 
       document.getElementById('scheduleId').value = currentSchedule.scheduleId;
       document.getElementById('inputScheduleDate').value = currentSchedule.scheduleDate;
       document.getElementById('deviceKind').value = deviceType.deviceTypeName + '(' + deviceType.deviceTypeCode + ')';
+      const target = document.querySelector(`input[name="dispatchType"][value="${currentSchedule.dispatchType}"]`);
+      if (target) {
+        target.checked = true;
+      }
 
       // 派送版本
       const sendVersionSelect = $("#sendVersion");
@@ -443,7 +478,7 @@
       expandCard(document.getElementById("device-selected"));
       expandCard(document.getElementById("group-selected"));
     } else {
-      document.querySelectorAll('.readonly-input:not(#scheduleDate):not(#sendVersion):not(#startTime):not(#endTime):not(#addTimeBtn):not(#sgbtn):not(#sdbtn)').forEach(input => {
+      document.querySelectorAll('.readonly-input:not([type="radio"]):not(#inputScheduleDate):not(#sendVersion):not(#startTime):not(#endTime):not(#addTimeBtn):not(#sgbtn):not(#sdbtn)').forEach(input => {
         input.disabled = true;
       });
     }
@@ -497,36 +532,57 @@
     initJsGrid("#device1", {
       data: unChoiceDevices(), //顯示未選擇設備
       fields: [
-        { name: "checked", title: "勾選欄位", type: "checkbox", width: 40, align: "center", editing: true,
-          itemTemplate: function(value, item) {
+        {
+          name: "checked", title: "勾選欄位", type: "checkbox", width: 40, align: "center", editing: true,
+          itemTemplate: function (value, item) {
             let checked = (typeof item.checked !== "undefined")
               ? item.checked
               : currentSchedule.deviceIds.includes(item.deviceId);
             return $("<input>").attr("type", "checkbox")
               .prop("checked", checked)
-              .on("change", function() {
-                item.checked = this.checked; 
+              .on("change", function () {
+                item.checked = this.checked;
               });
           }
         },
         { name: "deviceId", title: "設備編號", type: "text", width: 100 },
         { name: "deviceLocate", title: "設備位置", type: "text", width: 100 },
-        { name: "version", title: "當前版本", type: "text", width: 40 },
+        {
+          name: "organ", title: "所屬單位", type: "text", width: 80,
+          itemTemplate: function (value, item) {
+            return item.organId + " - " + item.organName;
+          }
+        }
       ],
     });
 
-        //宣告'已選擇'設備列表欄位
+    //宣告'已選擇'設備列表欄位
     const deviceField2 = [
       { name: "deviceId", title: "設備代號", type: "text", width: 60 },
       { name: "deviceLocate", title: "設備位置", type: "text", width: 100 },
-      { name: "version", title: "當前版本", type: "text", width: 60 },
+      {
+        name: "organ", title: "所屬單位", type: "text", width: 80,
+        itemTemplate: function (value, item) {
+          return item.organId + " - " + item.organName;
+        }
+      }
     ]
     //修改頁面時，增加刪除按鈕
     if (!isView) deviceField2.push({ type: "control", editButton: false, deleteButton: true });
 
+    //檢視頁面時，增加派送進度欄位
+    if (isView) {
+      deviceField2.push({
+        name: "dispatchStatus", title: "派送狀態", type: "text", width: 80,
+        itemTemplate: function (value) {
+          return getDispatchStatusBadge(value);
+        }
+      })
+    }
+
     //'已選擇'設備列表
     initJsGrid("#device2", {
-      data: deviceListOfType.filter(device => currentSchedule.deviceIds.includes(device.deviceId)), //顯示當前組別的設備
+      data: isView ? scheduleStatusList.filter(schedule => schedule.scheduleId == currentSchedule.scheduleId)[0].devices : deviceListOfType.filter(device => currentSchedule.deviceIds.includes(device.deviceId)), //顯示當前組別的設備
       fields: deviceField2,
       onItemDeleted: function (args) {
         let device = args.item;
@@ -535,6 +591,17 @@
         $("#device1").jsGrid("option", "data", unChoiceDevices()).jsGrid("loadData");
       },
     });
+
+    //取得派送狀態 badge
+    function getDispatchStatusBadge(status) {
+      const statusMap = {
+        [DispatchStatus.SUCCESS]: { text: "完成", class: "badge badge-success" },
+        [DispatchStatus.PENDING]: { text: "待派送", class: "badge badge-secondary" },
+      };
+      const s = statusMap[status];
+
+      return `<span class="${s.class}">${s.text}</span>`;
+    }
 
     //設備組別card - 點擊設備選擇
     function deviceSelection() {
@@ -546,10 +613,10 @@
     function filterDevices() {
       let keyword = $("#searchDevice").val().trim().toLowerCase();
       let filteredData = unChoiceDevices().filter(device => {
-        let matchKeyword = keyword === "" ||  (device.deviceId && device.deviceId.toLowerCase().includes(keyword)) || (device.deviceLocate && device.deviceLocate.toLowerCase().includes(keyword));
+        let matchKeyword = keyword === "" || (device.deviceId && device.deviceId.toLowerCase().includes(keyword)) || (device.deviceLocate && device.deviceLocate.toLowerCase().includes(keyword));
         return matchKeyword;
       });
-    
+
       $("#device1").jsGrid("option", "data", filteredData).jsGrid("loadData");
     }
 
@@ -560,7 +627,7 @@
         alert("請選擇要加入的設備！");
         return;
       }
-      
+
       // 遍歷選中的設備
       selectedDevices.forEach(item => {
         if (!currentSchedule.deviceIds.includes(item.deviceId))
@@ -568,7 +635,7 @@
       });
 
       // 加入已選擇列表
-      let selectedList = $("#device2").jsGrid("option", "data").concat(selectedDevices); 
+      let selectedList = $("#device2").jsGrid("option", "data").concat(selectedDevices);
       $("#device2").jsGrid("option", "data", selectedList).jsGrid("refresh");
       $("#device1").jsGrid("option", "data", unChoiceDevices()).jsGrid("loadData");
 
@@ -589,30 +656,29 @@
       pageSize: 10,
       sorting: true,
       paging: true,
-      pageButtonCount: 5, 
+      pageButtonCount: 5,
       pagePrevText: "上一頁",
       pageNextText: "下一頁",
       pagerFormat: "頁數: {first} {prev} {pages} {next} {last} &nbsp;&nbsp; 第 {pageIndex} / {pageCount} 頁",
       noDataContent: "無資料",
       data: unChoiceGroups(),
       fields: [
-        { name: "checked", title: "勾選欄位", type: "checkbox", width: 40, align: "center", editing: true,
-          itemTemplate: function(value, item) {
+        {
+          name: "checked", title: "勾選欄位", type: "checkbox", width: 40, align: "center", editing: true,
+          itemTemplate: function (value, item) {
             let checked = (typeof item.checked !== "undefined")
               ? item.checked
               : currentSchedule.groupIds.includes(item.groupId);
             return $("<input>").attr("type", "checkbox")
               .prop("checked", checked)
-              .on("change", function() {
-                item.checked = this.checked; 
+              .on("change", function () {
+                item.checked = this.checked;
               });
           }
         },
         { name: "groupId", title: "組別編號", type: "text", width: 100 },
         { name: "groupName", title: "組別名稱", type: "text", width: 100 },
-        { name: "groupTag", title: "組別標籤", type: "text", width: 60 },
-        { name: "lastVersion", title: "上次派送版本", type: "text", width: 60 },
-        { name: "lastSendDate", title: "上次派送日期", type: "text", width: 60 },
+        { name: "groupTag", title: "組別標籤", type: "text", width: 60 }
       ],
 
       onRefreshed: function (args) {
@@ -635,13 +701,14 @@
     const gridField2 = [
       { name: "groupId", title: "組別編號", type: "text", width: 100 },
       { name: "groupName", title: "組別名稱", type: "text", width: 100 },
-      { name: "groupTag", title: "組別標籤", type: "text", width: 100 },
-      { name: "lastVersion", title: "上次派送版本", type: "text", width: 60 },
-      { name: "lastSendDate", title: "上次派送日期", type: "text", width: 60 },
+      { name: "groupTag", title: "組別標籤", type: "text", width: 100 }
     ]
 
     //修改頁面時，增加刪除按鈕
     if (!isView) gridField2.push({ type: "control", editButton: false, deleteButton: true });
+
+    //檢視頁面時，增加派送進度欄位
+    if (isView) gridField2.push({ name: "dispatchProgress", title: "派送進度", type: "text", width: 80 });
 
     //'已選擇'組別列表
     $("#jsGrid2").jsGrid({
@@ -655,7 +722,7 @@
       pageNextText: "下一頁",
       pagerFormat: "頁數: {first} {prev} {pages} {next} {last} &nbsp;&nbsp; 第 {pageIndex} / {pageCount} 頁",
       noDataContent: "無資料",
-      data: deviceGroupOfType.filter(group => currentSchedule.groupIds.includes(group.groupId)), //顯示當前組別的設備
+      data: isView ? scheduleStatusList.filter(schedule => schedule.scheduleId == currentSchedule.scheduleId)[0].groups : deviceGroupOfType.filter(group => currentSchedule.groupIds.includes(group.groupId)), //顯示當前組別的設備
       fields: gridField2,
       onRefreshed: function (args) {
         $(".jsgrid-header-row th").css({
@@ -680,7 +747,6 @@
       },
       deleteConfirm: "確定要刪除嗎？"
     });
-
 
     //編輯排程card - 點擊組別選擇
     function groupSelection() {
@@ -744,12 +810,15 @@
     function validateForm() {
       // 獲取左輸入框
       let inputSendVersion = document.getElementById("sendVersion").value;
+      let dispatchType = document.querySelector('input[name="dispatchType"]:checked');
       let inputScheduleDate = document.getElementById("inputScheduleDate").value;
-      let inputOrganName = document.getElementById("inputOrganName").value;
       let selectedDeviceList = $("#device2").jsGrid("option", "data");
       let selectedGroupList = $("#jsGrid2").jsGrid("option", "data");
       if (isNullOrEmpty(inputSendVersion) || inputSendVersion === '軟體版本選擇') {
         alert("請選擇派送版本");
+        return false;
+      } else if (!dispatchType) {
+        alert("請選擇派送方式");
         return false;
       } else if (isNullOrEmpty(inputScheduleDate)) {
         alert("請輸入排程日期");

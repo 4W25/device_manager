@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>登入系統</title>
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="./plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="./dist/css/adminlte.min.css">
+  <style>
+    body {
+      background: #108194;
+      color: #fff;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    .login-box {
+      max-width: 400px;
+      margin: 100px auto;
+      padding: 30px;
+      background: #fff;
+      border-radius: 8px;
+      color: #333;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .login-box .login-logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .login-box .login-logo img {
+      height: 50px;
+    }
+
+    .login-error-msg {
+      color: #dc3545;
+      background-color: #FFECEC;
+      text-align: center;
+      padding: 10px 20px;
+      border: 1px solid #FFD2D2;
+      border-radius: 5px
+    }
+
+    .btn-primary {
+      background-color: #054a97;
+      border-color: #054a97;
+    }
+
+    .btn-primary:hover {
+      background-color: #054a97;
+      border-color: #054a97;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="login-box">
+    <div class="login-logo">
+      <img src="./dist/img/cust/ATM.png" alt="ATM Logo">
+    </div>
+    <h4 class="text-center mb-4">軟體派送系統登入</h4>
+    <p class="login-box-msg" id="login-msg">請輸入帳號與密碼</p>
+    <form id="loginForm">
+      <div class="input-group mb-3">
+        <input type="text" name="username" id="username" class="form-control" placeholder="請輸入帳號">
+        <div class="input-group-append">
+          <div class="input-group-text">
+            <span class="fas fa-user"></span>
+          </div>
+        </div>
+      </div>
+      <div class="input-group mb-3">
+        <input type="password" name="password" id="password" class="form-control" placeholder="請輸入密碼">
+        <div class="input-group-append">
+          <div class="input-group-text">
+            <span class="fas fa-lock"></span>
+          </div>
+        </div>
+      </div>
+      <button type="submit" id="loginbtn" class="btn btn-primary btn-block">登入</button>
+    </form>
+
+  </div>
+  <!-- /.login-box -->
+  <!-- PAGE PLUGINS -->
+  <!-- jQuery -->
+  <script src="./plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="./plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Validate -->
+  <script src="./plugins/jquery-validation/jquery.validate.js"></script>
+  <script src="./plugins/jquery-validation/additional-methods.js"></script>
+
+  <!-- AdminLTE -->
+  <script src="./dist/js/adminlte.js"></script>
+  <script>
+
+    $.validator.addMethod("username", function (value, element) {
+      return this.optional(element) || /^[a-zA-Z][a-zA-Z0-9_]+$/.test(value);
+    }, "Please enter a valid username");
+    $("#username").focus();
+    $('input').on("keydown", function (e) {
+      if (e.which == 13) {
+        $('#loginbtn').trigger('click');
+      }
+    })
+
+    $('#loginForm').validate({
+      rules: {
+        username: {
+          required: true,
+          username: true
+        },
+        password: {
+          required: true,
+          rangelength: [5, 12]
+        }
+      },
+      messages: {
+        username: {
+          required: '請輸入帳號',
+          username: '帳號格式不正確'
+        },
+        password: {
+          required: '請輸入密碼',
+          rangelength: '密碼格式不正確'
+        }
+      },
+      errorElement: 'span',
+      errorPlacement: function (error, element) {
+        error.addClass('invalid-feedback');
+        element.closest('.input-group').append(error);
+      },
+      highlight: function (element) {
+        $(element).addClass('is-invalid');
+      },
+      unhighlight: function (element) {
+        $(element).removeClass('is-invalid');
+      },
+      submitHandler: function () {
+        window.location.href = "index.html";
+      }
+    });
+
+
+  </script>
+
+</body>
+
+</html>

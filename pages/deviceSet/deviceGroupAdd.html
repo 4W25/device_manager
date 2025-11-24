@@ -116,12 +116,12 @@
                   <div class="col-md-6">
                     <!-- 左 -->
                     <div class="form-group">
-                      <label for="groupId">組別編號<span class="text-danger">*必填</span></label>
-                      <input class="form-control" id="groupId" type="text" placeholder="最多20個字元" maxlength="20">
-                    </div>
-                    <div class="form-group">
                       <label for="deviceKind">設備類型</label>
                       <input type="text" id="deviceKind" class="form-control" disabled="disabled">
+                    </div>
+                    <div class="form-group">
+                      <label for="groupId">組別編號<span class="text-danger">*必填</span></label>
+                      <input class="form-control" id="groupId" type="text" placeholder="最多20個字元" maxlength="20">
                     </div>
                     <div class="form-group">
                       <label>設備選擇</label>
@@ -311,15 +311,19 @@
               });
           }
         },
-        { name: "deviceId", title: "設備編號", type: "text", width: 100 },
-        { name: "deviceLocate", title: "設備位置", type: "text", width: 100 },
+        { name: "deviceId", title: "設備編號", type: "text", width: 60 },
+        { name: "deviceLocate", title: "設備位置", type: "text", width: 80 },
+        { name: "organ", title: "所屬單位", type: "text", width: 80,
+          itemTemplate: function (value, item) {
+            return item.organId + " - " + item.organName;
+          }
+        },
         {
           name: "groupIds", title: "歸屬組別代號", type: "text", width: 100,
           itemTemplate: function (value, item) {
             return isNullOrEmpty(item.groupIds) ? $("<span>").text("尚無組別") : $("<span>").text(value);
           }
-        },
-        { name: "version", title: "當前版本", type: "text", width: 40 },
+        }
       ],
     });
 
@@ -327,9 +331,13 @@
     initJsGrid("#jsGrid2", {
       data: deviceListOfType.filter(device => device.groupIds.includes(currentGroupId)), //顯示當前組別的設備
       fields: [
-        { name: "deviceId", title: "設備代號", type: "text", width: 100 },
-        { name: "deviceLocate", title: "設備位置", type: "text", width: 100 },
-        { name: "version", title: "當前版本", type: "text", width: 40 },
+        { name: "deviceId", title: "設備編號", type: "text", width: 80 },
+        { name: "deviceLocate", title: "設備位置", type: "text", width: 80 },
+        { name: "organ", title: "所屬單位", type: "text", width: 80,
+          itemTemplate: function (value, item) {
+            return item.organId + " - " + item.organName;
+          }
+        },
         { type: "control", editButton: false, deleteButton: true }
       ],
       onItemDeleted: function (args) {

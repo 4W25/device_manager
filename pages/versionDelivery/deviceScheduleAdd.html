@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -112,16 +113,21 @@
                 </div>
               </div>
               <div class="card-body">
-                <div class="row"> <!-- 第一、二行 -->
+                <div class="row"> <!-- 第一行 -->
+                  <!-- 左 -->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="deviceKind">設備類型</label>
+                      <input type="text" id="deviceKind" class="form-control" disabled="disabled">
+                    </div>
+                  </div>
+                </div>
+                <div class="row"> <!-- 第二、三行 -->
                   <!-- 左 -->
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="scheduleId">排程編號</label>
                       <input class="form-control" id="scheduleId" type="text" placeholder="系統自動產生" disabled="disabled">
-                    </div>
-                    <div class="form-group">
-                      <label for="deviceKind">設備類型</label>
-                      <input type="text" id="deviceKind" class="form-control" disabled="disabled">
                     </div>
                     <div class="form-group">
                       <label for="scheduleDate">排程日期<span class="text-danger">*必填</span></label>
@@ -142,9 +148,26 @@
                         <option selected disabled>軟體版本選擇</option>
                       </select>
                     </div>
+                    <div class="form-group">
+                      <label class="font-weight-bold d-block">派送方式</label>
+                      <div class="d-flex flex-wrap">
+                        <div class="custom-control custom-radio mr-4">
+                          <input type="radio" id="dispatchTypePush" name="dispatchType" class="custom-control-input" value="PUSH">
+                          <label class="custom-control-label" for="dispatchTypePush">由系統派送</label>
+                        </div>
+                        <div class="custom-control custom-radio mr-4">
+                          <input type="radio" id="dispatchTypePull" name="dispatchType" class="custom-control-input" value="PULL">
+                          <label class="custom-control-label" for="dispatchTypePull">設備自行拉取</label>
+                        </div>
+                        <div class="custom-control custom-radio mr-4">
+                          <input type="radio" id="dispatchTypeBoth" name="dispatchType" class="custom-control-input" value="BOTH">
+                          <label class="custom-control-label" for="dispatchTypeBoth">不拘</label>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="row"> <!-- 第三行 -->
+                <div class="row"> <!-- 第四行 -->
                   <!-- 左 -->
                   <div class="col-md-6">
                     <div class="form-group">
@@ -177,7 +200,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="row"> <!-- 第四行 -->
+                <div class="row"> <!-- 第五行 -->
                   <!-- 左 -->
                   <div class="col-md-6">
                     <div class="form-group">
@@ -274,7 +297,8 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label>搜尋</label>
-                      <input id="searchGroup" class="form-control" type="text" placeholder="請輸入組別編號或名稱或標籤" maxlength="18">
+                      <input id="searchGroup" class="form-control" type="text" placeholder="請輸入組別編號或名稱或標籤"
+                        maxlength="18">
                     </div>
                     <!-- /.form-group -->
                   </div>
@@ -359,7 +383,7 @@
   <!-- Tempusdominus Bootstrap 4 -->
   <script src="../../plugins/moment/moment.min.js"></script>
   <script src="../../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-  <!-- 自訂義jsGrid --> 
+  <!-- 自訂義jsGrid -->
   <script src="../../js/jsGridInit.js"></script>
   <!-- 假資料存放區 -->
   <script src="../../data/device_group.js"></script>
@@ -453,21 +477,27 @@
     initJsGrid("#device1", {
       data: unChoiceDevices(), //顯示未選擇設備
       fields: [
-        { name: "checked", title: "勾選欄位", type: "checkbox", width: 40, align: "center", editing: true,
-          itemTemplate: function(value, item) {
+        {
+          name: "checked", title: "勾選欄位", type: "checkbox", width: 40, align: "center", editing: true,
+          itemTemplate: function (value, item) {
             let checked = (typeof item.checked !== "undefined")
               ? item.checked
               : currentSchedule.deviceIds.includes(item.deviceId);
             return $("<input>").attr("type", "checkbox")
               .prop("checked", checked)
-              .on("change", function() {
-                item.checked = this.checked; 
+              .on("change", function () {
+                item.checked = this.checked;
               });
           }
         },
         { name: "deviceId", title: "設備編號", type: "text", width: 100 },
         { name: "deviceLocate", title: "設備位置", type: "text", width: 100 },
-        { name: "version", title: "當前版本", type: "text", width: 40 },
+        {
+          name: "organ", title: "所屬單位", type: "text", width: 80,
+          itemTemplate: function (value, item) {
+            return item.organId + " - " + item.organName;
+          }
+        }
       ],
     });
 
@@ -477,7 +507,12 @@
       fields: [
         { name: "deviceId", title: "設備代號", type: "text", width: 100 },
         { name: "deviceLocate", title: "設備位置", type: "text", width: 100 },
-        { name: "version", title: "當前版本", type: "text", width: 40 },
+        {
+          name: "organ", title: "所屬單位", type: "text", width: 80,
+          itemTemplate: function (value, item) {
+            return item.organId + " - " + item.organName;
+          }
+        },
         { type: "control", editButton: false, deleteButton: true }
       ],
       onItemDeleted: function (args) {
@@ -498,10 +533,10 @@
     function filterDevices() {
       let keyword = $("#searchDevice").val().trim().toLowerCase();
       let filteredData = unChoiceDevices().filter(device => {
-        let matchKeyword = keyword === "" ||  (device.deviceId && device.deviceId.toLowerCase().includes(keyword)) || (device.deviceLocate && device.deviceLocate.toLowerCase().includes(keyword));
+        let matchKeyword = keyword === "" || (device.deviceId && device.deviceId.toLowerCase().includes(keyword)) || (device.deviceLocate && device.deviceLocate.toLowerCase().includes(keyword));
         return matchKeyword;
       });
-    
+
       $("#device1").jsGrid("option", "data", filteredData).jsGrid("loadData");
     }
 
@@ -512,7 +547,7 @@
         alert("請選擇要加入的設備！");
         return;
       }
-      
+
       // 遍歷選中的設備
       selectedDevices.forEach(item => {
         if (!currentSchedule.deviceIds.includes(item.deviceId))
@@ -520,7 +555,7 @@
       });
 
       // 加入已選擇列表
-      let selectedList = $("#device2").jsGrid("option", "data").concat(selectedDevices); 
+      let selectedList = $("#device2").jsGrid("option", "data").concat(selectedDevices);
       $("#device2").jsGrid("option", "data", selectedList).jsGrid("refresh");
       $("#device1").jsGrid("option", "data", unChoiceDevices()).jsGrid("loadData");
 
@@ -541,30 +576,29 @@
       pageSize: 10,
       sorting: true,
       paging: true,
-      pageButtonCount: 5, 
+      pageButtonCount: 5,
       pagePrevText: "上一頁",
       pageNextText: "下一頁",
       pagerFormat: "頁數: {first} {prev} {pages} {next} {last} &nbsp;&nbsp; 第 {pageIndex} / {pageCount} 頁",
       noDataContent: "無資料",
       data: unChoiceGroups(),
       fields: [
-        { name: "checked", title: "勾選欄位", type: "checkbox", width: 40, align: "center", editing: true,
-          itemTemplate: function(value, item) {
+        {
+          name: "checked", title: "勾選欄位", type: "checkbox", width: 40, align: "center", editing: true,
+          itemTemplate: function (value, item) {
             let checked = (typeof item.checked !== "undefined")
               ? item.checked
               : currentSchedule.groupIds.includes(item.groupId);
             return $("<input>").attr("type", "checkbox")
               .prop("checked", checked)
-              .on("change", function() {
-                item.checked = this.checked; 
+              .on("change", function () {
+                item.checked = this.checked;
               });
           }
         },
         { name: "groupId", title: "組別編號", type: "text", width: 100 },
         { name: "groupName", title: "組別名稱", type: "text", width: 100 },
-        { name: "groupTag", title: "組別標籤", type: "text", width: 60 },
-        { name: "lastVersion", title: "上次派送版本", type: "text", width: 60 },
-        { name: "lastSendDate", title: "上次派送日期", type: "text", width: 60 },
+        { name: "groupTag", title: "組別標籤", type: "text", width: 60 }
       ],
 
       onRefreshed: function (args) {
@@ -600,8 +634,6 @@
         { name: "groupId", title: "組別編號", type: "text", width: 100 },
         { name: "groupName", title: "組別名稱", type: "text", width: 100 },
         { name: "groupTag", title: "組別標籤", type: "text", width: 60 },
-        { name: "lastVersion", title: "上次派送版本", type: "text", width: 60 },
-        { name: "lastSendDate", title: "上次派送日期", type: "text", width: 60 },
         { type: "control", editButton: false, deleteButtion: true }
       ],
 
@@ -693,10 +725,14 @@
       // 獲取左輸入框
       let inputSendVersion = document.getElementById("sendVersion").value;
       let inputScheduleDate = document.getElementById("inputScheduleDate").value;
+      let dispatchType = document.querySelector('input[name="dispatchType"]:checked');
       let selectedDeviceList = $("#device2").jsGrid("option", "data");
       let selectedGroupList = $("#jsGrid2").jsGrid("option", "data");
       if (isNullOrEmpty(inputSendVersion) || inputSendVersion === '軟體版本選擇') {
         alert("請選擇派送版本");
+        return false;
+      } else if (!dispatchType) {
+        alert("請選擇派送方式");
         return false;
       } else if (isNullOrEmpty(inputScheduleDate)) {
         alert("請輸入排程日期");

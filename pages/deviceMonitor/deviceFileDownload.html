@@ -4,16 +4,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>遠端檔案下載</title>
+  <title>設備檔案下載</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
-  <!-- Select2 -->
-  <link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
-  <link rel="stylesheet" href="../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  <!-- IonIcons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- DataTables -->
   <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
@@ -50,6 +49,7 @@
         </li>
       </ul>
     </nav>
+    <!-- /.navbar -->
 
     <!-- Main Sidebar Container 側邊欄位 -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -71,7 +71,6 @@
             <a href="#" class="d-block">登入者姓名</a>
           </div>
         </div>
-
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul id="sidebarMenu" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
@@ -88,70 +87,44 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>遠端檔案下載</h1>
+              <h1>設備檔案下載</h1>
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="../../index.html">首頁</a></li>
-                <li class="breadcrumb-item active">基本管理 / 遠端檔案下載</li>
+                <li class="breadcrumb-item active">基本管理 / 設備檔案下載</li>
               </ol>
             </div>
           </div>
         </div>
+        <!-- /.container-fluid -->
       </section>
+
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
-          <!-- 上半部：篩選條件 -->
-          <div class="card">
+          <div class="card card-default card-outline">
             <div class="card-header">
-              <h3 class="card-title">選擇機台</h3>
+              <h3 class="card-title">
+                <i class="fas fa-th-large"></i>
+                設備檔案下載紀錄
+              </h3>
             </div>
             <div class="card-body">
-              <form class="form-inline">
-                <div class="form-group mb-2 mr-3">
-                  <label for="deviceTypeSelect" class="mr-2">設備類型</label>
-                  <select id="deviceTypeSelect" name="deviceTypeId" class="form-control select2"></select>
-                </div>
-                <div class="form-group mb-2 mr-3">
-                  <label for="selectedDeviceName" class="mr-2">設備機台</label>
-                  <div class="input-group" style="width: 350px;">
-                    <input type="text" class="form-control" id="selectedDeviceName" placeholder="請選擇機台" readonly>
-                    <div class="input-group-append">
-                      <button type="button" class="btn btn-info" id="openDeviceModalBtn" disabled>選擇</button>
-                    </div>
-                  </div>
-                </div>
-                <button id="fetchFilesBtn" disabled type="button" class="btn btn-primary mb-2">查詢檔案</button>
-              </form>
+              <!-- Tab 清單容器 -->
+              <ul class="nav nav-tabs" id="device-tabs" role="tablist"></ul>
+              <!-- 每個 tab 對應的內容（由 JS 產生） -->
+              <div class="tab-content" id="device-tab-content"></div>
             </div>
+            <!-- /.card -->
           </div>
-
-          <!-- 下半部：查詢結果表格 -->
-          <div id="fileListContainer" class="card mt-4" style="display:none;">
-            <div class="card-header">
-              <h3 class="card-title">可下載檔案清單</h3>
-            </div>
-            <div class="card-body">
-              <table id="fileListTable" class="table table-bordered table-hover mb-0">
-                <thead>
-                  <tr>         
-                    <th class="text-center"><input type="checkbox" id="selectAllFiles"></th>
-                    <th>檔名</th>
-                    <th>說明</th>
-                    <th>大小</th>
-                  </tr>
-                </thead>
-                <tbody id="fileList"></tbody>
-              </table>
-              <div class="mt-2">
-                <button class="btn btn-success" id="downloadZipBtn" style="display:none;">下載 ZIP</button>
-              </div>
-            </div>
-          </div>
+          <!-- /.card -->
         </div>
+        <!-- /.container-fluid -->
       </section>
+      <!-- /.content -->
     </div>
+    <!-- /.content-wrapper -->
     <footer class="main-footer">
       <div class="float-right d-none d-sm-block">
         <b>Version</b> 3.2.0
@@ -161,9 +134,71 @@
       </strong> All rights reserved.
     </footer>
   </div>
+  <!-- ./wrapper -->
 
-  <!-- 彈窗：設備機台選擇 -->
-  <div class="modal fade" id="deviceModal" tabindex="-1">
+  <!-- 檔案路徑 Modal -->
+  <div class="modal fade" id="filePathsModal" tabindex="-1" aria-labelledby="filePathsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="filePathsModalLabel">檔案路徑</h5>
+          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <textarea id="filePathsContent" style="width:100%;height:300px;" readonly></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 新增檔案下載請求 Modal -->
+  <div class="modal fade" id="addModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">新增檔案下載請求</h5>
+          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+        </div>
+
+        <div class="modal-body">
+          <!-- 設備類型 -->
+          <div class="form-group">
+            <label for="deviceType">設備類型</label>
+            <input type="text" id="deviceType" class="form-control" disabled="disabled">
+          </div>
+          <!-- 設備機台選擇（按鈕開第二層 modal） -->
+          <div class="form-group">
+            <label for="deviceId">設備機台</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="deviceId" placeholder="請選擇機台" readonly>
+              <div class="input-group-append">
+                <button class="btn btn-info" id="selectDeviceBtn" data-toggle="modal" data-target="#selectDeviceModal">
+                  選擇
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- 多筆路徑輸入（Enter 新增） -->
+          <div class="form-group">
+            <label for="filePathInput">下載路徑（可輸入多筆）</label>
+            <input type="text" id="filePathInput" class="form-control" placeholder="輸入路徑後按 Enter 新增">
+            <ul id="filePathList" class="list-group mt-2" style="max-height:150px; overflow-y:auto;"></ul>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-primary" id="submitBtn">送出</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 第二層：設備機台選擇 Modal -->
+  <div class="modal fade" id="selectDeviceModal" tabindex="-1" role="dialog">
+    <!--data-backdrop="static" data-keyboard="false"-->
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -171,19 +206,17 @@
           <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
         </div>
         <div class="modal-body">
-          <table id="deviceTable" class="table table-bordered table-hover">
-          </table>
+          <table id="deviceTable" class="table table-bordered table-hover"></table>
         </div>
       </div>
     </div>
   </div>
 
+
   <!-- jQuery -->
   <script src="../../plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap 4 -->
   <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- Select2 -->
-  <script src="../../plugins/select2/js/select2.full.js"></script>
   <!-- DataTables  & Plugins -->
   <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
   <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -200,60 +233,203 @@
   <!-- AdminLTE App -->
   <script src="../../dist/js/adminlte.min.js"></script>
   <!-- 假資料存放區 -->
-  <script src="../../data/deviceType_info.js"></script>
+  <script src="../../data/device_group.js"></script>
   <!-- 左側欄動態生成 -->
   <script src="../../data/sidebar_menu.js"></script>
   <script src="../../js/sidebar.js"></script>
   <script>
 
-    // 模擬資料-設備機台檔案清單
-    const fileData = {
-      'A012001601': [
-        { name: 'log1.txt', desc: '交易紀錄', size: '12KB' },
-        { name: 'log2.txt', desc: '錯誤日誌', size: '8KB' }
-      ],
-      'A012001602': [
-        { name: 'update.bin', desc: '更新檔', size: '5MB' }
-      ],
-      'A012200901': [
-        { name: 'cfile1.log', desc: '日誌', size: '15KB' }
-      ],
-      'A012200902': [
-        { name: 'oth1.dat', desc: '資料檔', size: '20KB' }
-      ]
-    };
+    const deviceFileDownloadList = [
+      { downloadSeq: "DL2025010001", deviceTypeCode: "OKI-RG7", deviceId: "A012001601", filePaths: ["/home/atm/update/version_1.2/config.json", "/home/atm/security/cert/new_root_ca.pem", "/home/atm/logs/patch_log_0115.txt"], createdTime: "2025-01-15 10:21:30", status: 1 },
+      { downloadSeq: "DL2025010002", deviceTypeCode: "OKI-RG7", deviceId: "A012001601", filePaths: ["/opt/kiosk/files/menu/update_v5.1.bin", "/opt/kiosk/config/theme/dark_theme.css", "/opt/kiosk/logs/update_log_0115.txt"], createdTime: "2025-01-15 10:25:11", status: 2 },
+      { downloadSeq: "DL2025010003", deviceTypeCode: "OKI-RG7", deviceId: "A012001603", filePaths: ["/home/atm/security/cert/new_root_ca.pem"], createdTime: "2025-01-15 10:29:54", status: 3 },
+      { downloadSeq: "DL2025010004", deviceTypeCode: "OKI-RG7", deviceId: "A012200901", filePaths: ["/data/system/app/remote_update/app_patch_06.zip", "/data/system/app/remote_update/patch_notes.txt"], createdTime: "2025-01-15 10:31:22", status: 1 },
+      { downloadSeq: "DL2025010005", deviceTypeCode: "OKI-RG7", deviceId: "A012200901", filePaths: ["/opt/kiosk/config/theme/dark_theme.css"], createdTime: "2025-01-15 10:34:19", status: 2 },
+    ];
 
-    // 選擇設備類型- 初始化
-    const deviceTypeSelectList = deviceTypeList.map(item => ({
-      value: item.deviceTypeCode,
-      text: item.deviceTypeName + ' (' + item.deviceTypeCode + ')'
-    }));
-    populateSelect2($('#deviceTypeSelect'), deviceTypeSelectList, '請選擇');
-
-    // 選擇設備類型- 動態邏輯
-    $('#deviceTypeSelect').on('change', function () {
-      const selectedDeviceType = $(this).val();
-      console.log('Selected Device Type:', selectedDeviceType);
-      $('#selectedDeviceName').val('');
-      $('#fetchFilesBtn').prop('disabled', true);
-      $('#openDeviceModalBtn').prop('disabled', !selectedDeviceType);
-
-      // 清除 DataTable（避免切換類型後殘留）
-      if ($.fn.DataTable.isDataTable('#deviceTable')) {
-        $('#deviceTable').DataTable().clear().destroy();
-      }
+    const DeviceFileStatus = Object.freeze({
+      SUCCESS: 1,
+      PROCESSING: 2,
+      FAILED: 3
     });
 
-    // 選擇設備- 設備機台彈窗
-    $('#openDeviceModalBtn').on('click', function () {
-      const selectType = $('#deviceTypeSelect').val();
-      const deviceListOfType = deviceDataList.filter(d => d.deviceTypeCode === selectType);
+    const tableColumns = [
+      { title: "類型名稱" },
+      { title: "型號代碼" },
+      { title: "設備編號" },
+      { title: "檔案獲取流水號" },
+      { title: "檔案路徑" },
+      { title: "建立時間" },
+      { title: "檔案獲取狀態" },
+      { title: "檔案" },
+    ];
+
+    const filePathsModal = $("#filePathsModal");   //'檢視'路徑指定檔 Modal
+    const addModal = $("#addModal");   //'新增'下載檔案 Modal
+    const selectDeviceModal = $("#selectDeviceModal");   //'選擇'設備 Modal
+
+    //根據設備類型數量動態產生
+    deviceTypeList.forEach((type, index) => {
+      const isActive = index === 0;
+      createTab(type, isActive);
+      const data = getTableData(type.deviceTypeCode);
+      initTable(`table-${type.deviceTypeCode}`, data, type);
+    });
+
+    //建立 tab 結構
+    function createTab(type, isActive) {
+      $("#device-tabs").append(`
+        <li class="nav-item">
+          <a class="nav-link ${isActive ? "active" : ""}" id="tab-${type.deviceTypeCode}" data-toggle="pill"
+            href="#pane-${type.deviceTypeCode}" role="tab" aria-selected="${isActive}">
+           ${type.deviceTypeName}（${type.deviceTypeCode}）
+          </a>
+        </li>
+      `);
+
+      $("#device-tab-content").append(`
+        <div class="tab-pane fade ${isActive ? "show active" : ""}" id="pane-${type.deviceTypeCode}" role="tabpanel">
+          <section class="content">
+            <div class="container-fluid">
+              <div class="card">
+                <div class="card-body">
+                  <table id="table-${type.deviceTypeCode}" class="table table-bordered table-hover">
+                    <thead><tr>${tableColumns.map(col => `<th>${col.title}</th>`).join("")}</tr></thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      `);
+    }
+
+    //取得該設備類型的指定檔案下載紀錄資料
+    function getTableData(typeCode) {
+      return deviceFileDownloadList
+        .filter(d => d.deviceTypeCode === typeCode)
+        .map(d => {
+          const deviceType = deviceTypeList.find(t => t.deviceTypeCode === d.deviceTypeCode);
+          const viewBtn = `<button class="btn btn-sm btn-primary" onclick="showFilePathsModal('${d.downloadSeq}')">檢視</button>`;
+          const downloadBtn = d.status === 1
+            ? `<button class="btn btn-sm btn-success btnDownload" data-id="${d.downloadSeq}"><i class="fas fa-download"></i> 下載</button>`
+            : `<button class="btn btn-sm btn-success disabled"><i class="fas fa-download"></i> 下載</button>`;
+          return [
+            deviceType.deviceTypeName,
+            deviceType.deviceTypeCode,
+            d.deviceId,
+            d.downloadSeq,
+            viewBtn,
+            d.createdTime,
+            getStatusBadge(d.status),
+            downloadBtn
+          ];
+        });
+    }
+
+    //初始化 DataTable
+    function initTable(tableId, data, deviceType) {
+      $(`#${tableId}`).DataTable({
+        data: data,
+        columns: tableColumns,
+        responsive: true,
+        lengthChange: false,
+        ordering: false,
+        autoWidth: false,
+        dom: "<'row'<'col-sm-6'B><'col-sm-6'f>>" +
+          "<'row'<'col-12'tr>>" +
+          "<'row'<'col-sm-6'i><'col-sm-6'p>>",
+        buttons: [{
+          text: '<i class="fas fa-pencil-alt"></i> 新增',
+          className: 'btn btn-secondary',
+          action: function () {
+            showAddModal(deviceType);
+          }
+        }],
+        language: {
+          search: "搜尋：",
+          lengthMenu: "每頁顯示 _MENU_ 筆",
+          zeroRecords: "查無資料",
+          info: "顯示第 _START_ 筆到第 _END_ 筆，共 _TOTAL_ 筆",
+          infoEmpty: "",
+          infoFiltered: "",
+          paginate: { first: "第一頁", last: "最後一頁", next: "下一頁", previous: "上一頁" }
+        }
+      });
+    }
+
+    //取得狀態 badge
+    function getStatusBadge(status) {
+      const statusMap = {
+        [DeviceFileStatus.SUCCESS]: { text: "成功", class: "badge-success" },
+        [DeviceFileStatus.PROCESSING]: { text: "進行中", class: "badge-secondary" },
+        [DeviceFileStatus.FAILED]: { text: "失敗", class: "badge-danger" }
+      };
+      const s = statusMap[status];
+      return `<span class="badge ${s.class}">${s.text}</span>`;
+    }
+
+    //檢視-路徑指定檔
+    function showFilePathsModal(downloadSeq) {
+      const deviceFileDownloadHis = deviceFileDownloadList.find(d => d.downloadSeq === downloadSeq);
+      if (!deviceFileDownloadHis) return;
+
+      // 如果有多個檔案路徑，filePaths 是陣列，join 換行
+      const pathsText = deviceFileDownloadHis.filePaths ? deviceFileDownloadHis.filePaths.join("\n") : deviceFileDownloadHis.filePath;
+      document.getElementById("filePathsContent").textContent = pathsText;
+      document.getElementById("filePathsModalLabel").textContent = `流水號'${downloadSeq}' 的路徑指定檔`;
+
+      filePathsModal.modal('show');
+    }
+
+    //下載-指定ZIP檔案
+    $(document).on("click", ".btnDownload", function () {
+      const seq = $(this).data("id");
+      fakeZipDownload(seq);
+    });
+
+    function fakeZipDownload(seq) {
+      const zipContent =
+        `Fake ZIP file
+          DownloadSeq: ${seq}
+          Generated at: ${new Date().toISOString()}
+          (This is only a simulated ZIP file for UI testing)
+        `;
+
+      const blob = new Blob([zipContent], { type: "application/zip" });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${seq}.zip`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      URL.revokeObjectURL(url);
+
+      console.log(`假 ZIP 已下載：${seq}.zip`);
+    }
+
+    //彈出- 新增視窗
+    function showAddModal(deviceType) {
+      $("#deviceType").val(deviceType.deviceTypeName + "(" + deviceType.deviceTypeCode + ")");
+      addModal.modal('show');
+    }
+
+    // 按下「選擇機台」按鈕 → 開啟 Modal
+    $('#selectDeviceBtn').on('click', function () {
+
+      const typeCode = $("#deviceType").val().match(/\((.*?)\)/)[1];
+      const deviceListOfType = deviceList.filter(d => d.deviceTypeCode === typeCode);
 
       // 防止 DataTable 重複初始化
       if ($.fn.DataTable.isDataTable('#deviceTable')) {
         $('#deviceTable').DataTable().clear().destroy();
       }
 
+      // 初始化機台清單 DataTable
       $("#deviceTable").DataTable({
         responsive: true,
         lengthChange: false,
@@ -264,11 +440,12 @@
           {
             data: null, title: "選擇", className: "text-center", width: "100px",
             render: function (data, type, row) {
-              return `<button type="button" class="btn btn-sm btn-primary select-device-btn" data-id="${row.deviceNo}" data-locate="${row.deviceLocate}">選擇</button>`;
+              return `<button type="button" class="btn btn-sm btn-primary select-device-btn" data-id="${row.deviceId}" data-locate="${row.deviceLocate}">選擇</button>`;
             }
           },
-          { data: "deviceNo", title: "設備編號" },
-          { data: "deviceLocate", title: "設備位置" }
+          { data: "deviceId", title: "設備編號" },
+          { data: "deviceLocate", title: "設備位置" },
+          { data: null, title: "所屬單位", render: function (data, type, row) { return row.organId + " - " + row.organName; } }
         ],
         language: {
           search: "搜尋：",
@@ -281,92 +458,82 @@
         }
       });
 
-      $('#deviceModal').modal('show');
+      // 開啟第二層 modal
+      selectDeviceModal.modal('show');
     });
 
-    // 點選某個機台
+    // 點選某個機台 → 回填欄位
     $(document).on('click', '.select-device-btn', function () {
       const id = $(this).data('id');
       const locate = $(this).data('locate');
 
-      // 帶回主畫面欄位
-      $('#selectedDeviceName').val(`${id} - ${locate}`);
-      $('#selectedDeviceName').data('deviceNo', id);
+      // 填入主 modal 的欄位
+      $('#deviceId').val(`${id} - ${locate}`);
+      $('#deviceId').data('deviceId', id);
 
-      $('#deviceModal').modal('hide');
-
-      // 啟用查詢按鈕
-      $('#fetchFilesBtn').prop('disabled', false);
+      // 關閉第二層 modal
+      selectDeviceModal.modal('hide');
     });
 
-    // 查詢檔案清單
-    $('#fetchFilesBtn').on('click', function () {
-      const deviceId = $('#selectedDeviceName').data('deviceNo');
-      const files = fileData[deviceId] || [];
+    // 輸入路徑
+    $("#filePathInput").on("keyup", function (e) {
+      if (e.key === "Enter") {
+        const value = $(this).val().trim();
+        if (value === "") return;
 
-      const html = files.map((f, idx) => `
-        <tr>
-          <td class="text-center">
-            <input type="checkbox" value="${f.name}" class="file-checkbox">
-          </td>
-          <td>${f.name}</td>
-          <td>${f.desc}</td>
-          <td>${f.size}</td>
-        </tr>
-      `).join('');
+        if (isValidPath(value)) {
+          $("#filePathList").append(`
+            <li class="list-group-item d-flex justify-content-between">
+              <span class="path-text">${value}</span>
+              <button class="btn btn-sm btn-danger btnRemovePath">刪除</button>
+            </li>
+          `);
 
-      $('#fileList').html(html);
-      $('#fileListContainer').show();
-      $('#downloadZipBtn').show();
+          $(this).val("");
+        } else {
+          alert("路徑格式錯誤，請以 '/' 開頭且不能有非法字元");
+        }
+      }
     });
 
-    // 全選
-    $('#selectAllFiles').on('change', function() {
-      const checked = $(this).prop('checked');
-      $('.file-checkbox').prop('checked', checked);
+    // 刪除路徑
+    $(document).on("click", ".btnRemovePath", function () {
+      $(this).closest("li").remove();
     });
 
-    // 下載 ZIP
-    $('#downloadZipBtn').on('click', function () {
-      const selected = $('.file-checkbox:checked').map(function () {
-        return this.value;
+    //驗證路徑
+    function isValidPath(path) {
+      if (!path || !path.trim()) return false;           // 空字串
+      if (!path.startsWith("/")) return false;          // 必須 / 開頭
+      if (/[<>:"|?*]/.test(path)) return false;         // 非法字元
+      return true;
+    }
+
+    //送出下載檔案請求 
+    $("#submitBtn").on("click", function () {
+      const deviceId = $("#deviceId").data("deviceId");
+      const filePaths = $("#filePathList li .path-text").map(function () {
+        return $(this).text().trim();
       }).get();
 
-      if (selected.length === 0) {
-        alert("請至少勾選一個檔案");
+      if (!deviceId) {
+        alert("請選擇機台");
+        return;
+      }
+      if (filePaths.length === 0) {
+        alert("請輸入下載路徑");
         return;
       }
 
-      alert("將下載 ZIP：\n" + selected.join('\n'));
-      // TODO：呼叫後端 API 下載 ZIP
+      // 送出下載請求
+      alert("待連接後端，送出下載請求成功：");
+      console.log("傳給後端資料：", deviceId, filePaths);
+      addModal.modal('hide');
     });
 
 
-    /*自訂義select2*/
-    function populateSelect2(selectElement, data, placeholder) {
-      if (!selectElement.length || !data) return; // 防呆：如果元素不存在或沒有資料，就直接結束
-      selectElement.empty(); // 清空舊選項
 
-      const placeholderOption = new Option(placeholder, '', false, false); // 不預設
-      selectElement.append(placeholderOption);
 
-      data.forEach(item => {
-        // 確保 item.value 和 item.text 存在
-        const option = new Option(item.text, item.value, false, false);
-        selectElement.append(option);
-      });
-
-      // 初始化或重新初始化 Select2
-      selectElement.select2({
-        theme: 'bootstrap4',
-        placeholder: placeholder, // 這裡設定 Select2 自身的 placeholder
-        allowClear: false        // 允許清除選擇，清除後會顯示 placeholder
-      });
-
-      if (!selectElement.val() && placeholder) {
-        selectElement.val('').trigger('change'); // 選中 value 為空字串的選項
-      }
-    }
   </script>
 </body>
 

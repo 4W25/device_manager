@@ -2,19 +2,19 @@
 
 //設備類型
 const deviceTypeList = [
-	{ deviceTypeName: "循環機", deviceTypeCode:'OKI-RG7' },
-  { deviceTypeName: "自動提款機", deviceTypeCode:'WIN-1500XE' },
-  { deviceTypeName: "循環機", deviceTypeCode:'HITACHI-CZ5000'}
+  { deviceTypeName: "循環機", deviceTypeCode: 'OKI-RG7' },
+  { deviceTypeName: "自動提款機", deviceTypeCode: 'WIN-1500XE' },
+  { deviceTypeName: "循環機", deviceTypeCode: 'HITACHI-CZ5000' }
 ];
 
 //設備資料
 const deviceList = [
-	// 循環機(OKI-RG7)
-	{ deviceId: 'A012001601', deviceLocate: '台北市-大眾門市', deviceTypeCode: "OKI-RG7", organId: '0120016', organName: '營運中心', groupIds: ['GR_OKI_TPE2500002','GR_OKI_TPE2500001'], groupName: "循環機OKI-RG7_台北區1組", version: "A25.04.01", createDataDate: '2025-07-08', ip: '0.16.10.0' },
-	{ deviceId: 'A012001602', deviceLocate: '台北市-中崙門市', deviceTypeCode: "OKI-RG7", organId: '0120016', organName: '營運中心', groupIds: [], groupName: "尚未", version: "A22.10.15", createDataDate: '2025-03-15', ip: '05.05.0.05' },
-	{ deviceId: 'A012001603', deviceLocate: '新北市-大庭門市', deviceTypeCode: "OKI-RG7", organId: '0120016', organName: '營運中心', groupIds: [], groupName: "尚未", version: "A23.06.22", createDataDate: '2024-12-31', ip: '164.11.20.18' },
-	{ deviceId: 'A012200901', deviceLocate: '台中市-大時代門市', deviceTypeCode: "OKI-RG7", organId: '0120016', organName: '營運中心', groupIds: ['GR_OKI_TPE2500001'], groupName: "尚未", version: "A25.10.01", createDataDate: '2024-10-22', ip: '162.15.0.04' },
-	{ deviceId: 'A012200902', deviceLocate: '高雄市-中雅門市', deviceTypeCode: "OKI-RG7", organId: '0120016', organName: '營運中心', groupIds: [], groupName: "尚未", version: "A24.07.01", createDataDate: '2024-06-10', ip: '0.0.0.0' },
+  // 循環機(OKI-RG7)
+  { deviceId: 'A012001601', deviceLocate: '台北市-大眾門市', deviceTypeCode: "OKI-RG7", organId: '0120016', organName: '營運中心', groupIds: ['GR_OKI_TPE2500002', 'GR_OKI_TPE2500001'], groupName: "循環機OKI-RG7_台北區1組", version: "A25.04.01", createDataDate: '2025-07-08', ip: '0.16.10.0' },
+  { deviceId: 'A012001602', deviceLocate: '台北市-中崙門市', deviceTypeCode: "OKI-RG7", organId: '0120016', organName: '營運中心', groupIds: [], groupName: "尚未", version: "A22.10.15", createDataDate: '2025-03-15', ip: '05.05.0.05' },
+  { deviceId: 'A012001603', deviceLocate: '新北市-大庭門市', deviceTypeCode: "OKI-RG7", organId: '0120016', organName: '營運中心', groupIds: [], groupName: "尚未", version: "A23.06.22", createDataDate: '2024-12-31', ip: '164.11.20.18' },
+  { deviceId: 'A012200901', deviceLocate: '台中市-大時代門市', deviceTypeCode: "OKI-RG7", organId: '0120016', organName: '營運中心', groupIds: ['GR_OKI_TPE2500001'], groupName: "尚未", version: "A25.10.01", createDataDate: '2024-10-22', ip: '162.15.0.04' },
+  { deviceId: 'A012200902', deviceLocate: '高雄市-中雅門市', deviceTypeCode: "OKI-RG7", organId: '0120016', organName: '營運中心', groupIds: [], groupName: "尚未", version: "A24.07.01", createDataDate: '2024-06-10', ip: '0.0.0.0' },
 
 ]
 /*
@@ -125,51 +125,56 @@ const deviceGroupList = [
 
 //軟體版本資料
 const versionList = [
-    // 循環機(OKI-RG7)
-    { versionId: "A250401", version: "A25.04.01", deviceTypeCode:'OKI-RG7', versionName: "ATM 4月更新", modId: "Admin", createdAt: "2025-04-01" },
-    { versionId: "A250501", version: "A25.05.01", deviceTypeCode:'OKI-RG7', versionName: "ATM 5月更新", modId: "Admin", createdAt: "2025-05-01" },
-    { versionId: "A250601", version: "A25.06.01", deviceTypeCode:'OKI-RG7', versionName: "ATM 6月更新", modId: "Admin", createdAt: "2025-06-01" },
-  
-    /*
-    // TCR 系統 Device02
-    { versionId: "T250101", version: "T25.01.01", typeId: "Device02", versionName: "TCR 1月更新", modId: "Admin", createdAt: "2025-01-01" },
-    { versionId: "T250401", version: "T25.04.01", typeId: "Device02", versionName: "TCR 4月更新", modId: "Admin", createdAt: "2025-04-01" },
-    { versionId: "T250515", version: "T25.05.15", typeId: "Device02", versionName: "TCR 5月中修正", modId: "Admin", createdAt: "2025-05-15" },
-    { versionId: "T250620", version: "T25.06.20", typeId: "Device02", versionName: "TCR 6月強化", modId: "Admin", createdAt: "2025-06-20" },
-  
-    // 門禁系統 Device03
-    { versionId: "D250101", version: "D25.01.01", typeId: "Device03", versionName: "門禁冬季版", modId: "Admin", createdAt: "2025-01-01" },
-    { versionId: "D250301", version: "D25.03.01", typeId: "Device03", versionName: "門禁春季版", modId: "Admin", createdAt: "2025-03-01" },
-    { versionId: "D250506", version: "D25.05.06", typeId: "Device03", versionName: "門禁五月改版", modId: "Admin", createdAt: "2025-05-06" },
-    { versionId: "D250628", version: "D25.06.28", typeId: "Device03", versionName: "門禁6月功能新增", modId: "Admin", createdAt: "2025-06-28" },
-  
-    // 監控系統 SCADA Device04
-    { versionId: "C250312", version: "C25.03.12", typeId: "Device04", versionName: "監控3月維護", modId: "Admin", createdAt: "2025-03-12" },
-    { versionId: "C250511", version: "C25.05.11", typeId: "Device04", versionName: "監控五月升級", modId: "Admin", createdAt: "2025-05-11" },
-    { versionId: "C250703", version: "C25.07.03", typeId: "Device04", versionName: "SCADA 7月版本", modId: "Admin", createdAt: "2025-07-03" }
-    */
-  ];
+  // 循環機(OKI-RG7)
+  { versionId: "A250401", version: "A25.04.01", deviceTypeCode: 'OKI-RG7', versionName: "ATM 4月更新", modId: "Admin", createdAt: "2025-04-01" },
+  { versionId: "A250501", version: "A25.05.01", deviceTypeCode: 'OKI-RG7', versionName: "ATM 5月更新", modId: "Admin", createdAt: "2025-05-01" },
+  { versionId: "A250601", version: "A25.06.01", deviceTypeCode: 'OKI-RG7', versionName: "ATM 6月更新", modId: "Admin", createdAt: "2025-06-01" },
+
+  /*
+  // TCR 系統 Device02
+  { versionId: "T250101", version: "T25.01.01", typeId: "Device02", versionName: "TCR 1月更新", modId: "Admin", createdAt: "2025-01-01" },
+  { versionId: "T250401", version: "T25.04.01", typeId: "Device02", versionName: "TCR 4月更新", modId: "Admin", createdAt: "2025-04-01" },
+  { versionId: "T250515", version: "T25.05.15", typeId: "Device02", versionName: "TCR 5月中修正", modId: "Admin", createdAt: "2025-05-15" },
+  { versionId: "T250620", version: "T25.06.20", typeId: "Device02", versionName: "TCR 6月強化", modId: "Admin", createdAt: "2025-06-20" },
+ 
+  // 門禁系統 Device03
+  { versionId: "D250101", version: "D25.01.01", typeId: "Device03", versionName: "門禁冬季版", modId: "Admin", createdAt: "2025-01-01" },
+  { versionId: "D250301", version: "D25.03.01", typeId: "Device03", versionName: "門禁春季版", modId: "Admin", createdAt: "2025-03-01" },
+  { versionId: "D250506", version: "D25.05.06", typeId: "Device03", versionName: "門禁五月改版", modId: "Admin", createdAt: "2025-05-06" },
+  { versionId: "D250628", version: "D25.06.28", typeId: "Device03", versionName: "門禁6月功能新增", modId: "Admin", createdAt: "2025-06-28" },
+ 
+  // 監控系統 SCADA Device04
+  { versionId: "C250312", version: "C25.03.12", typeId: "Device04", versionName: "監控3月維護", modId: "Admin", createdAt: "2025-03-12" },
+  { versionId: "C250511", version: "C25.05.11", typeId: "Device04", versionName: "監控五月升級", modId: "Admin", createdAt: "2025-05-11" },
+  { versionId: "C250703", version: "C25.07.03", typeId: "Device04", versionName: "SCADA 7月版本", modId: "Admin", createdAt: "2025-07-03" }
+  */
+];
 
 
 //設備軟體排程資料
 const deviceScheduleList = [
-    // 循環機(OKI-RG7)
-    { scheduleId:'SCH_OKI_A250101250001', deviceIds:['A012200902'], groupIds: ['GR_OKI_TPE2500001'], deviceTypeCode:'OKI-RG7', sendVersionId: "A250501", sendVersion: 'A25.05.01', scheduleDate: '2025-06-01', timePeriod: [{ start: "10:00", end: "12:00" }, { start: "19:00", end: "21:00" },{ start: "01:00", end: "05:00" }]},
-  /*
-    // TCR 系統
-    { scheduleId:'TCRT250101250001', groupIds: ['TCRTXG0003'], typeId: 'Device02', sendVersionId: "T250101", sendVersion: 'T25.01.01', scheduleDate: '2025-06-03', timePeriod: [{ start: "14:00", end: "16:00" }], organId:'0123503', modId:'Admin' },
-  
-    // 門禁系統
-    { scheduleId:'ACSD250101250001', groupIds: ['ACSTPE0003','ACSTPE0005'], typeId: 'Device03', sendVersionId: "D250101", sendVersion: 'D25.01.01', scheduleDate: '2025-06-04', timePeriod: [{ start: "10:00", end: "12:00" }], organId:'0123605', modId:'Admin' },
-    { scheduleId:'ACSD250301250002', groupIds: ['ACSNWT0007'], typeId: 'Device03', sendVersionId: "D250301", sendVersion: 'D25.03.01', scheduleDate: '2025-06-05', timePeriod: [{ start: "13:00", end: "15:00" }], organId:'0123607', modId:'Admin' },
-    { scheduleId:'ACSD250506250003', groupIds: ['ACSTNN0010','ACSTNN0011'], typeId: 'Device03', sendVersionId: "D250506", sendVersion: 'D25.05.06', scheduleDate: '2025-06-06', timePeriod: [{ start: "10:00", end: "11:00" },{ start: "01:00", end: "06:00" }], organId:'0123610', modId:'Admin' },
-    { scheduleId:'ACSD250101250004', groupIds: ['ACSKHH0012','ACSKHH0013'], typeId: 'Device03', sendVersionId: "D250101", sendVersion: 'D25.01.01', scheduleDate: '2025-06-07', timePeriod: [{ start: "15:00", end: "17:00" }], organId:'0123612', modId:'Admin' },
-    { scheduleId:'ACSD250101250005', groupIds: ['ACSPTG0014'], typeId: 'Device03', sendVersionId: "D250628", sendVersion: 'D25.06.28', scheduleDate: '2025-07-01', timePeriod: [{ start: "18:00", end: "20:00" }], organId:'0123614', modId:'Admin' },
-  
-    // 監控系統 SCADA
-    { scheduleId:'SCADAC250101250001', groupIds: ['SCADATAO0001', 'SCADATAO0002'], typeId: 'Device04', sendVersion: 'C25.03.12', scheduleDate: '2025-06-09', timePeriod: [{ start: "09:00", end: "11:00" }], organId:'0123701', modId:'Admin' },
-    { scheduleId:'SCADAC250312250002', groupIds: ['SCADATPE0003'], typeId: 'Device04', sendVersion: 'C25.05.11', scheduleDate: '2025-06-10', timePeriod: [{ start: "10:00", end: "12:00" }], organId:'0123703', modId:'Admin' },
-    { scheduleId:'SCADAC250703250003', groupIds: ['SCADAKHH0006'], typeId: 'Device04', sendVersion: 'C25.07.03', scheduleDate: '2025-06-11', timePeriod: [{ start: "14:00", end: "16:00" }], organId:'0123706', modId:'Admin' }
-  */
-  ];
+  // 循環機(OKI-RG7)
+  { scheduleId: 'SCH_OKI_A250101250001', deviceIds: ['A012200902'], groupIds: ['GR_OKI_TPE2500001'], deviceTypeCode: 'OKI-RG7', sendVersionId: "A250501", dispatchType: 'PUSH', sendVersion: 'A25.05.01', scheduleDate: '2025-06-01', timePeriod: [{ start: "10:00", end: "12:00" }, { start: "19:00", end: "21:00" }, { start: "01:00", end: "05:00" }] },
+
+];
+
+const DispatchStatus = {
+  PENDING: 'PENDING',      // 待派送
+  SUCCESS: 'SUCCESS',      // 派送完成
+};
+
+const UpdateStatus = {
+  PENDING: '待更新',
+  SUCCESS: '更新成功',
+  FAILED: '更新失敗',
+}
+
+const scheduleStatusList = [
+  { 
+    scheduleId: 'SCH_OKI_A250101250001',
+    devices: [{ deviceId: 'A012200902', deviceLocate: '高雄市-中雅門市', organId: '0120016', organName: '營運中心', dispatchStatus: 'SUCCESS', updateStatus: 'SUCCESS' }],
+    groups: [{ groupId: 'GR_OKI_TPE2500001',groupName: '循環機OKI-RG7_測試組',groupTag: '測試組',deviceTypeCode: 'OKI-RG7',dispatchProgress: '80%'}]
+  }
+];
+
 
