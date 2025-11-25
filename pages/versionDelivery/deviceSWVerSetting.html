@@ -221,81 +221,132 @@
   if(typeof deviceTypeList==='undefined'||typeof versionInfo==='undefined'||typeof statusMap==='undefined'){console.error('請先載入 device_info.js 並包含 deviceTypeList, versionInfo, statusMap');return;}
   const createdTables={};
 
-  function buildTabs(){
-    const tabList=$('#device-tabs').empty(); const tabContent=$('#device-tabContent').empty();
-    deviceTypeList.forEach((d,idx)=>{
-      const verNoKey='Device'+String(idx+1).padStart(2,'0'); const active=idx===0?'active':'';
-      const tabId=`tab-${verNoKey}`; const contentId=`content-${verNoKey}`;
-      tabList.append(`<li class="nav-item"><a class="nav-link ${active}" id="${tabId}" data-toggle="pill" href="#${contentId}" role="tab" aria-controls="${contentId}" aria-selected="${idx===0}">${d.deviceType}</a></li>`);
-      tabContent.append(`<div class="tab-pane fade ${active?'show active':''}" id="${contentId}" role="tabpanel" aria-labelledby="${tabId}"><section class="content p-2"><div class="row mb-2"><div class="col-12 text-end"><button class="btn btn-secondary btn-upload"><i class="fas fa-pencil-alt"></i>新增</button></div></div><table id="table-${verNoKey}" class="table table-bordered table-hover"><thead><tr>
-	  <th>類型名稱</th>
-      <th>型號代碼</th>
-	  <th>軟體版號</th>
-	  <th>上傳時間</th>
-	  <th>前置版本</th>
-	  <th>更新類型</th>
-	  <th>說明</th>
-	  <th>狀態</th>
-	  <th>功能</th></tr>
-	  </thead><tbody id="deviceTableBody-${verNoKey}"></tbody></table></section></div>`);
-      renderDeviceTable(verNoKey,`deviceTableBody-${verNoKey}`,d.deviceType);
+const statusList = ["核准","審核中", "退回" ];
+function buildTabs() {
+    const tabList = $('#device-tabs').empty();
+    const tabContent = $('#device-tabContent').empty();
+
+    deviceTypeList.forEach((d, idx) => {
+        const verNoKey = 'Device' + String(idx + 1).padStart(2, '0');
+        const active = idx === 0 ? 'active' : '';
+        const tabId = `tab-${verNoKey}`;
+        const contentId = `content-${verNoKey}`;
+
+        // 主分頁
+        tabList.append(`<li class="nav-item">
+            <a class="nav-link ${active}" id="${tabId}" data-toggle="pill" href="#${contentId}" role="tab">${d.deviceType}</a>
+        </li>`);
+
+        // 狀態子分頁 (nav-tabs)
+        let statusTabsHtml = '<ul class="nav nav-tabs mb-2">';
+        let statusContentHtml = '';
+        statusList.forEach((s, sIdx) => {
+            const sActive = sIdx === 0 ? 'active' : '';
+            const statusTabId = `status-tab-${verNoKey}-${s}`;
+            const statusContentId = `status-content-${verNoKey}-${s}`;
+            statusTabsHtml += `<li class="nav-item">
+                <a class="nav-link ${sActive}" id="${statusTabId}" data-toggle="tab" href="#${statusContentId}" role="tab">${s}</a>
+            </li>`;
+            statusContentHtml += `<div class="tab-pane fade ${sActive ? 'show active' : ''}" id="${statusContentId}" role="tabpanel">
+                <table id="table-${verNoKey}-${s}" class="table table-bordered table-hover">
+                    <thead><tr>
+                        <th>類型名稱</th>
+                        <th>型號代碼</th>
+                        <th>軟體版號</th>
+                        <th>上傳時間</th>
+                        <th>前置版本</th>
+                        <th>更新類型</th>
+                        <th>說明</th>
+                        <th>狀態</th>
+                        <th>功能</th>
+                    </tr></thead>
+                    <tbody id="deviceTableBody-${verNoKey}-${s}"></tbody>
+                </table>
+            </div>`;
+        });
+        statusTabsHtml += '</ul>';
+
+        tabContent.append(`<div class="tab-pane fade ${active?'show active':''}" id="${contentId}" role="tabpanel">
+            <section class="content p-2">
+                <div class="row mb-2">
+                    <div class="col-12 text-end">
+                        <button class="btn btn-secondary btn-upload"><i class="fas fa-pencil-alt"></i> 新增</button>
+                    </div>
+                </div>
+                ${statusTabsHtml}
+                <div class="tab-content">${statusContentHtml}</div>
+            </section>
+        </div>`);
+
+        // 渲染資料，但不初始化 DataTable
+        statusList.forEach(s => {
+            renderDeviceTable(verNoKey, `deviceTableBody-${verNoKey}-${s}`, d.deviceType, s);
+        });
     });
 
-    $('a[data-toggle="pill"]').on('shown.bs.tab',function(e){
-      const href=$(e.target).attr('href'); const $content=$(href); const table=$content.find('table').attr('id');
-      if(table&&!createdTables[table]){createdTables[table]=initializeDataTable(table);}else if(table&&createdTables[table]){createdTables[table].columns.adjust();}
-      const curDeviceType=$(e.target).text(); $('#modalDeviceType').val(curDeviceType); populatePreviousVerSelect(curDeviceType);
-    });
-    const firstTab=$('#device-tabs a.nav-link').first(); if(firstTab.length) firstTab.tab('show');
+    // 初始化第一個主分頁 + 第一個狀態子分頁
+    const firstMainTab = $('#device-tabs a.nav-link').first();
+    if (firstMainTab.length) {
+        firstMainTab.tab('show');
+        const firstContentId = firstMainTab.attr('href');
+        const firstStatusTab = $(`${firstContentId} .nav-tabs a.nav-link`).first();
+        if (firstStatusTab.length) {
+            firstStatusTab.tab('show');
 
-// 初始化第一個 tab 的 DataTable
-const firstContent = $('#device-tabContent .tab-pane').first();
-if (firstContent.length) {
-    const firstTableId = firstContent.find('table').attr('id');
-    if(firstTableId && !createdTables[firstTableId]) {
-        createdTables[firstTableId] = initializeDataTable(firstTableId);
+            // 初始化第一個表格
+            const firstTableId = $(`${firstContentId} .tab-content .tab-pane.active table`).attr('id');
+            if (firstTableId && !createdTables[firstTableId]) {
+                createdTables[firstTableId] = initializeDataTable(firstTableId);
+            }
+        }
     }
+
+    // 監聽狀態子分頁切換，初始化 DataTable 或調整
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+        const table = $($(e.target).attr('href')).find('table').attr('id');
+        if (table && !createdTables[table]) {
+            createdTables[table] = initializeDataTable(table);
+        } else if (table && createdTables[table]) {
+            createdTables[table].columns.adjust();
+        }
+    });
 }
 
 
-  }
 
-  function renderDeviceTable(verNo,tableBodyId,deviceType){
-    const tableBody=document.getElementById(tableBodyId); tableBody.innerHTML='';
-    const filtered=versionInfo.filter(v=>v.deviceType===deviceType);
-    const latestMap={};
-    filtered.forEach(row=>{const exist=latestMap[row.verNo]; if(!exist||new Date(row.updateTime)>new Date(exist.updateTime)) latestMap[row.verNo]=row;});
-    Object.values(latestMap).sort((a,b)=>new Date(b.updateTime)-new Date(a.updateTime)).forEach(data=>{
-      const statusKey=data.status||'待覆核';
-      const badgeClass=`badge`;
-      const badgeColor=statusKey==='待覆核'?'badge-warning':statusKey==='核准'?'badge-success':statusKey==='退回'?'badge-danger':'badge-secondary';
-      let downloadBtn='';
-      if(data.fileBase64){ const filename=data.originalFileName||`${data.verNo}.zip`; downloadBtn=`<a href="data:application/zip;base64,${data.fileBase64}" download="${filename}" class="btn btn-sm btn-success"><i class="fas fa-download"></i></a>`;}
-      else if(data.filePath) downloadBtn=`<a href="${data.filePath}" download class="btn btn-sm btn-success"><i class="fas fa-download"></i></a>`; 
-      else downloadBtn=`<button class="btn btn-sm btn-secondary" disabled><i class="fas fa-download"></i> 無檔案</button>`;
+function renderDeviceTable(verNo, tableBodyId, deviceType, filterStatus) {
+    const tableBody = document.getElementById(tableBodyId);
+    tableBody.innerHTML = '';
+    const filtered = versionInfo.filter(v => v.deviceType === deviceType && (v.status || '待覆核') === filterStatus);
+    filtered.forEach(data => {
+        const statusKey = data.status || '待覆核';
+        const badgeColor = statusKey==='待覆核'?'badge-warning':statusKey==='核准'?'badge-success':statusKey==='退回'?'badge-danger':'badge-secondary';
+        let downloadBtn='';
+        if(data.fileBase64){ const filename=data.originalFileName||`${data.verNo}.zip`; downloadBtn=`<a href="data:application/zip;base64,${data.fileBase64}" download="${filename}" class="btn btn-sm btn-success"><i class="fas fa-download"></i></a>`;}
+        else if(data.filePath) downloadBtn=`<a href="${data.filePath}" download class="btn btn-sm btn-success"><i class="fas fa-download"></i></a>`; 
+        else downloadBtn=`<button class="btn btn-sm btn-secondary" disabled><i class="fas fa-download"></i> 無檔案</button>`;
 
-      tableBody.insertAdjacentHTML('beforeend',`
-        <tr>
-		<td>${escapeHtml(data.deviceName)}</td>
-		<td>${escapeHtml(data.deviceModel)}</td>
-
-          <td>${escapeHtml(data.verNo)}</td>
-          <td>${escapeHtml(data.updateTime)}</td>
-
-          <td>${escapeHtml(data.previousVer||'')}</td>
-          <td>${escapeHtml(data.updateType||'')}</td>
-          <td>${escapeHtml(data.releaseNotes||'')}</td>
-          <td><span class="badge ${badgeColor}">${escapeHtml(statusKey)}</span></td>
-          <td class="text-center">
-            <button class="btn btn-sm btn-primary" onclick="viewSWVer('${data.verNo}','${deviceType}')">檢視</button>
-            <button class="btn btn-sm btn-success" onclick="editSWVer('${data.verNo}','${deviceType}')">修改</button>
-            <button class="btn btn-sm btn-danger" onclick="deleteSWVer('${data.verNo}','${deviceType}')">刪除</button>
-            ${downloadBtn}
-          </td>
-        </tr>
-      `);
+        tableBody.insertAdjacentHTML('beforeend',`
+            <tr>
+                <td>${escapeHtml(data.deviceName)}</td>
+                <td>${escapeHtml(data.deviceModel)}</td>
+                <td>${escapeHtml(data.verNo)}</td>
+                <td>${escapeHtml(data.updateTime)}</td>
+                <td>${escapeHtml(data.previousVer||'')}</td>
+                <td>${escapeHtml(data.updateType||'')}</td>
+                <td>${escapeHtml(data.releaseNotes||'')}</td>
+                <td><span class="badge ${badgeColor}">${escapeHtml(statusKey)}</span></td>
+                <td class="text-center">
+                    <button class="btn btn-sm btn-primary" onclick="viewSWVer('${data.verNo}','${deviceType}')">檢視</button>
+                    <button class="btn btn-sm btn-success" onclick="editSWVer('${data.verNo}','${deviceType}')">修改</button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteSWVer('${data.verNo}','${deviceType}')">刪除</button>
+                    ${downloadBtn}
+                </td>
+            </tr>
+        `);
     });
-  }
+}
+
 
   function initializeDataTable(tableId){
     return $(`#${tableId}`).DataTable({responsive:true,
