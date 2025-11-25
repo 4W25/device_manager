@@ -1,0 +1,341 @@
+<!-- 此HTML文件用於群組權限覆核頁面，展示一個表格，包含群組權限的審核功能，並使用Select2插件顯示紫色主題的多選下拉框。 -->
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<!-- 設定語言為繁體中文 -->
+
+<head>
+  <meta charset="utf-8">
+  <!-- 設定字符編碼為UTF-8 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 設定視窗寬度適應設備，並初始縮放為1 -->
+  <title>群組權限覆核</title>
+  <!-- 頁面標題 -->
+
+  <!-- 引入外部字體和樣式檔案 -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- 引入Google字體Source Sans Pro -->
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <!-- 引入FontAwesome圖標庫 -->
+  <link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
+  <!-- 引入Select2插件的基本樣式 -->
+  <link rel="stylesheet" href="../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  <!-- 引入Select2的Bootstrap4主題樣式，支持紫色主題 -->
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <!-- 引入AdminLTE管理面板樣式 -->
+
+  <style>
+    /* 强制紫色主题的Select2样式 - 针对所有Select2容器 */
+.select2-container--bootstrap4.select2-purple .select2-selection--multiple {
+  background-color: #6f42c1 !important;  /* 紫色背景 */
+  border-color: #6f42c1 !important;      /* 紫色边框 */
+  cursor: default;
+  pointer-events: none;  /* 阻止点击，替代disabled */
+}
+
+/* 强制已选选项的紫色标签 - 使用全局选择器覆盖默认灰色 */
+.select2-container--bootstrap4 .select2-selection__choice {
+  background-color: #7950f2 !important;  /* 深紫色背景 */
+  border: none !important;
+  color: #fff !important;                /* 白色文字 */
+  padding: 2px 5px !important;
+  margin-right: 5px !important;
+}
+
+/* 确保下拉框选项的悬停和选中状态为紫色 */
+.select2-container--bootstrap4 .select2-dropdown.select2-purple .select2-results__option--highlighted {
+  background-color: #6f42c1 !important;  /* 悬停时紫色 */
+  color: #fff !important;
+}
+
+.select2-container--bootstrap4 .select2-dropdown.select2-purple .select2-results__option[aria-selected="true"] {
+  background-color: #7950f2 !important;  /* 已选选项紫色 */
+  color: #fff !important;
+}
+
+/* 如果仍有灰色，添加更强的覆盖（针对AdminLTE冲突） */
+.select2-container--bootstrap4 .select2-selection__choice {
+  background-color: #7950f2 !important;
+  color: #fff !important;
+}
+
+  </style>
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <!-- 設定body類別為AdminLTE的側邊欄迷你模式，並保持轉換效果 -->
+  <div class="wrapper">
+    <!-- AdminLTE的主要包裝器 -->
+
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- 導航欄，白色背景，展開式佈局 -->
+      <!-- 上方行列 -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+          <!-- 側邊欄切換按鈕 -->
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="../../index.html" class="nav-link">回首頁</a>
+          <!-- 回首頁連結，在小螢幕上隱藏 -->
+        </li>
+      </ul>
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+            <i class="fas fa-expand-arrows-alt"></i>
+            <!-- 全螢幕切換按鈕 -->
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- 側邊欄，深色主題，帶陰影效果 -->
+      <a href="../../index.html" class="brand-link"><img
+        src="../../dist/img/device01.png"
+        class="brand-image img-circle elevation-3" style="opacity: .8"><span
+        class="brand-text font-weight-light">自動化設備管理平臺</span></a>
+      <!-- 品牌連結，包含圖標和文字 -->
+      <div class="sidebar">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <!-- 使用者面板 -->
+          <div class="image">
+            <img src="../../dist/img/userNobody.png"
+              class="img-circle elevation-2" alt="User">
+            <!-- 使用者頭像 -->
+          </div>
+          <div class="info">
+            <a href="#" class="d-block">登入者姓名</a>
+            <!-- 使用者名稱連結 -->
+          </div>
+        </div>
+        <nav class="mt-2">
+          <ul id="sidebarMenu" class="nav nav-pills nav-sidebar flex-column"
+            data-widget="treeview" role="menu" data-accordion="false"></ul>
+          <!-- 側邊欄選單，動態生成 -->
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Content -->
+    <div class="content-wrapper">
+      <!-- 內容包裝器 -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>權限設定覆核</h1>
+              <!-- 頁面標題 -->
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="../../index.html">首頁</a></li>
+                <li class="breadcrumb-item active">基本管理 / 權限設定覆核</li>
+                <!-- 麵包屑導航 -->
+              </ol>
+            </div>
+          </div>
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+
+      <section class="content">
+        <div class="container-fluid">
+          <!-- 內容區域 -->
+          <div class="card card-outline card-primary">
+            <div class="card-header">
+              <h3 class="card-title"><i class="fas fa-user-shield mr-2"></i>群組權限設定覆核</h3>
+            </div>
+          <table class="table table-bordered table-hover" id="reviewTable">
+            <!-- 審核表格，帶邊框和懸停效果 -->
+            <thead class="thead-light">
+              <tr>
+                <th style="width:40px"></th>
+                <th>群組代號</th>
+                <th>群組名稱</th>
+                <th>申請者</th>
+                <th>申請時間</th>
+                <th>操作</th>
+                <!-- 表格標題行 -->
+              </tr>
+            </thead>
+            <tbody>
+              <!-- 表格內容區域 -->
+
+              <!-- 假資料 1 -->
+              <tr data-toggle="collapse" data-target="#details1" class="clickable">
+                <!-- 可點擊行，用於展開/收合詳細資訊 -->
+                <td><i class="fas fa-plus"></i></td>
+                <td>SYSTEM</td>
+                <td>系統管理員</td>
+                <td>王小明</td>
+                <td>2025/01/12 14:32:55</td>
+                <td>
+                  <button class="btn btn-success btn-sm btn-approve">通過</button>
+                  <button class="btn btn-danger btn-sm btn-reject">退回</button>
+                  <!-- 審核按鈕 -->
+                </td>
+              </tr>
+              <tr class="collapse" id="details1">
+                <!-- 詳細資訊行，預設收合 -->
+                <td colspan="6">
+                  <div class="permission-container readonly-select2">
+                    <!-- 權限容器，只讀模式 -->
+                    <label>系統管理</label>
+                    <div class="select2-purple">
+                      <select class="form-control select2" multiple="multiple" data-dropdown-css-class="select2-purple" style="width: 100%;" >
+                        <!-- Select2多選下拉框，應用紫色主題 -->
+                        <option selected>使用者管理</option>
+                        <option selected>群組設定</option>
+                        <option selected>權限控管</option>
+                        <option selected>選單維護</option>
+                      </select>
+                    </div>
+
+                    <label class="mt-2">設備管理</label>
+                    <div class="select2-purple">
+                      <select class="form-control select2" multiple="multiple" data-dropdown-css-class="select2-purple" style="width: 100%;" >
+                        <option selected>設備清冊</option>
+                        <option selected>維護紀錄</option>
+                        <option selected>版本控管</option>
+                      </select>
+                    </div>
+
+                    <label class="mt-2">報表分析</label>
+                    <div class="select2-purple">
+                      <select class="form-control select2" multiple="multiple" data-dropdown-css-class="select2-purple" style="width: 100%;" >
+                        <option selected>設備運作報表</option>
+                        <option selected>異常統計報表</option>
+                      </select>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- 假資料 2 -->
+              <tr data-toggle="collapse" data-target="#details2" class="clickable">
+                <td><i class="fas fa-plus"></i></td>
+                <td>TECH</td>
+                <td>技術人員</td>
+                <td>李阿宏</td>
+                <td>2025/01/13 09:15:20</td>
+                <td>
+                  <button class="btn btn-success btn-sm btn-approve">通過</button>
+                  <button class="btn btn-danger btn-sm btn-reject">退回</button>
+                </td>
+              </tr>
+              <tr class="collapse" id="details2">
+                <td colspan="6">
+                  <div class="permission-container readonly-select2">
+                    <label>設備管理</label>
+                    <select class="form-control select2" multiple="multiple" disabled>
+                      <!-- 此處的select沒有data-dropdown-css-class，但JS會統一處理 -->
+                      <option selected>設備清冊</option>
+                      <option selected>維護紀錄</option>
+                    </select>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- 假資料 3 -->
+              <tr data-toggle="collapse" data-target="#details3" class="clickable">
+                <td><i class="fas fa-plus"></i></td>
+                <td>PM</td>
+                <td>專案管理員</td>
+                <td>張小華</td>
+                <td>2025/01/14 11:50:12</td>
+                <td>
+                  <button class="btn btn-success btn-sm btn-approve">通過</button>
+                  <button class="btn btn-danger btn-sm btn-reject">退回</button>
+                </td>
+              </tr>
+              <tr class="collapse" id="details3">
+                <td colspan="6">
+                  <div class="permission-container readonly-select2">
+                    <label>系統管理</label>
+                    <select class="form-control select2" multiple="multiple" disabled>
+                      <option selected>使用者管理</option>
+                      <option selected>權限控管</option>
+                    </select>
+                    <label class="mt-2">報表分析</label>
+                    <select class="form-control select2" multiple="multiple" disabled>
+                      <option selected>設備運作報表</option>
+                    </select>
+                  </div>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+</div>
+        </div>
+      </section>
+    </div>
+
+    <footer class="main-footer">
+      <!-- 頁面底部 -->
+      <div class="float-right d-none d-sm-block">
+        <b>Version</b> 3.2.0
+        <!-- 版本資訊 -->
+      </div>
+      <strong>Copyright &copy;
+        <a href="https://www.leosys.com/">國眾電腦股份有限公司</a>.
+      </strong> All rights reserved.
+      <!-- 版權資訊 -->
+    </footer>
+  </div>
+
+  <!-- 引入JavaScript檔案 -->
+  <!-- jQuery -->
+  <script src="../../plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Select2 -->
+  <script src="../../plugins/select2/js/select2.full.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../../dist/js/adminlte.min.js"></script>
+  <!-- 左側欄動態生成 -->
+  <script src="../../data/sidebar_menu.js"></script>
+  <script src="../../js/sidebar.js"></script>
+
+  <script>
+    <!-- 自定義JavaScript功能 -->
+    $(function () {
+      // 初始化所有 Select2，鎖定並應用紫色主題
+      $('.select2').select2({
+        theme: 'bootstrap4',
+        dropdownCssClass: 'select2-purple',  // 應用紫色下拉框主題
+        disabled: true  // 設定為禁用狀態，只讀
+      });
+
+      // 展開/收合圖示切換
+      $('#reviewTable tbody tr.clickable').click(function () {
+        const icon = $(this).find('i.fas');
+        const target = $(this).data('target');
+        $(target).collapse('toggle');
+        icon.toggleClass('fa-plus fa-minus');
+      });
+
+      // 審核通過
+      $('.btn-approve').click(function (e) {
+        e.stopPropagation();
+        alert("審核已通過！（此為示意功能，可串接 API）");
+      });
+
+      // 退回
+      $('.btn-reject').click(function (e) {
+        e.stopPropagation();
+        const reason = prompt("請輸入退回原因：");
+        if (reason) {
+          alert("已退回，原因：" + reason);
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>

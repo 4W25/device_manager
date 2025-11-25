@@ -227,7 +227,7 @@
       const verNoKey='Device'+String(idx+1).padStart(2,'0'); const active=idx===0?'active':'';
       const tabId=`tab-${verNoKey}`; const contentId=`content-${verNoKey}`;
       tabList.append(`<li class="nav-item"><a class="nav-link ${active}" id="${tabId}" data-toggle="pill" href="#${contentId}" role="tab" aria-controls="${contentId}" aria-selected="${idx===0}">${d.deviceType}</a></li>`);
-      tabContent.append(`<div class="tab-pane fade ${active?'show active':''}" id="${contentId}" role="tabpanel" aria-labelledby="${tabId}"><section class="content p-2"><div class="row mb-2"><div class="col-12 text-end"><button class="btn btn-primary btn-upload">上傳程式</button></div></div><table id="table-${verNoKey}" class="table table-bordered table-hover"><thead><tr>
+      tabContent.append(`<div class="tab-pane fade ${active?'show active':''}" id="${contentId}" role="tabpanel" aria-labelledby="${tabId}"><section class="content p-2"><div class="row mb-2"><div class="col-12 text-end"><button class="btn btn-secondary btn-upload"><i class="fas fa-pencil-alt"></i>新增</button></div></div><table id="table-${verNoKey}" class="table table-bordered table-hover"><thead><tr>
 	  <th>類型名稱</th>
       <th>型號代碼</th>
 	  <th>軟體版號</th>
