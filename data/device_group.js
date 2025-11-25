@@ -164,9 +164,9 @@ const DispatchStatus = {
 };
 
 const UpdateStatus = {
-  PENDING: '待更新',
-  SUCCESS: '更新成功',
-  FAILED: '更新失敗',
+  PENDING: 'PENDING',      // 待更新
+  SUCCESS: 'SUCCESS',      // 更新成功
+  FAILED: 'FAILED',        // 更新失敗
 }
 
 const scheduleStatusList = [
