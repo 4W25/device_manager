@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>稽核紀錄</title>
+
+  <!-- AdminLTE & Plugin CSS -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+
+  <style>
+    .content-wrapper {  
+      background-color: #f8f9fa;
+    }
+    table th, table td {
+      vertical-align: middle !important;
+    }
+
+    .filter-bar {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .filter-bar label { margin: 0; font-weight: 600; }
+    .filter-bar .form-control { min-width: 150px; flex: 1; }
+    @media (max-width: 576px) {
+      .filter-bar label { width: 100%; }
+      .filter-bar .form-control { width: 100% !important; }
+      .filter-bar button { width: 48%; }
+    }
+    .table-responsive { overflow-x: auto; }
+    table thead th { text-align: center; font-size: 18px; font-weight: 600; }
+    table tbody td { text-align: center; font-size: 15px; font-weight: 400; }
+    th.sortable { cursor: pointer; }
+    th.sortable::after { content: ' ⇅'; font-size: 12px; color: #888; }
+    #noDataRow td {
+      font-size: 18px; padding: 20px; color: #dc3545; font-weight: bold; background: #fff3f3;
+    }
+  </style>
+</head>
+
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <ul class="navbar-nav">
+      <li class="nav-item"><a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a></li>
+      <li class="nav-item d-none d-sm-inline-block"><a href="../../index.html" class="nav-link">回首頁</a></li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item"><a class="nav-link" data-widget="fullscreen" href="#"><i class="fas fa-expand-arrows-alt"></i></a></li>
+    </ul>
+  </nav>
+
+  <!-- Sidebar -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <a href="../../index.html" class="brand-link">
+      <img src="../../dist/img/device01.png" alt="Logo" class="brand-image img-circle elevation-3" style="opacity:.8">
+      <span class="brand-text font-weight-light">自動化設備管理平臺</span>
+    </a>
+    <div class="sidebar">
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image"><img src="../../dist/img/userNobody.png" class="img-circle elevation-2" alt="User Image"></div>
+        <div class="info"><a href="#" class="d-block">登入者姓名</a></div>
+      </div>
+      <nav class="mt-2">
+        <ul id="sidebarMenu" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"></ul>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- Content Wrapper -->
+  <div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6"><h1>稽核紀錄</h1></div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="../../index.html">首頁</a></li>
+              <li class="breadcrumb-item active">稽核紀錄</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+          
+    <section class="content">
+      <div class="container-fluid">
+
+        <!-- 篩選條件 -->
+        <div class="filter-bar">
+          <label for="startDate">起始日期：</label>
+          <input type="date" id="startDate" class="form-control">
+          <label for="endDate">結束日期：</label>
+          <input type="date" id="endDate" class="form-control">
+          <label for="userInput">行員編號：</label>
+          <input type="text" id="userInput" class="form-control" placeholder="輸入行員編號">
+          <label for="actionNameSelect">交易名稱：</label>
+          <select id="actionNameSelect" class="form-control">
+            <option value="">全部</option>
+          </select>
+          <label for="resultSelect">交易執行結果：</label>
+          <select id="resultSelect" class="form-control">
+            <option value="">全部</option>
+            <option value="S">S</option>
+            <option value="F">F</option>
+          </select>
+          <button class="btn btn-primary" onclick="filterTable()">查詢</button>
+          <button class="btn btn-secondary" onclick="resetFilter()">重設</button>
+        </div>
+
+        <div class="card">
+          <div class="card-header bg-white text-dark border-bottom">稽核紀錄</div>
+          <div class="card-body">
+            <h3>稽核紀錄清單</h3>
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover align-middle" id="logTable">
+                <thead class="table-light">
+                  <tr>
+                    <th class="sortable" onclick="sortTableByTime()">紀錄時間</th>
+                    <th>行員編號</th>
+                    <th>交易名稱</th>
+                    <th>執行動作</th>
+                    <th>交易執行結果</th>
+                    <th>IP 位址</th>
+                    <th>詳細資料</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr id="noDataRow" style="display:none;">
+                    <td colspan="7" class="text-center text-danger">查無此資料</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <footer class="main-footer">
+    <div class="float-right d-none d-sm-block"><b>Version</b> 3.2.0</div>
+    <strong>&copy; 2014-2024 <a href="https://www.leosys.com/">國眾電腦股份有限公司</a>.</strong> All rights reserved.
+  </footer>
+</div>
+
+<!-- 詳細資料 Modal -->
+<div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">稽核詳細資料</h5>
+        <button type="button" class="btn-close" id="modalCloseBtn"></button>
+      </div>
+      <div class="modal-body" id="modalBodyContent">
+        <!-- JS 填入內容 -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="modalFooterClose">關閉</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../../plugins/select2/js/select2.full.min.js"></script>
+<script src="../../dist/js/adminlte.min.js"></script>
+<script src="../../js/sidebar.js"></script>
+<script src="../../data/sidebar_menu.js"></script>
+<script src="../../data/logData.js"></script>
+
+<script>
+let sortAsc = true;
+let currentPage = 1;
+const pageSize = 10; // 每頁 10 筆
+
+document.addEventListener("DOMContentLoaded", () => {
+  const tbody = document.querySelector("#logTable tbody");
+
+  // 填入資料
+  logData.forEach((item, idx) => {
+    const row = document.createElement("tr");
+    const resultText = item.result === "S" ? "S" : item.result === "F" ? "F" : item.result;
+
+    row.innerHTML = `
+      <td>${item.time}</td>
+      <td>${item.user}</td>
+      <td>${item.actionName}</td>
+      <td>${item.actionCode}</td>
+      <td>${resultText}</td>
+      <td>${item.ip}</td>
+      <td><button class="btn btn-info btn-sm" onclick="openDetailModal(${idx})">詳細</button></td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  // 填入交易名稱
+  const actionSet = new Set(logData.map(d => d.actionName));
+  const actionSelect = document.getElementById("actionNameSelect");
+  actionSet.forEach(name => {
+    const opt = document.createElement("option");
+    opt.value = name;
+    opt.textContent = name;
+    actionSelect.appendChild(opt);
+  });
+
+  // Modal 關閉按鈕
+  const detailModalEl = document.getElementById('detailModal');
+  const detailModal = new bootstrap.Modal(detailModalEl);
+
+  document.getElementById("modalCloseBtn").addEventListener("click", () => detailModal.hide());
+  document.getElementById("modalFooterClose").addEventListener("click", () => detailModal.hide());
+
+  window.openDetailModal = function(idx) {
+    const item = logData[idx];
+    document.getElementById("modalBodyContent").innerHTML = `
+      <p><strong>紀錄時間：</strong> ${item.time}</p>
+      <p><strong>行員編號：</strong> ${item.user}</p>
+      <p><strong>交易名稱：</strong> ${item.actionName}</p>
+      <p><strong>執行動作：</strong> ${item.actionCode}</p>
+      <p><strong>交易執行結果：</strong> ${item.result}</p>
+      <p><strong>IP 位址：</strong> ${item.ip}</p>
+      <p><strong>其他資料：</strong> ${item.detail || '無'}</p>
+    `;
+    detailModal.show();
+  }
+
+  // 初始化分頁
+  setTimeout(() => showPage(1), 10);
+});
+
+// 排序
+function sortTableByTime() {
+  const tbody = document.querySelector("#logTable tbody"); 
+  const rows = Array.from(tbody.querySelectorAll("tr:not(#noDataRow)"));
+
+  rows.sort((a, b) => {
+    const da = new Date(a.cells[0].textContent.trim());
+    const db = new Date(b.cells[0].textContent.trim());
+    return sortAsc ? da - db : db - da;
+  });
+
+  sortAsc = !sortAsc;
+
+  const noDataRow = document.getElementById("noDataRow");
+  tbody.innerHTML = "";
+  tbody.appendChild(noDataRow);
+
+  rows.forEach(r => tbody.appendChild(r));
+
+  showPage(1); // 排序後重新分頁
+}
+
+// 篩選
+function filterTable() {
+  const startDate = document.getElementById("startDate").value;
+  const endDate = document.getElementById("endDate").value;
+  const userInput = document.getElementById("userInput").value.trim();
+  const actionName = document.getElementById("actionNameSelect").value;
+  const resultFilter = document.getElementById("resultSelect").value;
+
+  if (startDate && endDate && new Date(startDate) > new Date(endDate)) { 
+    alert("⚠️ 結束日期不能小於起始日期！");
+    return;
+  }
+
+  const rows = document.querySelectorAll("#logTable tbody tr:not(#noDataRow)");
+  let visibleCount = 0;
+
+  rows.forEach(row => {
+    const date = new Date(row.cells[0].textContent.trim());
+    const user = row.cells[1].textContent.trim();
+    const action = row.cells[2].textContent.trim();
+    const result = row.cells[4].textContent.trim();
+
+    let visible = true;
+    if (startDate && date < new Date(startDate)) visible = false;
+    if (endDate && date > new Date(endDate + "T23:59:59")) visible = false;
+    if (userInput && !user.includes(userInput)) visible = false;
+    if (actionName && action !== actionName) visible = false;
+    if (resultFilter && result !== resultFilter) visible = false;
+
+    row.style.display = visible ? "" : "none";
+    row.dataset.hidden = visible ? "false" : "true";
+
+    if (visible) visibleCount++;
+  });
+
+  document.getElementById("noDataRow").style.display = visibleCount === 0 ? "" : "none";
+
+  showPage(1); // 篩選後回到第 1 頁
+}
+
+function resetFilter() {
+  document.getElementById("startDate").value = "";
+  document.getElementById("endDate").value = "";
+  document.getElementById("userInput").value = "";
+  document.getElementById("actionNameSelect").value = "";
+  document.getElementById("resultSelect").value = "";
+
+  document.querySelectorAll("#logTable tbody tr:not(#noDataRow)").forEach(row => {
+    row.style.display = "";
+    row.dataset.hidden = "false";
+  });
+  document.getElementById("noDataRow").style.display = "none";
+
+  showPage(1); // 重置後回到第 1 頁
+}
+
+
+function showPage(page) {
+  const tbody = document.querySelector("#logTable tbody");
+  const rows = Array.from(tbody.querySelectorAll("tr:not(#noDataRow)"))
+                    .filter(r => r.dataset.hidden !== "true");
+
+  const total = rows.length;
+  const totalPages = Math.ceil(total / pageSize) || 1;
+
+  currentPage = Math.max(1, Math.min(page, totalPages));
+
+  const start = (currentPage - 1) * pageSize;
+  const end = currentPage * pageSize;
+
+  rows.forEach((row, index) => {
+    row.style.display = (index >= start && index < end) ? "" : "none";
+  });
+
+  renderPagination(total, totalPages);
+}
+
+function renderPagination(totalRows, totalPages) {
+  let container = document.getElementById("pagination");
+  
+  if (!container) {
+    container = document.createElement("div");
+    container.id = "pagination";
+    container.className = "mt-3 d-flex justify-content-between align-items-center";
+    document.querySelector("#logTable").after(container);
+  }
+
+  // 左側筆數資訊
+  const startIndex = totalRows ? (currentPage - 1) * pageSize + 1 : 0;
+  const endIndex = totalRows ? Math.min(currentPage * pageSize, totalRows) : 0;
+
+  const leftText = `
+    <div class="text-muted">
+      目前第 <b>${startIndex}</b> – <b>${endIndex}</b> 筆 / 共 <b>${totalRows}</b> 筆
+    </div>
+  `;
+
+  // 右側分頁按鈕
+  let rightHtml = `<ul class="pagination mb-0">`;
+
+  rightHtml += `
+    <li class="page-item ${currentPage === 1 ? "disabled" : ""}">
+      <a class="page-link" href="#" onclick="showPage(${currentPage - 1})">上一頁</a>
+    </li>
+  `;
+
+  for (let i = 1; i <= totalPages; i++) {
+    rightHtml += `
+      <li class="page-item ${i === currentPage ? "active" : ""}">
+        <a class="page-link" href="#" onclick="showPage(${i})">${i}</a>
+      </li>
+    `;
+  }
+
+  rightHtml += `
+    <li class="page-item ${currentPage === totalPages ? "disabled" : ""}">
+      <a class="page-link" href="#" onclick="showPage(${currentPage + 1})">下一頁</a>
+    </li>
+  `;
+
+  rightHtml += `</ul>`;
+
+  container.innerHTML = leftText + rightHtml;
+}
+</script>
+
+
+</body>
+</html>                           
