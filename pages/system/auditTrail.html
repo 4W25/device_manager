@@ -103,8 +103,8 @@
           <input type="date" id="startDate" class="form-control">
           <label for="endDate">結束日期：</label>
           <input type="date" id="endDate" class="form-control">
-          <label for="userInput">行員編號：</label>
-          <input type="text" id="userInput" class="form-control" placeholder="輸入行員編號">
+          <label for="userInput">使用者編號:</label>
+          <input type="text" id="userInput" class="form-control" placeholder="輸入使用者編號">
           <label for="actionNameSelect">交易名稱：</label>
           <select id="actionNameSelect" class="form-control">
             <option value="">全部</option>
@@ -128,7 +128,7 @@
                 <thead class="table-light">
                   <tr>
                     <th class="sortable" onclick="sortTableByTime()">紀錄時間</th>
-                    <th>行員編號</th>
+                    <th>使用者編號</th>
                     <th>交易名稱</th>
                     <th>執行動作</th>
                     <th>交易執行結果</th>
@@ -185,212 +185,179 @@
 <script src="../../data/logData.js"></script>
 
 <script>
+// ====== 測試資料 ======
+const logData = [];
+const users = ['A001','A002','A003','B001','B002'];
+const actions = ['Login','Logout','GetData','UpdateData','DeleteData'];
+const results = ['S','F'];
+for(let i=0;i<30;i++){
+  const date = new Date();
+  date.setDate(date.getDate() - Math.floor(Math.random()*30));
+  const timeStr = date.getFullYear() + '-' +
+                  String(date.getMonth()+1).padStart(2,'0') + '-' +
+                  String(date.getDate()).padStart(2,'0') + ' ' +
+                  String(date.getHours()).padStart(2,'0') + ':' +
+                  String(date.getMinutes()).padStart(2,'0') + ':' +
+                  String(date.getSeconds()).padStart(2,'0');
+  logData.push({
+    time: timeStr,
+    user: users[Math.floor(Math.random()*users.length)],
+    actionName: actions[Math.floor(Math.random()*actions.length)],
+    actionCode: 'Code'+(i+1),
+    result: results[Math.floor(Math.random()*results.length)],
+    ip: `192.168.1.${Math.floor(Math.random()*255)}`,
+    detail: '測試資料 '+(i+1)
+  });
+}
+
+let filteredData = [...logData];
 let sortAsc = true;
 let currentPage = 1;
-const pageSize = 10; // 每頁 10 筆
+const pageSize = 10;
 
-document.addEventListener("DOMContentLoaded", () => {
-  const tbody = document.querySelector("#logTable tbody");
-
-  // 填入資料
-  logData.forEach((item, idx) => {
-    const row = document.createElement("tr");
-    const resultText = item.result === "S" ? "S" : item.result === "F" ? "F" : item.result;
-
-    row.innerHTML = `
-      <td>${item.time}</td>
-      <td>${item.user}</td>
-      <td>${item.actionName}</td>
-      <td>${item.actionCode}</td>
-      <td>${resultText}</td>
-      <td>${item.ip}</td>
-      <td><button class="btn btn-info btn-sm" onclick="openDetailModal(${idx})">詳細</button></td>
-    `;
-    tbody.appendChild(row);
-  });
-
-  // 填入交易名稱
-  const actionSet = new Set(logData.map(d => d.actionName));
+document.addEventListener("DOMContentLoaded", ()=>{
+  // 填入交易名稱下拉選單
+  const actionSet = new Set(logData.map(d=>d.actionName));
   const actionSelect = document.getElementById("actionNameSelect");
-  actionSet.forEach(name => {
+  actionSet.forEach(name=>{
     const opt = document.createElement("option");
-    opt.value = name;
-    opt.textContent = name;
+    opt.value = name; opt.textContent=name;
     actionSelect.appendChild(opt);
   });
 
-  // Modal 關閉按鈕
+  // Modal
   const detailModalEl = document.getElementById('detailModal');
   const detailModal = new bootstrap.Modal(detailModalEl);
-
-  document.getElementById("modalCloseBtn").addEventListener("click", () => detailModal.hide());
-  document.getElementById("modalFooterClose").addEventListener("click", () => detailModal.hide());
-
-  window.openDetailModal = function(idx) {
-    const item = logData[idx];
+  document.getElementById("modalCloseBtn").addEventListener("click",()=>detailModal.hide());
+  document.getElementById("modalFooterClose").addEventListener("click",()=>detailModal.hide());
+  window.openDetailModal = function(idx){
+    const item = filteredData[idx];
     document.getElementById("modalBodyContent").innerHTML = `
       <p><strong>紀錄時間：</strong> ${item.time}</p>
-      <p><strong>行員編號：</strong> ${item.user}</p>
+      <p><strong>使用者編號:</strong> ${item.user}</p>
       <p><strong>交易名稱：</strong> ${item.actionName}</p>
       <p><strong>執行動作：</strong> ${item.actionCode}</p>
       <p><strong>交易執行結果：</strong> ${item.result}</p>
       <p><strong>IP 位址：</strong> ${item.ip}</p>
-      <p><strong>其他資料：</strong> ${item.detail || '無'}</p>
+      <p><strong>其他資料：</strong> ${item.detail}</p>
     `;
     detailModal.show();
   }
 
-  // 初始化分頁
-  setTimeout(() => showPage(1), 10);
+  showPage(1);
 });
 
-// 排序
-function sortTableByTime() {
-  const tbody = document.querySelector("#logTable tbody"); 
-  const rows = Array.from(tbody.querySelectorAll("tr:not(#noDataRow)"));
-
-  rows.sort((a, b) => {
-    const da = new Date(a.cells[0].textContent.trim());
-    const db = new Date(b.cells[0].textContent.trim());
+// ====== 排序 ======
+function sortTableByTime(){
+  filteredData.sort((a,b)=>{
+    const da = new Date(a.time), db = new Date(b.time);
     return sortAsc ? da - db : db - da;
   });
-
   sortAsc = !sortAsc;
-
-  const noDataRow = document.getElementById("noDataRow");
-  tbody.innerHTML = "";
-  tbody.appendChild(noDataRow);
-
-  rows.forEach(r => tbody.appendChild(r));
-
-  showPage(1); // 排序後重新分頁
+  showPage(1);
 }
 
-// 篩選
-function filterTable() {
+// ====== 篩選 ======
+function filterTable(){
   const startDate = document.getElementById("startDate").value;
   const endDate = document.getElementById("endDate").value;
   const userInput = document.getElementById("userInput").value.trim();
   const actionName = document.getElementById("actionNameSelect").value;
   const resultFilter = document.getElementById("resultSelect").value;
 
-  if (startDate && endDate && new Date(startDate) > new Date(endDate)) { 
+  if(startDate && endDate && new Date(startDate) > new Date(endDate)){
     alert("⚠️ 結束日期不能小於起始日期！");
     return;
   }
 
-  const rows = document.querySelectorAll("#logTable tbody tr:not(#noDataRow)");
-  let visibleCount = 0;
-
-  rows.forEach(row => {
-    const date = new Date(row.cells[0].textContent.trim());
-    const user = row.cells[1].textContent.trim();
-    const action = row.cells[2].textContent.trim();
-    const result = row.cells[4].textContent.trim();
-
+  filteredData = logData.filter(d=>{
     let visible = true;
-    if (startDate && date < new Date(startDate)) visible = false;
-    if (endDate && date > new Date(endDate + "T23:59:59")) visible = false;
-    if (userInput && !user.includes(userInput)) visible = false;
-    if (actionName && action !== actionName) visible = false;
-    if (resultFilter && result !== resultFilter) visible = false;
-
-    row.style.display = visible ? "" : "none";
-    row.dataset.hidden = visible ? "false" : "true";
-
-    if (visible) visibleCount++;
+    const date = new Date(d.time);
+    if(startDate && date < new Date(startDate)) visible=false;
+    if(endDate && date > new Date(endDate+'T23:59:59')) visible=false;
+    if(userInput && !d.user.includes(userInput)) visible=false;
+    if(actionName && d.actionName!==actionName) visible=false;
+    if(resultFilter && d.result!==resultFilter) visible=false;
+    return visible;
   });
 
-  document.getElementById("noDataRow").style.display = visibleCount === 0 ? "" : "none";
-
-  showPage(1); // 篩選後回到第 1 頁
+  showPage(1);
 }
 
-function resetFilter() {
-  document.getElementById("startDate").value = "";
-  document.getElementById("endDate").value = "";
-  document.getElementById("userInput").value = "";
-  document.getElementById("actionNameSelect").value = "";
-  document.getElementById("resultSelect").value = "";
-
-  document.querySelectorAll("#logTable tbody tr:not(#noDataRow)").forEach(row => {
-    row.style.display = "";
-    row.dataset.hidden = "false";
-  });
-  document.getElementById("noDataRow").style.display = "none";
-
-  showPage(1); // 重置後回到第 1 頁
+// ====== 重置 ======
+function resetFilter(){
+  document.getElementById("startDate").value='';
+  document.getElementById("endDate").value='';
+  document.getElementById("userInput").value='';
+  document.getElementById("actionNameSelect").value='';
+  document.getElementById("resultSelect").value='';
+  filteredData = [...logData];
+  showPage(1);
 }
 
-
-function showPage(page) {
+// ====== 分頁 ======
+function showPage(page){
+  currentPage = page;
   const tbody = document.querySelector("#logTable tbody");
-  const rows = Array.from(tbody.querySelectorAll("tr:not(#noDataRow)"))
-                    .filter(r => r.dataset.hidden !== "true");
+  tbody.innerHTML = '';
+  const start = (page-1)*pageSize;
+  const end = start+pageSize;
+  const rows = filteredData.slice(start,end);
 
-  const total = rows.length;
-  const totalPages = Math.ceil(total / pageSize) || 1;
+  if(rows.length===0){
+    tbody.innerHTML=`<tr id="noDataRow"><td colspan="7" class="text-center text-danger">查無此資料</td></tr>`;
+  }else{
+    rows.forEach((d,idx)=>{
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${d.time}</td>
+        <td>${d.user}</td>
+        <td>${d.actionName}</td>
+        <td>${d.actionCode}</td>
+        <td>${d.result}</td>
+        <td>${d.ip}</td>
+        <td><button class="btn btn-info btn-sm" onclick="openDetailModal(${idx})">詳細</button></td>
+      `;
+      tbody.appendChild(row);
+    });
+  }
 
-  currentPage = Math.max(1, Math.min(page, totalPages));
-
-  const start = (currentPage - 1) * pageSize;
-  const end = currentPage * pageSize;
-
-  rows.forEach((row, index) => {
-    row.style.display = (index >= start && index < end) ? "" : "none";
-  });
-
-  renderPagination(total, totalPages);
+  renderPagination(filteredData.length, Math.ceil(filteredData.length/pageSize));
 }
 
-function renderPagination(totalRows, totalPages) {
+function renderPagination(totalRows,totalPages){
   let container = document.getElementById("pagination");
-  
-  if (!container) {
-    container = document.createElement("div");
-    container.id = "pagination";
-    container.className = "mt-3 d-flex justify-content-between align-items-center";
+  if(!container){
+    container=document.createElement('div');
+    container.id='pagination';
+    container.className='mt-3 d-flex justify-content-between align-items-center';
     document.querySelector("#logTable").after(container);
   }
 
-  // 左側筆數資訊
-  const startIndex = totalRows ? (currentPage - 1) * pageSize + 1 : 0;
-  const endIndex = totalRows ? Math.min(currentPage * pageSize, totalRows) : 0;
+  const startIndex = totalRows ? (currentPage-1)*pageSize+1 : 0;
+  const endIndex = totalRows ? Math.min(currentPage*pageSize,totalRows) : 0;
 
-  const leftText = `
-    <div class="text-muted">
-      目前第 <b>${startIndex}</b> – <b>${endIndex}</b> 筆 / 共 <b>${totalRows}</b> 筆
-    </div>
-  `;
+  const leftText = `<div class="text-muted">目前第 <b>${startIndex}</b> – <b>${endIndex}</b> 筆 / 共 <b>${totalRows}</b> 筆</div>`;
 
-  // 右側分頁按鈕
-  let rightHtml = `<ul class="pagination mb-0">`;
+  let rightHtml = '<ul class="pagination mb-0">';
+  rightHtml += `<li class="page-item ${currentPage===1?'disabled':''}">
+    <a class="page-link" href="#" onclick="showPage(${currentPage-1});return false;">上一頁</a>
+  </li>`;
 
-  rightHtml += `
-    <li class="page-item ${currentPage === 1 ? "disabled" : ""}">
-      <a class="page-link" href="#" onclick="showPage(${currentPage - 1})">上一頁</a>
-    </li>
-  `;
-
-  for (let i = 1; i <= totalPages; i++) {
-    rightHtml += `
-      <li class="page-item ${i === currentPage ? "active" : ""}">
-        <a class="page-link" href="#" onclick="showPage(${i})">${i}</a>
-      </li>
-    `;
+  for(let i=1;i<=totalPages;i++){
+    rightHtml += `<li class="page-item ${i===currentPage?'active':''}">
+      <a class="page-link" href="#" onclick="showPage(${i});return false;">${i}</a>
+    </li>`;
   }
 
-  rightHtml += `
-    <li class="page-item ${currentPage === totalPages ? "disabled" : ""}">
-      <a class="page-link" href="#" onclick="showPage(${currentPage + 1})">下一頁</a>
-    </li>
-  `;
-
-  rightHtml += `</ul>`;
+  rightHtml += `<li class="page-item ${currentPage===totalPages?'disabled':''}">
+    <a class="page-link" href="#" onclick="showPage(${currentPage+1});return false;">下一頁</a>
+  </li></ul>`;
 
   container.innerHTML = leftText + rightHtml;
 }
 </script>
+
 
 
 </body>

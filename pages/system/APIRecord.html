@@ -153,8 +153,25 @@ body { min-width: 1200px; text-align: center; }
           </div>
 
           <!-- Tab 分頁 -->
-          <ul class="nav nav-tabs" id="apiTab" role="tablist"></ul>
-          <div class="tab-content" id="apiTabContent"></div>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th style="cursor:pointer;" onclick="sortByTime()">紀錄時間 ⬍</th>
+            <th>使用者</th>
+            <th>API 名稱</th>
+            <th>結果</th>
+            <th>IP</th>
+            <th>類別</th>
+            <th>詳細</th>
+        </tr>
+    </thead>
+    <tbody id="tbody-main"></tbody>
+</table>
+
+
+<!-- 分頁 -->
+<div id="pagination-main" class="d-flex justify-content-between align-items-center mt-2"></div>
+         
         </div>
       </div>
     </section>
@@ -224,216 +241,155 @@ const apiData = [
 {time:'2025-11-21 10:05:55', user:'D005', api:'GenerateReport', result:'S', ip:'192.168.4.14', type:'Report', detail:'報表產生成功'}
 ];
 
-/*生成 Tabs 與表格框架*/
-const types = [...new Set(apiData.map(d => d.type))];
-const tabList = $("#apiTab");
-const tabContent = $("#apiTabContent");
 
-types.forEach((type, index) => {
-const active = index === 0 ? "active" : "";
-tabList.append(`
- <li class="nav-item">
-   <a class="nav-link ${active}" data-toggle="tab" href="#content-${type}">${type}</a>
- </li>
-`);
-
-tabContent.append(`
- <div class="tab-pane fade show ${active}" id="content-${type}">
-   <table class="table table-bordered table-hover">
-     <thead>
-       <tr>
-         <th>紀錄時間</th>
-         <th>使用者</th>
-         <th>API 名稱</th>
-         <th>結果</th>
-         <th>IP</th>
-         <th>詳細</th>
-       </tr>
-     </thead>
-     <tbody id="tbody-${type}"></tbody>
-   </table>
-   <!-- 分頁/筆數顯示會插入在這裡 -->
- </div>
-`);
-});
-
-/*多表格分頁功能*/
+/*===== 單一表格參數 =====*/
 const pageSize = 10;
-let pageState = {};
-types.forEach(t => pageState[t] = 1);
+let currentPage = 1;
+let filteredData = apiData;
 
-//顯示分頁資料
-function showPage(type, page) {
-const tbody = document.querySelector(`#tbody-${type}`);
-const rows = Array.from(tbody.querySelectorAll(`tr:not(#noDataRow-${type})`));
 
-const total = rows.length;
-const totalPages = Math.ceil(total / pageSize) || 1;
+/*===== 分頁顯示 =====*/
+function showPage(page) {
+    const tbody = document.querySelector("#tbody-main");
+    const total = filteredData.length;
+    const totalPages = Math.ceil(total / pageSize) || 1;
 
-pageState[type] = Math.max(1, Math.min(page, totalPages));
-const start = (pageState[type] - 1) * pageSize;
-const end = start + pageSize;
+    currentPage = Math.max(1, Math.min(page, totalPages));
 
-rows.forEach((row, idx) => {
- row.style.display = (idx >= start && idx < end) ? "" : "none";
-});
+    const start = (currentPage - 1) * pageSize;
+    const end = start + pageSize;
 
-renderPagination(type, totalPages);
+    const pageRows = filteredData.slice(start, end);
+
+    tbody.innerHTML = "";
+
+    if (pageRows.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7">查無資料</td></tr>`;
+    } else {
+        pageRows.forEach(d => {
+            tbody.innerHTML += `
+            <tr>
+                <td>${d.time}</td>
+                <td>${d.user}</td>
+                <td>${d.api}</td>
+                <td>${d.result}</td>
+                <td>${d.ip}</td>
+                <td>${d.type}</td>
+                <td><button class="btn btn-info btn-sm" onclick="showDetail(${apiData.indexOf(d)})">詳細</button></td>
+            </tr>`;
+        });
+    }
+
+    renderPagination(totalPages);
 }
 
 
-function renderPagination(type, totalPages) {
-let container = document.getElementById(`pagination-${type}`);
+/*===== 分頁列 =====*/
+function renderPagination(totalPages) {
+    const container = document.querySelector("#pagination-main");
 
-if (!container) {
- container = document.createElement("div");
- container.id = `pagination-${type}`;
- container.className = "mt-3 d-flex justify-content-between align-items-center";
- document.querySelector(`#tbody-${type}`).parentElement.after(container);
+    const startIndex = filteredData.length ? (currentPage - 1) * pageSize + 1 : 0;
+    const endIndex = filteredData.length ? Math.min(currentPage * pageSize, filteredData.length) : 0;
+
+    let html = `
+    <div class="text-muted">
+        目前第 <b>${startIndex}</b> – <b>${endIndex}</b> 筆 / 共 <b>${filteredData.length}</b> 筆
+    </div>
+    <ul class="pagination mb-0">`;
+
+    html += `
+    <li class="page-item ${currentPage === 1 ? "disabled" : ""}">
+        <a class="page-link" href="#" onclick="showPage(${currentPage - 1})">上一頁</a>
+    </li>`;
+
+    for (let i = 1; i <= totalPages; i++) {
+        html += `
+        <li class="page-item ${i === currentPage ? "active" : ""}">
+            <a class="page-link" href="#" onclick="showPage(${i})">${i}</a>
+        </li>`;
+    }
+
+    html += `
+    <li class="page-item ${currentPage === totalPages ? "disabled" : ""}">
+        <a class="page-link" href="#" onclick="showPage(${currentPage + 1})">下一頁</a>
+    </li>
+    </ul>`;
+
+    container.innerHTML = html;
 }
 
-const rows = Array.from(document.querySelectorAll(`#tbody-${type} tr:not(#noDataRow-${type})`));
-const totalRows = rows.length;
-const currentPage = pageState[type];
-const startIndex = totalRows ? (currentPage - 1) * pageSize + 1 : 0;
-const endIndex = totalRows ? Math.min(currentPage * pageSize, totalRows) : 0;
 
-const leftText = `
- <div class="text-muted">
-   目前第 <b>${startIndex}</b> – <b>${endIndex}</b> 筆 / 共 <b>${totalRows}</b> 筆
- </div>
-`;
-
-let rightHtml = `<ul class="pagination mb-0">`;
-
-rightHtml += `
- <li class="page-item ${currentPage === 1 ? "disabled" : ""}">
-   <a class="page-link" href="#" onclick="showPage('${type}', ${currentPage - 1})">上一頁</a>
- </li>`;
-
-for (let i = 1; i <= totalPages; i++) {
- rightHtml += `
-   <li class="page-item ${i === currentPage ? "active" : ""}">
-     <a class="page-link" href="#" onclick="showPage('${type}', ${i})">${i}</a>
-   </li>`;
-}
-
-rightHtml += `
- <li class="page-item ${currentPage === totalPages ? "disabled" : ""}">
-   <a class="page-link" href="#" onclick="showPage('${type}', ${currentPage + 1})">下一頁</a>
- </li>
-`;
-
-rightHtml += `</ul>`;
-container.innerHTML = leftText + rightHtml;
-}
-
-/* 生成表格內容*/
-function renderTable() {
-types.forEach(type => {
- const tbody = $(`#tbody-${type}`);
- tbody.empty();
-
- const filtered = apiData.filter(d => d.type === type);
-
- if (filtered.length === 0) {
-   tbody.append(`<tr id="noDataRow-${type}"><td colspan="6">查無此資料</td></tr>`);
- } else {
-   filtered.forEach(d => {
-     tbody.append(`
-       <tr>
-         <td>${d.time}</td>
-         <td>${d.user}</td>
-         <td>${d.api}</td>
-         <td>${d.result}</td>
-         <td>${d.ip}</td>
-         <td><button class="btn btn-info btn-sm" onclick="showDetail(${apiData.indexOf(d)})">詳細</button></td>
-       </tr>
-     `);
-   });
- }
-
- showPage(type, 1); // 初始化每個 type 第 1 頁
-});
-}
-
-/*Modal 詳細內容*/
+/*===== 詳細 Modal =====*/
 function showDetail(idx) {
-const d = apiData[idx];
-$('#modalBodyContent').html(`
- <p><b>時間:</b> ${d.time}</p>
- <p><b>使用者:</b> ${d.user}</p>
- <p><b>API 名稱:</b> ${d.api}</p>
- <p><b>結果:</b> ${d.result}</p>
- <p><b>IP:</b> ${d.ip}</p>
- <p><b>詳細:</b> ${d.detail}</p>
-`);
-$('#detailModal').modal('show');
+    const d = apiData[idx];
+    $('#modalBodyContent').html(`
+        <p><b>時間:</b> ${d.time}</p>
+        <p><b>使用者:</b> ${d.user}</p>
+        <p><b>API 名稱:</b> ${d.api}</p>
+        <p><b>結果:</b> ${d.result}</p>
+        <p><b>IP:</b> ${d.ip}</p>
+        <p><b>類別:</b> ${d.type}</p>
+        <p><b>詳細:</b> ${d.detail}</p>
+    `);
+    $('#detailModal').modal('show');
 }
 
-/* 篩選功能 */
+
+/*===== 篩選功能 =====*/
 function filterTable() {
-const start = $('#startDate').val();
-const end = $('#endDate').val();
-const user = $('#userInput').val().trim();
-const apiName = $('#apiNameSelect').val();
-const result = $('#statusSelect').val();
+    const start = $('#startDate').val();
+    const end = $('#endDate').val();
+    const user = $('#userInput').val().trim();
+    const apiName = $('#apiNameSelect').val();
+    const result = $('#statusSelect').val();
 
-if (start && end && new Date(start) > new Date(end)) {
- alert("⚠️ 結束日期不能小於起始日期！");
- return;
-}
+    if (start && end && new Date(start) > new Date(end)) {
+        alert("⚠️ 結束日期不能小於起始日期！");
+        return;
+    }
 
-types.forEach(type => {
- const tbody = $(`#tbody-${type}`);
- tbody.empty();
+    filteredData = apiData.filter(d =>
+        (!start || new Date(d.time) >= new Date(start)) &&
+        (!end || new Date(d.time) <= new Date(end + "T23:59:59")) &&
+        (!user || d.user.includes(user)) &&
+        (!apiName || d.api === apiName) &&
+        (!result || d.result === result)
+    );
 
- const filtered = apiData.filter(d =>
-   d.type === type &&
-   (!start || new Date(d.time) >= new Date(start)) &&
-   (!end || new Date(d.time) <= new Date(end + "T23:59:59")) &&
-   (!user || d.user.includes(user)) &&
-   (!apiName || d.api === apiName) &&
-   (!result || d.result === result)
- );
-
- if (filtered.length === 0) {
-   tbody.append(`<tr id="noDataRow-${type}"><td colspan="6">查無此資料</td></tr>`);
- } else {
-   filtered.forEach(d => {
-     tbody.append(`
-       <tr>
-         <td>${d.time}</td>
-         <td>${d.user}</td>
-         <td>${d.api}</td>
-         <td>${d.result}</td>
-         <td>${d.ip}</td>
-         <td><button class="btn btn-info btn-sm" onclick="showDetail(${apiData.indexOf(d)})">詳細</button></td>
-       </tr>
-     `);
-   });
- }
-
- showPage(type, 1); // 篩選後重置到第 1 頁
-});
+    showPage(1);
 }
 
 function resetFilter() {
-$('#startDate,#endDate,#userInput,#apiNameSelect,#statusSelect').val('');
-renderTable();
+    $('#startDate,#endDate,#userInput,#apiNameSelect,#statusSelect').val('');
+    filteredData = apiData;
+    showPage(1);
 }
 
-//頁面初始化/
-$(document).ready(function() {
-renderTable();
 
-const apiNames = [...new Set(apiData.map(d => d.api))];
-apiNames.forEach(name =>
- $('#apiNameSelect').append(`<option value="${name}">${name}</option>`)
-);
+/*===== 頁面初始化 =====*/
+$(document).ready(function() {
+    showPage(1);
+
+    const apiNames = [...new Set(apiData.map(d => d.api))];
+    apiNames.forEach(name =>
+        $('#apiNameSelect').append(`<option value="${name}">${name}</option>`)
+    );
 });
+let timeSortAsc = true;  // true = 小 → 大，false = 大 → 小
+
+function sortByTime() {
+    filteredData.sort((a, b) => {
+        const t1 = new Date(a.time);
+        const t2 = new Date(b.time);
+        return timeSortAsc ? t1 - t2 : t2 - t1;
+    });
+
+    timeSortAsc = !timeSortAsc; // 每次點擊切換排序方向
+    showPage(1); // 重新顯示第一頁
+}
 
 </script>
+
 
 </body>
 </html>
