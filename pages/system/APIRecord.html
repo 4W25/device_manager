@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -21,11 +21,9 @@
 <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
 
 <style>
-/* 基本樣式 */
-.nav-tabs { margin-bottom: 20px; }
 .table th, .table td { 
   vertical-align: middle !important; 
-  text-align: center;       /* ✅ 表格內容置中 */
+  text-align: center;       
 }
 .filter-bar { 
   display:flex; 
@@ -41,15 +39,6 @@
   .filter-bar button { width:48%; }
 }
 
-/* 查無資料列置中 */
-#noDataRow td { 
-  text-align:center; 
-  color:#dc3545; 
-  font-weight:bold; 
-  background:#fff3f3; 
-}
-
-/* 分頁區置中 */
 #pagination {
   display: flex;
   justify-content: space-between;
@@ -58,24 +47,6 @@
 }
 #pagination .text-muted { text-align: center; flex:1; }
 #pagination ul.pagination { justify-content: center; margin:0; }
-
-
-body { min-width: 1200px; text-align: center; }
-.col-sm-2 h1 {
-  text-align: left;   /* ✅ 強制靠左 */
-  margin: 0;          /* 可選，避免多餘 margin */
-}
-/* Sidebar 菜單文字靠左 */
-.nav-sidebar .nav-item > .nav-link {
-  text-align: left;      /* 文字靠左 */
-  padding-left: 1rem;    /* 左側內距，可根據需求調整 */
-}
-
-.nav-sidebar .nav-item {
-  justify-content: flex-start; /* 去掉預設的對齊方式 */
-}
-
-
 </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -97,24 +68,24 @@ body { min-width: 1200px; text-align: center; }
 
   <!-- Sidebar -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <a href="../../index.html" class="brand-link"> <img
-      src="../../dist/img/device01.png" alt="Logo"
-      class="brand-image img-circle elevation-3" style="opacity: .8">
+    <a href="../../index.html" class="brand-link">
+      <img src="../../dist/img/device01.png" alt="Logo" class="brand-image img-circle elevation-3" style="opacity:.8">
       <span class="brand-text font-weight-light">自動化設備管理平臺</span>
     </a>
+
     <div class="sidebar">
+      <!-- 使用者資訊 -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="../../dist/img/userNobody.png"
-            class="img-circle elevation-2" alt="User Image">
+          <img src="../../dist/img/userNobody.png" class="img-circle elevation-2" alt="User Image">
         </div>
-        <div class="info">
-          <a href="#" class="d-block">登入者姓名</a>
-        </div>
+        <div class="info"><a href="#" class="d-block">登入者姓名</a></div>
       </div>
+
+      <!-- 側邊選單 -->
       <nav class="mt-2">
-        <ul id="sidebarMenu" class="nav nav-pills nav-sidebar flex-column"
-          data-widget="treeview" role="menu" data-accordion="false">
+        <ul id="sidebarMenu" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+          <!-- sidebar.js 自動填充選單 -->
         </ul>
       </nav>
     </div>
@@ -125,7 +96,7 @@ body { min-width: 1200px; text-align: center; }
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-2  "><h1>API 紀錄總覽</h1></div>
+          <div class="col-sm-2"><h1>API 紀錄總覽</h1></div>
           <div class="col-sm-10">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="../../index.html">首頁</a></li>
@@ -144,7 +115,6 @@ body { min-width: 1200px; text-align: center; }
           <div class="filter-bar">
             <label for="startDate">起始日期：</label><input type="date" id="startDate" class="form-control">
             <label for="endDate">結束日期：</label><input type="date" id="endDate" class="form-control">
-            <label for="userInput">使用者：</label><input type="text" id="userInput" class="form-control" placeholder="輸入使用者">
             <label for="apiNameSelect">API 名稱：</label><select id="apiNameSelect" class="form-control"><option value="">全部</option></select>
             <label for="statusSelect">執行結果：</label>
             <select id="statusSelect" class="form-control"><option value="">全部</option><option value="S">S</option><option value="F">F</option></select>
@@ -152,26 +122,23 @@ body { min-width: 1200px; text-align: center; }
             <button class="btn btn-secondary" onclick="resetFilter()">重設</button>
           </div>
 
-          <!-- Tab 分頁 -->
-<table class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <th style="cursor:pointer;" onclick="sortByTime()">紀錄時間 ⬍</th>
-            <th>使用者</th>
-            <th>API 名稱</th>
-            <th>結果</th>
-            <th>IP</th>
-            <th>類別</th>
-            <th>詳細</th>
-        </tr>
-    </thead>
-    <tbody id="tbody-main"></tbody>
-</table>
+          <!-- 表格 -->
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th style="cursor:pointer;" onclick="sortByTime()">紀錄時間 ⬍</th>
+                <th>API 名稱</th>
+                <th>結果</th>
+                <th>IP</th>
+                <th>類別</th>
+                <th>詳細</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-main"></tbody>
+          </table>
 
-
-<!-- 分頁 -->
-<div id="pagination-main" class="d-flex justify-content-between align-items-center mt-2"></div>
-         
+          <!-- 分頁 -->
+          <div id="pagination-main" class="d-flex justify-content-between align-items-center mt-2"></div>
         </div>
       </div>
     </section>
@@ -200,6 +167,7 @@ body { min-width: 1200px; text-align: center; }
   </div>
 </div>
 
+<!-- JS -->
 <script src="../../plugins/jquery/jquery.min.js"></script>
 <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
@@ -207,48 +175,46 @@ body { min-width: 1200px; text-align: center; }
 <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 <script src="../../plugins/select2/js/select2.full.min.js"></script>
 <script src="../../dist/js/adminlte.min.js"></script>
+
+<!-- Sidebar scripts -->
 <script src="../../js/sidebar.js"></script>
 <script src="../../data/sidebar_menu.js"></script>
 
 <script>
-/*API 原始資料*/
+// API 資料
 const apiData = [
-{time:'2025-11-20 10:00:00', user:'A001', api:'Login', result:'S', ip:'192.168.1.10', type:'Auth', detail:'登入成功'},
-{time:'2025-11-20 10:05:00', user:'A002', api:'GetData', result:'F', ip:'192.168.1.12', type:'Data', detail:'資料不存在'},
-{time:'2025-11-20 10:10:00', user:'A003', api:'Update', result:'S', ip:'192.168.1.13', type:'Data', detail:'更新成功'},
-{time:'2025-11-18 09:12:30', user:'A001', api:'Login', result:'S', ip:'192.168.1.10', type:'Auth', detail:'登入成功'},
-{time:'2025-11-19 15:45:10', user:'A002', api:'Login', result:'F', ip:'192.168.1.11', type:'Auth', detail:'密碼錯誤'},
-{time:'2025-11-20 11:30:55', user:'A003', api:'Login', result:'S', ip:'192.168.1.12', type:'Auth', detail:'登入成功'},
-{time:'2025-11-20 14:05:20', user:'A004', api:'Logout', result:'S', ip:'192.168.1.13', type:'Auth', detail:'登出成功'},
-{time:'2025-11-21 08:50:00', user:'A005', api:'Login', result:'F', ip:'192.168.1.14', type:'Auth', detail:'帳號不存在'},
+{time:'2025-11-20 10:00:00', api:'Login', result:'S', ip:'192.168.1.10', type:'Auth', detail:'登入成功'},
+{time:'2025-11-20 10:05:00', api:'GetData', result:'F', ip:'192.168.1.12', type:'Data', detail:'資料不存在'},
+{time:'2025-11-20 10:10:00', api:'Update', result:'S', ip:'192.168.1.13', type:'Data', detail:'更新成功'},
+{time:'2025-11-18 09:12:30', api:'Login', result:'S', ip:'192.168.1.10', type:'Auth', detail:'登入成功'},
+{time:'2025-11-19 15:45:10', api:'Login', result:'F', ip:'192.168.1.11', type:'Auth', detail:'密碼錯誤'},
+{time:'2025-11-20 11:30:55', api:'Login', result:'S', ip:'192.168.1.12', type:'Auth', detail:'登入成功'},
+{time:'2025-11-20 14:05:20', api:'Logout', result:'S', ip:'192.168.1.13', type:'Auth', detail:'登出成功'},
+{time:'2025-11-21 08:50:00', api:'Login', result:'F', ip:'192.168.1.14', type:'Auth', detail:'帳號不存在'},
 
-{time:'2025-11-18 10:20:15', user:'B001', api:'GetData', result:'S', ip:'192.168.2.10', type:'Data', detail:'取得資料成功'},
-{time:'2025-11-19 16:50:05', user:'B002', api:'Update', result:'F', ip:'192.168.2.11', type:'Data', detail:'更新失敗'},
-{time:'2025-11-20 12:45:30', user:'B003', api:'GetData', result:'F', ip:'192.168.2.12', type:'Data', detail:'資料不存在'},
-{time:'2025-11-21 09:15:00', user:'B004', api:'Update', result:'S', ip:'192.168.2.13', type:'Data', detail:'更新成功'},
-{time:'2025-11-21 10:35:20', user:'B005', api:'GetData', result:'S', ip:'192.168.2.14', type:'Data', detail:'取得資料成功'},
+{time:'2025-11-18 10:20:15', api:'GetData', result:'S', ip:'192.168.2.10', type:'Data', detail:'取得資料成功'},
+{time:'2025-11-19 16:50:05', api:'Update', result:'F', ip:'192.168.2.11', type:'Data', detail:'更新失敗'},
+{time:'2025-11-20 12:45:30', api:'GetData', result:'F', ip:'192.168.2.12', type:'Data', detail:'資料不存在'},
+{time:'2025-11-21 09:15:00', api:'Update', result:'S', ip:'192.168.2.13', type:'Data', detail:'更新成功'},
+{time:'2025-11-21 10:35:20', api:'GetData', result:'S', ip:'192.168.2.14', type:'Data', detail:'取得資料成功'},
 
-{time:'2025-11-18 11:05:10', user:'C001', api:'Restart', result:'S', ip:'192.168.3.10', type:'System', detail:'系統重啟成功'},
-{time:'2025-11-19 14:25:40', user:'C002', api:'Restart', result:'F', ip:'192.168.3.11', type:'System', detail:'重啟失敗'},
-{time:'2025-11-20 15:50:30', user:'C003', api:'Backup', result:'S', ip:'192.168.3.12', type:'System', detail:'備份完成'},
-{time:'2025-11-20 16:15:45', user:'C004', api:'Backup', result:'F', ip:'192.168.3.13', type:'System', detail:'備份失敗'},
-{time:'2025-11-21 09:45:20', user:'C005', api:'Restart', result:'S', ip:'192.168.3.14', type:'System', detail:'系統重啟成功'},
+{time:'2025-11-18 11:05:10', api:'Restart', result:'S', ip:'192.168.3.10', type:'System', detail:'系統重啟成功'},
+{time:'2025-11-19 14:25:40', api:'Restart', result:'F', ip:'192.168.3.11', type:'System', detail:'重啟失敗'},
+{time:'2025-11-20 15:50:30', api:'Backup', result:'S', ip:'192.168.3.12', type:'System', detail:'備份完成'},
+{time:'2025-11-20 16:15:45', api:'Backup', result:'F', ip:'192.168.3.13', type:'System', detail:'備份失敗'},
+{time:'2025-11-21 09:45:20', api:'Restart', result:'S', ip:'192.168.3.14', type:'System', detail:'系統重啟成功'},
 
-{time:'2025-11-18 13:10:10', user:'D001', api:'GenerateReport', result:'S', ip:'192.168.4.10', type:'Report', detail:'報表產生成功'},
-{time:'2025-11-19 15:30:05', user:'D002', api:'GenerateReport', result:'F', ip:'192.168.4.11', type:'Report', detail:'報表產生失敗'},
-{time:'2025-11-20 14:50:20', user:'D003', api:'GenerateReport', result:'S', ip:'192.168.4.12', type:'Report', detail:'報表產生成功'},
-{time:'2025-11-20 16:20:40', user:'D004', api:'GenerateReport', result:'F', ip:'192.168.4.13', type:'Report', detail:'資料不足，產生失敗'},
-{time:'2025-11-21 10:05:55', user:'D005', api:'GenerateReport', result:'S', ip:'192.168.4.14', type:'Report', detail:'報表產生成功'}
+{time:'2025-11-18 13:10:10', api:'GenerateReport', result:'S', ip:'192.168.4.10', type:'Report', detail:'報表產生成功'},
+{time:'2025-11-19 15:30:05', api:'GenerateReport', result:'F', ip:'192.168.4.11', type:'Report', detail:'報表產生失敗'},
+{time:'2025-11-20 14:50:20', api:'GenerateReport', result:'S', ip:'192.168.4.12', type:'Report', detail:'報表產生成功'},
+{time:'2025-11-20 16:20:40', api:'GenerateReport', result:'F', ip:'192.168.4.13', type:'Report', detail:'資料不足，產生失敗'},
+{time:'2025-11-21 10:05:55', api:'GenerateReport', result:'S', ip:'192.168.4.14', type:'Report', detail:'報表產生成功'}
 ];
 
-
-/*===== 單一表格參數 =====*/
 const pageSize = 10;
 let currentPage = 1;
 let filteredData = apiData;
 
-
-/*===== 分頁顯示 =====*/
 function showPage(page) {
     const tbody = document.querySelector("#tbody-main");
     const total = filteredData.length;
@@ -264,13 +230,12 @@ function showPage(page) {
     tbody.innerHTML = "";
 
     if (pageRows.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7">查無資料</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6">查無資料</td></tr>`;
     } else {
         pageRows.forEach(d => {
             tbody.innerHTML += `
             <tr>
                 <td>${d.time}</td>
-                <td>${d.user}</td>
                 <td>${d.api}</td>
                 <td>${d.result}</td>
                 <td>${d.ip}</td>
@@ -283,8 +248,6 @@ function showPage(page) {
     renderPagination(totalPages);
 }
 
-
-/*===== 分頁列 =====*/
 function renderPagination(totalPages) {
     const container = document.querySelector("#pagination-main");
 
@@ -318,13 +281,10 @@ function renderPagination(totalPages) {
     container.innerHTML = html;
 }
 
-
-/*===== 詳細 Modal =====*/
 function showDetail(idx) {
     const d = apiData[idx];
     $('#modalBodyContent').html(`
         <p><b>時間:</b> ${d.time}</p>
-        <p><b>使用者:</b> ${d.user}</p>
         <p><b>API 名稱:</b> ${d.api}</p>
         <p><b>結果:</b> ${d.result}</p>
         <p><b>IP:</b> ${d.ip}</p>
@@ -334,12 +294,9 @@ function showDetail(idx) {
     $('#detailModal').modal('show');
 }
 
-
-/*===== 篩選功能 =====*/
 function filterTable() {
     const start = $('#startDate').val();
     const end = $('#endDate').val();
-    const user = $('#userInput').val().trim();
     const apiName = $('#apiNameSelect').val();
     const result = $('#statusSelect').val();
 
@@ -351,7 +308,6 @@ function filterTable() {
     filteredData = apiData.filter(d =>
         (!start || new Date(d.time) >= new Date(start)) &&
         (!end || new Date(d.time) <= new Date(end + "T23:59:59")) &&
-        (!user || d.user.includes(user)) &&
         (!apiName || d.api === apiName) &&
         (!result || d.result === result)
     );
@@ -360,13 +316,11 @@ function filterTable() {
 }
 
 function resetFilter() {
-    $('#startDate,#endDate,#userInput,#apiNameSelect,#statusSelect').val('');
+    $('#startDate,#endDate,#apiNameSelect,#statusSelect').val('');
     filteredData = apiData;
     showPage(1);
 }
 
-
-/*===== 頁面初始化 =====*/
 $(document).ready(function() {
     showPage(1);
 
@@ -375,7 +329,8 @@ $(document).ready(function() {
         $('#apiNameSelect').append(`<option value="${name}">${name}</option>`)
     );
 });
-let timeSortAsc = true;  // true = 小 → 大，false = 大 → 小
+
+let timeSortAsc = true;
 
 function sortByTime() {
     filteredData.sort((a, b) => {
@@ -384,12 +339,10 @@ function sortByTime() {
         return timeSortAsc ? t1 - t2 : t2 - t1;
     });
 
-    timeSortAsc = !timeSortAsc; // 每次點擊切換排序方向
-    showPage(1); // 重新顯示第一頁
+    timeSortAsc = !timeSortAsc;
+    showPage(1);
 }
-
 </script>
-
-
 </body>
 </html>
+
