@@ -48,8 +48,8 @@ const sidebarMenu = [
 			{ id: "item14", name: '選單設定', href: basePath +'pages/system/menu.html', order: 3 },
 			{ id: "item15", name: '權限設定', href: basePath +'pages/system/permission.html', order: 1 },
 			{ id: "item16", name: '權限設定覆核', href: basePath +'pages/system/permissionReview.html', order: 1 },
-			{ id: "item17", name: '稽核軌跡', href: basePath +'pages/system/permission2.html', order: 4 },
-			{ id: "item18", name: 'API紀錄', href: basePath +'pages/system/permission3.html', order: 5 },
+			{ id: "item17", name: '稽核軌跡', href: basePath +'pages/system/auditTrail.html', order: 4 },
+			{ id: "item18", name: 'API紀錄', href: basePath +'pages/system/APIRecord.html', order: 5 },
 		]
 	}
 ]
