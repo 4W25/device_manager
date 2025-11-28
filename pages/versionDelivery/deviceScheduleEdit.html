@@ -150,28 +150,23 @@
                       </select>
                     </div>
                     <div class="form-group">
-                      <label class="font-weight-bold d-block">派送方式<span class="text-danger">*必填</span></label>
+                      <label class="font-weight-bold d-block">派送方式</label>
                       <div class="d-flex flex-wrap">
-                        <div class="custom-control custom-radio mr-4">
-                          <input type="radio" id="dispatchTypePush" name="dispatchType"
+                        <div class="custom-control custom-checkbox mr-4">
+                          <input type="checkbox" id="dispatchTypePush" name="dispatchType"
                             class="custom-control-input readonly-input" value="PUSH">
-                          <label class="custom-control-label" for="dispatchTypePush">由系統派送</label>
+                          <label class="custom-control-label" for="dispatchTypePush">由系統推送</label>
                         </div>
-                        <div class="custom-control custom-radio mr-4">
-                          <input type="radio" id="dispatchTypePull" name="dispatchType"
+                        <div class="custom-control custom-checkbox mr-4">
+                          <input type="checkbox" id="dispatchTypePull" name="dispatchType"
                             class="custom-control-input readonly-input" value="PULL">
-                          <label class="custom-control-label" for="dispatchTypePull">設備自行拉取</label>
-                        </div>
-                        <div class="custom-control custom-radio mr-4">
-                          <input type="radio" id="dispatchTypeBoth" name="dispatchType"
-                            class="custom-control-input readonly-input" value="BOTH">
-                          <label class="custom-control-label" for="dispatchTypeBoth">不拘</label>
+                          <label class="custom-control-label" for="dispatchTypePull">設備請求</label>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="row"> <!-- 第四行 -->
+                <div class="row"> <!-- 第四、五行 -->
                   <!-- 左 -->
                   <div class="col-md-6">
                     <div class="form-group">
@@ -196,6 +191,16 @@
                           onclick="addTimePeriod()">新增</button>
                       </div>
                     </div>
+                    <div class="form-group">
+                      <label for="updateDate">設定更新起始日期<span class="text-danger">*必填</span></label>
+                      <div class="input-group date" id="updateDate" data-target-input="nearest">
+                        <input type="text" id="inputUpdateDate" class="form-control datetimepicker-input readonly-input"
+                          data-target="#updateDate" placeholder="YYYY-MM-DD" />
+                        <div class="input-group-append" data-target="#updateDate" data-toggle="datetimepicker">
+                          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <!-- 右 -->
                   <div class="col-md-6">
@@ -205,7 +210,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="row"> <!-- 第五行 -->
+                <div class="row"> <!-- 第六行 -->
                   <!-- 左 -->
                   <div class="col-md-6">
                     <div class="form-group">
@@ -421,6 +426,10 @@
       $('#scheduleDate').datetimepicker({
         format: 'YYYY-MM-DD'
       });
+      // 更新起始時間
+      $('#updateDate').datetimepicker({
+        format: 'YYYY-MM-DD'
+      });
       //排程時段-選擇開始時刻
       $('#startTimePicker').datetimepicker({
         format: 'HH:mm',
@@ -444,9 +453,11 @@
       document.getElementById('scheduleId').value = currentSchedule.scheduleId;
       document.getElementById('inputScheduleDate').value = currentSchedule.scheduleDate;
       document.getElementById('deviceKind').value = deviceType.deviceTypeName + '(' + deviceType.deviceTypeCode + ')';
-      const target = document.querySelector(`input[name="dispatchType"][value="${currentSchedule.dispatchType}"]`);
-      if (target) {
-        target.checked = true;
+      if (Array.isArray(currentSchedule.dispatchType)) {
+        currentSchedule.dispatchType.forEach(type => {
+          const checkbox = document.querySelector(`input[name="dispatchType"][value="${type}"]`);
+          if (checkbox) checkbox.checked = true;
+        });
       }
 
       // 派送版本
@@ -456,10 +467,12 @@
         sendVersionSelect.append(`<option value="${version.versionId}">${version.version}</option>`);
       });
       sendVersionSelect.val(currentSchedule.sendVersionId).trigger('change');
-      //已選排程時段
+      // 已選排程時段
       timePeriodList.forEach(t => {
         renderTimePeriodTag(t.start, t.end);
       });
+      // 更新日期
+      document.getElementById('inputUpdateDate').value = currentSchedule.updateDate;
     }
 
     if (isView) { //檢視頁面   
@@ -478,7 +491,7 @@
       expandCard(document.getElementById("device-selected"));
       expandCard(document.getElementById("group-selected"));
     } else {
-      document.querySelectorAll('.readonly-input:not([type="radio"]):not(#inputScheduleDate):not(#sendVersion):not(#startTime):not(#endTime):not(#addTimeBtn):not(#sgbtn):not(#sdbtn)').forEach(input => {
+      document.querySelectorAll('.readonly-input:not([type="checkbox"]):not(#inputScheduleDate):not(#sendVersion):not(#startTime):not(#endTime):not(#inputUpdateDate):not(#addTimeBtn):not(#sgbtn):not(#sdbtn)').forEach(input => {
         input.disabled = true;
       });
     }
@@ -567,8 +580,6 @@
         }
       }
     ]
-    //修改頁面時，增加刪除按鈕
-    if (!isView) deviceField2.push({ type: "control", editButton: false, deleteButton: true });
 
     //檢視頁面時，增加派送進度欄位
     if (isView) {
@@ -578,7 +589,10 @@
           return getDispatchStatusBadge(value);
         }
       })
-    }
+      //修改頁面時，增加刪除按鈕
+    } else deviceField2.push({ type: "control", editButton: false, deleteButton: true });
+
+
 
     //'已選擇'設備列表
     initJsGrid("#device2", {
@@ -704,11 +718,19 @@
       { name: "groupTag", title: "組別標籤", type: "text", width: 100 }
     ]
 
-    //修改頁面時，增加刪除按鈕
-    if (!isView) gridField2.push({ type: "control", editButton: false, deleteButton: true });
-
     //檢視頁面時，增加派送進度欄位
-    if (isView) gridField2.push({ name: "dispatchProgress", title: "派送進度", type: "text", width: 80 });
+    if (isView) {
+      gridField2.unshift({ //插入欄位最前
+        name: "expand", title: "", width: 30, align: "center", sorting: false,
+        itemTemplate: function (_, group) {
+          return $("<button>").addClass("btn btn-sm btn-outline-primary").text("+").on("click", function () { toggleExpandRow($(this), group); });
+        }
+      });
+
+      gridField2.push({ name: "dispatchProgress", title: "派送進度", type: "text", width: 80 });
+    } else { //修改頁面時，增加刪除按鈕
+      gridField2.push({ type: "control", editButton: false, deleteButton: true });
+    }
 
     //'已選擇'組別列表
     $("#jsGrid2").jsGrid({
@@ -747,6 +769,50 @@
       },
       deleteConfirm: "確定要刪除嗎？"
     });
+
+    // 展開/收合 function
+    function toggleExpandRow($btn, group) {
+      const row = $btn.closest("tr");
+
+      // 已展開 → 收合
+      if (row.next().hasClass("sub-row")) {
+        row.next().slideUp(200, function () { $(this).remove(); });
+        $btn.text("+");
+        return;
+      }
+      $btn.text("-");
+
+      const devices = group.groupDevices || [];
+      const subTable = $("<table>").addClass("table table-sm table-bordered mb-0").css({ background: "#fafafa" });
+
+      subTable.append(`
+        <tr style="background:#E7F3FF">
+          <th>設備編號</th>
+          <th>設備地點</th>
+          <th>所屬單位</th>
+          <th>派送狀態</th>
+        </tr>
+      `);
+
+      // 排序可依需求：deviceId
+      devices.sort((a, b) => a.deviceId.localeCompare(b.deviceId));
+
+      devices.forEach(d => {
+        subTable.append(`
+          <tr>
+            <td>${d.deviceId}</td>
+            <td>${d.deviceLocate}</td>
+            <td>${d.organId + " - " + d.organName ?? '-'}</td>
+            <td>${d.dispatchStatus ? getDispatchStatusBadge(d.dispatchStatus) : '-'}</td>
+          </tr>
+        `);
+      });
+
+      const subRow = $("<tr>").addClass("sub-row").append($("<td>").attr("colspan", gridField2.length).append(subTable));
+
+      row.after(subRow);
+      subRow.hide().slideDown(200);
+    }
 
     //編輯排程card - 點擊組別選擇
     function groupSelection() {
@@ -810,15 +876,16 @@
     function validateForm() {
       // 獲取左輸入框
       let inputSendVersion = document.getElementById("sendVersion").value;
-      let dispatchType = document.querySelector('input[name="dispatchType"]:checked');
       let inputScheduleDate = document.getElementById("inputScheduleDate").value;
+      let inputUpdateDate = document.getElementById("inputUpdateDate").value;
+      let dispatchType = Array.from(document.querySelectorAll('input[name="dispatchType"]:checked')).map(cb => cb.value);
       let selectedDeviceList = $("#device2").jsGrid("option", "data");
       let selectedGroupList = $("#jsGrid2").jsGrid("option", "data");
       if (isNullOrEmpty(inputSendVersion) || inputSendVersion === '軟體版本選擇') {
         alert("請選擇派送版本");
         return false;
-      } else if (!dispatchType) {
-        alert("請選擇派送方式");
+      } else if (dispatchType.length === 0) {
+        alert("請選擇至少一種派送方式");
         return false;
       } else if (isNullOrEmpty(inputScheduleDate)) {
         alert("請輸入排程日期");
@@ -826,6 +893,9 @@
       } else if (isNullOrEmpty(timePeriodList)) {
         alert("請設定排程時段");
         console.log(JSON.stringify(timePeriodList));
+        return false;
+      } else if (isNullOrEmpty(inputUpdateDate)) {
+        alert("請設定更新起始日期");
         return false;
       } else if (isNullOrEmpty(selectedDeviceList) && isNullOrEmpty(selectedGroupList)) {
         alert("請選擇要加入的設備或組別");

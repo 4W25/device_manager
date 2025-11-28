@@ -151,23 +151,19 @@
                     <div class="form-group">
                       <label class="font-weight-bold d-block">派送方式</label>
                       <div class="d-flex flex-wrap">
-                        <div class="custom-control custom-radio mr-4">
-                          <input type="radio" id="dispatchTypePush" name="dispatchType" class="custom-control-input" value="PUSH">
-                          <label class="custom-control-label" for="dispatchTypePush">由系統派送</label>
+                        <div class="custom-control custom-checkbox mr-4">
+                          <input type="checkbox" id="dispatchTypePush" name="dispatchType" class="custom-control-input" value="PUSH">
+                          <label class="custom-control-label" for="dispatchTypePush">由系統推送</label>
                         </div>
-                        <div class="custom-control custom-radio mr-4">
-                          <input type="radio" id="dispatchTypePull" name="dispatchType" class="custom-control-input" value="PULL">
-                          <label class="custom-control-label" for="dispatchTypePull">設備自行拉取</label>
-                        </div>
-                        <div class="custom-control custom-radio mr-4">
-                          <input type="radio" id="dispatchTypeBoth" name="dispatchType" class="custom-control-input" value="BOTH">
-                          <label class="custom-control-label" for="dispatchTypeBoth">不拘</label>
+                        <div class="custom-control custom-checkbox mr-4">
+                          <input type="checkbox" id="dispatchTypePull" name="dispatchType" class="custom-control-input" value="PULL">
+                          <label class="custom-control-label" for="dispatchTypePull">設備請求</label>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="row"> <!-- 第四行 -->
+                <div class="row"> <!-- 第四、五行 -->
                   <!-- 左 -->
                   <div class="col-md-6">
                     <div class="form-group">
@@ -191,6 +187,16 @@
                         <button type="button" class="btn btn-primary btn-sm" onclick="addTimePeriod()">新增</button>
                       </div>
                     </div>
+                    <div class="form-group">
+                      <label for="updateDate">設定更新起始日期<span class="text-danger">*必填</span></label>
+                      <div class="input-group date" id="updateDate" data-target-input="nearest">
+                        <input type="text" id="inputUpdateDate" class="form-control datetimepicker-input"
+                          data-target="#updateDate" placeholder="YYYY-MM-DD" />
+                        <div class="input-group-append" data-target="#updateDate" data-toggle="datetimepicker">
+                          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <!-- 右 -->
                   <div class="col-md-6">
@@ -200,7 +206,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="row"> <!-- 第五行 -->
+                <div class="row"> <!-- 第六行 -->
                   <!-- 左 -->
                   <div class="col-md-6">
                     <div class="form-group">
@@ -415,6 +421,10 @@
       $("#deviceKind").val(typeName + '( ' + typeCode + ' )');
       // 排程日期
       $('#scheduleDate').datetimepicker({
+        format: 'YYYY-MM-DD'
+      });
+      // 更新起始時間
+      $('#updateDate').datetimepicker({
         format: 'YYYY-MM-DD'
       });
       // 排程時段-選擇開始時刻
@@ -725,20 +735,24 @@
       // 獲取左輸入框
       let inputSendVersion = document.getElementById("sendVersion").value;
       let inputScheduleDate = document.getElementById("inputScheduleDate").value;
-      let dispatchType = document.querySelector('input[name="dispatchType"]:checked');
+      let inputUpdateDate = document.getElementById("inputUpdateDate").value;
+      let dispatchType = Array.from(document.querySelectorAll('input[name="dispatchType"]:checked')).map(cb => cb.value);
       let selectedDeviceList = $("#device2").jsGrid("option", "data");
       let selectedGroupList = $("#jsGrid2").jsGrid("option", "data");
       if (isNullOrEmpty(inputSendVersion) || inputSendVersion === '軟體版本選擇') {
         alert("請選擇派送版本");
         return false;
-      } else if (!dispatchType) {
-        alert("請選擇派送方式");
+      } else if (dispatchType.length === 0) {
+        alert("請選擇至少一種派送方式");
         return false;
       } else if (isNullOrEmpty(inputScheduleDate)) {
         alert("請輸入排程日期");
         return false;
       } else if (isNullOrEmpty(timePeriodList)) {
         alert("請設定排程時段");
+        return false;
+      } else if (isNullOrEmpty(inputUpdateDate)) {
+        alert("請設定更新起始日期");
         return false;
       } else if (isNullOrEmpty(selectedDeviceList) && isNullOrEmpty(selectedGroupList)) {
         alert("請選擇要加入的設備或組別");

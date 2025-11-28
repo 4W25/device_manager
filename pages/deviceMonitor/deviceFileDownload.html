@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>設備檔案下載</title>
+  <title>遠端檔案下載</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet"
@@ -87,12 +87,12 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>設備檔案下載</h1>
+              <h1>遠端檔案下載</h1>
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="../../index.html">首頁</a></li>
-                <li class="breadcrumb-item active">基本管理 / 設備檔案下載</li>
+                <li class="breadcrumb-item active">基本管理 / 遠端檔案下載</li>
               </ol>
             </div>
           </div>
@@ -107,7 +107,7 @@
             <div class="card-header">
               <h3 class="card-title">
                 <i class="fas fa-th-large"></i>
-                設備檔案下載紀錄
+                遠端檔案下載紀錄
               </h3>
             </div>
             <div class="card-body">
@@ -154,12 +154,12 @@
     </div>
   </div>
 
-  <!-- 新增檔案下載請求 Modal -->
+  <!-- 新增遠端檔案下載請求 Modal -->
   <div class="modal fade" id="addModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">新增檔案下載請求</h5>
+          <h5 class="modal-title">新增遠端檔案下載請求</h5>
           <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
         </div>
 
@@ -242,7 +242,7 @@
     const deviceFileDownloadList = [
       { downloadSeq: "DL2025010001", deviceTypeCode: "OKI-RG7", deviceId: "A012001601", filePaths: ["/home/atm/update/version_1.2/config.json", "/home/atm/security/cert/new_root_ca.pem", "/home/atm/logs/patch_log_0115.txt"], createdTime: "2025-01-15 10:21:30", status: 1 },
       { downloadSeq: "DL2025010002", deviceTypeCode: "OKI-RG7", deviceId: "A012001601", filePaths: ["/opt/kiosk/files/menu/update_v5.1.bin", "/opt/kiosk/config/theme/dark_theme.css", "/opt/kiosk/logs/update_log_0115.txt"], createdTime: "2025-01-15 10:25:11", status: 2 },
-      { downloadSeq: "DL2025010003", deviceTypeCode: "OKI-RG7", deviceId: "A012001603", filePaths: ["/home/atm/security/cert/new_root_ca.pem"], createdTime: "2025-01-15 10:29:54", status: 3 },
+      { downloadSeq: "DL2025010003", deviceTypeCode: "OKI-RG7", deviceId: "A012001603", filePaths: ["/home/atm/security/cert/new_root_ca.pem"], createdTime: "2025-01-15 10:29:54", status: 3, reason: "排程時段結束，設備未在線上" },
       { downloadSeq: "DL2025010004", deviceTypeCode: "OKI-RG7", deviceId: "A012200901", filePaths: ["/data/system/app/remote_update/app_patch_06.zip", "/data/system/app/remote_update/patch_notes.txt"], createdTime: "2025-01-15 10:31:22", status: 1 },
       { downloadSeq: "DL2025010005", deviceTypeCode: "OKI-RG7", deviceId: "A012200901", filePaths: ["/opt/kiosk/config/theme/dark_theme.css"], createdTime: "2025-01-15 10:34:19", status: 2 },
     ];
@@ -322,7 +322,7 @@
             d.downloadSeq,
             viewBtn,
             d.createdTime,
-            getStatusBadge(d.status),
+            getStatusBadge(d.status, d.reason ? d.reason : ""),
             downloadBtn
           ];
         });
@@ -360,15 +360,25 @@
     }
 
     //取得狀態 badge
-    function getStatusBadge(status) {
+    function getStatusBadge(status, reason) {
       const statusMap = {
         [DeviceFileStatus.SUCCESS]: { text: "成功", class: "badge-success" },
         [DeviceFileStatus.PROCESSING]: { text: "進行中", class: "badge-secondary" },
         [DeviceFileStatus.FAILED]: { text: "失敗", class: "badge-danger" }
       };
       const s = statusMap[status];
+      if (status === DeviceFileStatus.FAILED) { //失敗原因
+        return `<span class="badge ${s.class} failure-reason" data-reason="${reason}">${s.text}</span>`;
+      }
       return `<span class="badge ${s.class}">${s.text}</span>`;
     }
+
+    $(document).on("mouseenter", ".failure-reason", function () {
+      $(this).tooltip({
+        title: $(this).data("reason"),
+        placement: "top"
+      }).tooltip("show");
+    });
 
     //檢視-路徑指定檔
     function showFilePathsModal(downloadSeq) {
@@ -537,4 +547,5 @@
   </script>
 </body>
 
+</html>
 </html>

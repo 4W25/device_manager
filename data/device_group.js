@@ -151,11 +151,63 @@ const versionList = [
 ];
 
 
+// 狀態對應排序與顏色
+const reviewStatus = [
+	{ statusName: "核准", statusCode: 2, colorBadge: "badge-success" },
+	{ statusName:"審核中", statusCode: 0, colorBadge: "badge-warning" },
+	{ statusName: "退回", statusCode: 1, colorBadge: "badge-danger" }
+];
+
 //設備軟體排程資料
 const deviceScheduleList = [
-  // 循環機(OKI-RG7)
-  { scheduleId: 'SCH_OKI_A250101250001', deviceIds: ['A012200902'], groupIds: ['GR_OKI_TPE2500001'], deviceTypeCode: 'OKI-RG7', sendVersionId: "A250501", dispatchType: 'PUSH', sendVersion: 'A25.05.01', scheduleDate: '2025-06-01', timePeriod: [{ start: "10:00", end: "12:00" }, { start: "19:00", end: "21:00" }, { start: "01:00", end: "05:00" }] },
+    /* ===============================
+       1. 循環機 OKI-RG7
+     =============================== */
+  // 循環機(OKI-RG7)  核准 (status = 2)
+  { scheduleId: 'SCH_OKI_25010101', reviewStatus:2, deviceIds: ['A012200901','A012200902'], groupIds: ['GR_OKI_TPE2500001'], deviceTypeCode: 'OKI-RG7', sendVersionId: "A250501", dispatchType: ["PUSH","PULL"], sendVersion: 'A250501', scheduleDate: '2025-06-01', timePeriod: [{ start: "10:00", end: "12:00" }, { start: "19:00", end: "21:00" }, { start: "01:00", end: "05:00" }], updateTime: '2025-07-01 23:59:59' },
+  { scheduleId: 'SCH_OKI_25010102', reviewStatus: 2, deviceIds: ['A012200902'], groupIds: ['GR_OKI_TPE2500002'], deviceTypeCode: 'OKI-RG7', sendVersionId: "A250601", dispatchType: ["PULL","PUSH"], sendVersion: 'A25.06.01', scheduleDate: '2025-06-05', timePeriod: [{ start: "10:00", end: "12:00" }, { start: "19:00", end: "21:00" }], updateTime: '2025-07-03 23:59:59' },
 
+  // 審核中 (status = 0)
+  { scheduleId: 'SCH_OKI_25010201', reviewStatus: 0, deviceIds: ['A012200903'], groupIds: ['GR_OKI_NTP01'], deviceTypeCode: 'OKI-RG7', sendVersionId: "A250601", dispatchType: ["PULL"], sendVersion: 'A25.06.02', scheduleDate: '2025-06-10', timePeriod: [{ start: "14:00", end: "16:00" }], updateTime: '2025-07-10 23:59:59' },
+  { scheduleId: 'SCH_OKI_25010202', reviewStatus: 0, deviceIds: ['A012200904'], groupIds: ['GR_OKI_NTP02'], deviceTypeCode: 'OKI-RG7', sendVersionId: "A250401", dispatchType: ["PUSH"], sendVersion: 'A25.07.01', scheduleDate: '2025-06-12', timePeriod: [{ start: "01:00", end: "05:00" }], updateTime: '2025-07-12 23:59:59' },
+
+  // 退回 (status = 1)
+  { scheduleId: 'SCH_OKI_25010301', reviewStatus: 1, deviceIds: ['A012200905'], groupIds: ['GR_OKI_KHH01'], deviceTypeCode: 'OKI-RG7', sendVersionId: "A250601", dispatchType: ["PUSH","PULL"], sendVersion: 'A25.08.01', scheduleDate: '2025-06-15', timePeriod: [{ start: "08:00", end: "09:30" }], updateTime: '2025-07-15 23:59:59' },
+  { scheduleId: 'SCH_OKI_25010302', reviewStatus: 1, deviceIds: ['A012200906'], groupIds: ['GR_OKI_KHH02'], deviceTypeCode: 'OKI-RG7', sendVersionId: "A250502", dispatchType: ["PULL"], sendVersion: 'A25.08.02', scheduleDate: '2025-06-18', timePeriod: [{ start: "20:00", end: "23:00" }], updateTime: '2025-07-18 23:59:59' }
+/*
+   ===============================
+       2. 自動提款機 WIN-1500XE
+   =============================== 
+
+  // 核准
+  { scheduleId: 'SCH_WIN_25020101', reviewStatus: 2, deviceIds: ['W012300901'], groupIds: ['GR_WIN_TPE01'], deviceTypeCode: 'WIN-1500XE', sendVersionId: "B250501", dispatchType: ["PUSH"], sendVersion: 'B25.05.01', scheduleDate: '2025-07-01', timePeriod: [{ start: "09:00", end: "11:00" }], updateDate: '2025-08-01' },
+  { scheduleId: 'SCH_WIN_25020102', reviewStatus: 2, deviceIds: ['W012300902'], groupIds: ['GR_WIN_TPE02'], deviceTypeCode: 'WIN-1500XE', sendVersionId: "B250601", dispatchType: ["PULL"], sendVersion: 'B25.06.01', scheduleDate: '2025-07-03', timePeriod: [{ start: "18:00", end: "20:00" }], updateDate: '2025-08-03' },
+
+  // 審核中
+  { scheduleId: 'SCH_WIN_25020201', reviewStatus: 0, deviceIds: ['W012300903'], groupIds: ['GR_WIN_NTP01'], deviceTypeCode: 'WIN-1500XE', sendVersionId: "B250701", dispatchType: ["PUSH","PULL"], sendVersion: 'B25.07.01', scheduleDate: '2025-07-10', timePeriod: [{ start: "02:00", end: "04:00" }], updateDate: '2025-08-10' },
+  { scheduleId: 'SCH_WIN_25020202', reviewStatus: 0, deviceIds: ['W012300904'], groupIds: ['GR_WIN_NTP02'], deviceTypeCode: 'WIN-1500XE', sendVersionId: "B250702", dispatchType: ["PULL"], sendVersion: 'B25.07.02', scheduleDate: '2025-07-12', timePeriod: [{ start: "09:00", end: "10:00" }], updateDate: '2025-08-12' },
+
+  // 退回
+  { scheduleId: 'SCH_WIN_25020301', reviewStatus: 1, deviceIds: ['W012300905'], groupIds: ['GR_WIN_KHH01'], deviceTypeCode: 'WIN-1500XE', sendVersionId: "B250801", dispatchType: ["PUSH"], sendVersion: 'B25.08.01', scheduleDate: '2025-07-15', timePeriod: [{ start: "22:00", end: "23:30" }], updateDate: '2025-08-15' },
+  { scheduleId: 'SCH_WIN_25020302', reviewStatus: 1, deviceIds: ['W012300906'], groupIds: ['GR_WIN_KHH02'], deviceTypeCode: 'WIN-1500XE', sendVersionId: "B250802", dispatchType: ["PULL","PUSH"], sendVersion: 'B25.08.02', scheduleDate: '2025-07-17', timePeriod: [{ start: "05:00", end: "07:00" }], updateDate: '2025-08-17' },
+
+
+   ===============================
+       3. 循環機 HITACHI-CZ5000
+     =============================== 
+
+  // 核准
+  { scheduleId: 'SCH_HIT_25030101', reviewStatus: 2, deviceIds: ['H013300901'], groupIds: ['GR_HIT_TPE01'], deviceTypeCode: 'HITACHI-CZ5000', sendVersionId: "C250501", dispatchType: ["PUSH"], sendVersion: 'C25.05.01', scheduleDate: '2025-08-01', timePeriod: [{ start: "07:00", end: "09:00" }], updateDate: '2025-09-01' },
+  { scheduleId: 'SCH_HIT_25030102', reviewStatus: 2, deviceIds: ['H013300902'], groupIds: ['GR_HIT_TPE02'], deviceTypeCode: 'HITACHI-CZ5000', sendVersionId: "C250601", dispatchType: ["PULL"], sendVersion: 'C25.06.01', scheduleDate: '2025-08-03', timePeriod: [{ start: "15:00", end: "17:00" }], updateDate: '2025-09-03' },
+
+  // 審核中
+  { scheduleId: 'SCH_HIT_25030201', reviewStatus: 0, deviceIds: ['H013300903'], groupIds: ['GR_HIT_NTP01'], deviceTypeCode: 'HITACHI-CZ5000', sendVersionId: "C250701", dispatchType: ["PUSH","PULL"], sendVersion: 'C25.07.01', scheduleDate: '2025-08-10', timePeriod: [{ start: "03:00", end: "05:00" }], updateDate: '2025-09-10' },
+  { scheduleId: 'SCH_HIT_25030202', reviewStatus: 0, deviceIds: ['H013300904'], groupIds: ['GR_HIT_NTP02'], deviceTypeCode: 'HITACHI-CZ5000', sendVersionId: "C250702", dispatchType: ["PULL"], sendVersion: 'C25.07.02', scheduleDate: '2025-08-12', timePeriod: [{ start: "13:00", end: "14:00" }], updateDate: '2025-09-12' },
+
+  // 退回
+  { scheduleId: 'SCH_HIT_25030301', reviewStatus: 1, deviceIds: ['H013300905'], groupIds: ['GR_HIT_KHH01'], deviceTypeCode: 'HITACHI-CZ5000', sendVersionId: "C250801", dispatchType: ["PUSH"], sendVersion: 'C25.08.01', scheduleDate: '2025-08-15', timePeriod: [{ start: "00:00", end: "02:00" }], updateDate: '2025-09-15' },
+  { scheduleId: 'SCH_HIT_25030302', reviewStatus: 1, deviceIds: ['H013300906'], groupIds: ['GR_HIT_KHH02'], deviceTypeCode: 'HITACHI-CZ5000', sendVersionId: "C250802", dispatchType: ["PULL","PUSH"], sendVersion: 'C25.08.02', scheduleDate: '2025-08-17', timePeriod: [{ start: "18:00", end: "20:00" }], updateDate: '2025-09-17' },
+*/
 ];
 
 const DispatchStatus = {
@@ -171,9 +223,13 @@ const UpdateStatus = {
 
 const scheduleStatusList = [
   { 
-    scheduleId: 'SCH_OKI_A250101250001',
+    scheduleId: 'SCH_OKI_25010101',
     devices: [{ deviceId: 'A012200902', deviceLocate: '高雄市-中雅門市', organId: '0120016', organName: '營運中心', dispatchStatus: 'SUCCESS', updateStatus: 'SUCCESS' }],
-    groups: [{ groupId: 'GR_OKI_TPE2500001',groupName: '循環機OKI-RG7_測試組',groupTag: '測試組',deviceTypeCode: 'OKI-RG7',dispatchProgress: '80%'}]
+    groups: [{ groupId: 'GR_OKI_TPE2500001',groupName: '循環機OKI-RG7_測試組',groupTag: '測試組',deviceTypeCode: 'OKI-RG7',dispatchProgress: '50%',
+      groupDevices: [
+          {deviceId: 'A012001601', deviceLocate: '台北市-大眾門市', organId: '0120016', organName: '營運中心', dispatchStatus: 'PENDING'},
+          {deviceId: 'A012200901', deviceLocate: '台中市-大時代門市', organId: '0120016', organName: '營運中心', dispatchStatus: 'SUCCESS'}]
+    }]
   }
 ];
 

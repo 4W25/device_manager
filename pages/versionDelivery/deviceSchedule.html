@@ -136,13 +136,28 @@
       <strong>Copyright &copy; 2014-2024
         <a href="https://www.leosys.com/">國眾電腦股份有限公司</a>.
       </strong> All rights reserved.
-    </footer>
-
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-      <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->
+    </footer>    
+    <!-- Audit Modal -->
+    <div class="modal fade" id="auditModal" tabindex="-1" role="dialog" aria-labelledby="auditModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content border-primary shadow-sm">
+          <div class="modal-header">
+            <h5 class="modal-title" id="auditModalLabel">簽核軌跡</h5>
+              <button type="button" class="close text-white" data-dismiss="modal" aria-label="關閉">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          <div class="modal-body">
+            <div class="list-group" id="auditModalBody">
+            <!-- JS 填充資料 -->
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <!-- ./wrapper -->
 
@@ -178,116 +193,168 @@
       { title: "排程編號" },
       { title: "派送版本" },
       { title: "排程日期" },
-      { title: "可派送時段" },
+      { title: "已選設備/組別" },
+      { title: "更新時間" },
+      { title: "審核狀態" },
       { title: "功能", orderable: false }
     ];
 
-    //根據設備類型數量動態產生
+    // 核心：初始化所有外層 tab（設備類型）
     deviceTypeList.forEach((type, index) => {
       const isActive = index === 0;
-      createTab(type, isActive);
-      const data = getTableData(type.deviceTypeCode);
-      initTable(`table-${type.deviceTypeCode}`, data, type.deviceTypeCode);
+      createDeviceTypeTab(type, isActive);
+      initInnerTables(type.deviceTypeCode);
     });
 
-    //建立 tab 結構
-    function createTab(type, isActive) {
+    function createDeviceTypeTab(type, isActive) {
+      // 外層設備類型 tab
       $("#device-tabs").append(`
         <li class="nav-item">
-          <a class="nav-link ${isActive ? "active" : ""}" id="tab-${type.deviceTypeCode}" data-toggle="pill"
-            href="#pane-${type.deviceTypeCode}" role="tab" aria-selected="${isActive}">
-           ${type.deviceTypeName}（${type.deviceTypeCode}）
+          <a class="nav-link ${isActive ? "active" : ""}" data-toggle="pill" href="#pane-${type.deviceTypeCode}">
+            ${type.deviceTypeName}（${type.deviceTypeCode}）
           </a>
         </li>
       `);
 
+      // 外層 tab 內容（新增按鈕 + 內層審核狀態 tabs）
       $("#device-tab-content").append(`
-        <div class="tab-pane fade ${isActive ? "show active" : ""}" id="pane-${type.deviceTypeCode}" role="tabpanel">
-          <section class="content">
-            <div class="container-fluid">
-              <div class="card">
-                <div class="card-body">
-                  <table id="table-${type.deviceTypeCode}" class="table table-bordered table-hover">
-                    <thead><tr>${tableColumns.map(col => `<th>${col.title}</th>`).join("")}</tr></thead>
-                    <tbody></tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </section>
+        <div class="tab-pane fade ${isActive ? "show active" : ""}" id="pane-${type.deviceTypeCode}">     
+        <!-- 新增按鈕 -->
+        <div class="mb-3">
+          <button class="btn btn-secondary" onclick="window.location.href='deviceScheduleAdd.html?typeCode=${type.deviceTypeCode}'">
+            <i class="fas fa-pencil-alt"></i> 新增
+          </button>
         </div>
+
+        <!-- 內層：審核狀態 tabs（nav-tabs） -->
+        <ul class="nav nav-tabs mb-3" id="review-tabs-${type.deviceTypeCode}" role="tablist">
+          ${reviewStatus.map((r, idx) => `
+            <li class="nav-item">
+              <a class="nav-link ${idx === 0 ? "active" : ""}" data-toggle="pill"
+                href="#pane-${type.deviceTypeCode}-${r.statusCode}">
+                ${r.statusName}
+              </a>
+            </li>
+          `).join("")}
+        </ul>
+
+        <!-- 內層 tab 內容 -->
+        <div class="tab-content">
+        ${reviewStatus.map((r, idx) => `
+          <div class="tab-pane fade ${idx === 0 ? "show active" : ""}" id="pane-${type.deviceTypeCode}-${r.statusCode}">
+            <table class="table table-bordered table-hover table-${type.deviceTypeCode}-${r.statusCode}">
+              <thead><tr>${tableColumns.map(c => `<th>${c.title}</th>`).join("")}</tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        `).join("")}
+        </div>
+      </div>
       `);
     }
 
-    //取得該設備類型的資料
-    function getTableData(typeCode) {
+    // 初始化內層 table
+    function initInnerTables(typeCode) {
+      reviewStatus.forEach(r => {
+        const selector = `.table-${typeCode}-${r.statusCode}`;
+        $(selector).DataTable({
+          data: getTableData(typeCode, r.statusCode),
+          columns: tableColumns.map((c, idx) => ({ data: idx })),
+          responsive: true,
+          lengthChange: false,
+          ordering: false,
+          autoWidth: false,
+          language: {
+            search: "搜尋：",
+            lengthMenu: "每頁顯示 _MENU_ 筆",
+            zeroRecords: "查無資料",
+            info: "顯示第 _START_ 筆到第 _END_ 筆，共 _TOTAL_ 筆",
+            infoEmpty: "",
+            infoFiltered: "",
+            paginate: { first: "第一頁", last: "最後一頁", next: "下一頁", previous: "上一頁" }
+          }
+
+        });
+      });
+    }
+
+    // 取得 table 資料
+    function getTableData(typeCode, statusCode) {
       return deviceScheduleList
-        .filter(d => d.deviceTypeCode === typeCode)
+        .filter(d => d.deviceTypeCode === typeCode && d.reviewStatus === statusCode)
         .map(d => {
-          const deviceType = deviceTypeList.find(t => t.deviceTypeCode === d.deviceTypeCode);
-          const timePeriod = d.timePeriod.map(tp => `<span class="badge badge-info mr-1">${tp.start} - ${tp.end}</span>`).join("");
+          const deviceType = deviceTypeList.find(t => t.deviceTypeCode === typeCode);
+          const isReadOnly = (statusCode === 0 || statusCode === 2);
+          const listBadge = [
+            ...d.deviceIds.map(dev => `<span class="badge badge-secondary mr-1">${dev}</span>`),
+            ...d.groupIds.map(grp => `<span class="badge badge-info mr-1">${grp}</span>`)
+          ].join(" ");
+          const auditBtn = (statusCode === 2)  ? `<button class="btn btn-sm btn-info mr-1" onclick="openAudit('${d.scheduleId}')">簽核軌跡</button>`: "";
+          
           return [
             deviceType.deviceTypeName,
             deviceType.deviceTypeCode,
             d.scheduleId,
             d.sendVersion,
             d.scheduleDate,
-            timePeriod,
-
-            `
-            <div class="d-flex justify-content-center">
-              <div class="mr-1">
-                <a href="deviceScheduleEdit.html?Id=${d.scheduleId}&isView=true" class="btn btn-sm btn-primary">檢視</a>
-              </div>
-              <div class="mr-1">
-                <a href="deviceScheduleEdit.html?Id=${d.scheduleId}" class="btn btn-sm btn-secondary">修改</a>
-              </div>
-              <div>
-                <button class="btn btn-sm btn-danger" onclick="deleteSchedule('${d.scheduleId}')">刪除</button>
-              </div>
-            </div>
-            `
+            listBadge,
+            d.updateTime,
+            `<span class="badge ${reviewStatus.find(rs => rs.statusCode === d.reviewStatus).colorBadge}">${reviewStatus.find(rs => rs.statusCode === d.reviewStatus).statusName}</span>`,
+            `<div class="d-flex justify-content-center">
+              <a href="deviceScheduleEdit.html?Id=${d.scheduleId}&isView=true" class="btn btn-sm btn-primary mr-1">檢視</a> 
+              <a href="deviceScheduleEdit.html?Id=${d.scheduleId}" class="btn btn-sm btn-secondary mr-1 ${isReadOnly ? "disabled" : ""}">修改</a>
+              <button class="btn btn-sm btn-danger mr-1 ${isReadOnly ? "disabled" : ""}" onclick="deleteSchedule('${d.scheduleId}')">刪除</button>
+              ${auditBtn}
+             </div>`  
           ];
         });
     }
 
-
-    //初始化 DataTable
-    function initTable(tableId, data, typeCode) {
-      $(`#${tableId}`).DataTable({
-        data: data,
-        columns: tableColumns,
-        responsive: true,
-        lengthChange: false,
-        ordering: false,
-        autoWidth: false,
-        dom: "<'row'<'col-sm-6'B><'col-sm-6'f>>" +
-          "<'row'<'col-12'tr>>" +
-          "<'row'<'col-sm-6'i><'col-sm-6'p>>",
-        buttons: [{
-          text: '<i class="fas fa-pencil-alt"></i> 新增',
-          className: 'btn btn-secondary',
-          action: function () {
-            window.location.href = `deviceScheduleAdd.html?typeCode=${typeCode}`;
-          }
-        }],
-        language: {
-          search: "搜尋：",
-          lengthMenu: "每頁顯示 _MENU_ 筆",
-          zeroRecords:"查無資料",
-          info:"顯示第 _START_ 筆到第 _END_ 筆，共 _TOTAL_ 筆",
-          infoEmpty:"",
-          infoFiltered: "", 
-          paginate:{first:"第一頁",last:"最後一頁",next:"下一頁",previous:"上一頁"}
+    /*
+        function renderDispatchType(dispatchTypes) {
+          if (!dispatchTypes || dispatchTypes.length === 0) return "-";
+          return dispatchTypes.map(t => {
+            const text  = (t === "PUSH") ? "由系統推送" : "設備請求"
+            return `<span class="badge badge-secondary mr-1">${text}</span>`;
+          }).join("");
         }
-      });
-    }
+    */
 
     // 刪除設備軟體排程
     function deleteSchedule(scheduleId) {
       alert(`設備軟體排程 ${scheduleId} 已刪除！（此功能需連接後端）`);
     }
 
+
+    function openAudit(scheduleId) {
+      // 模擬簽核軌跡資料
+      const auditData = [
+        { item: "申請", time: "2025-05-15 10:00", userId: "S5678", user: "王小明" },
+        { item: "核准", time: "2025-05-16 14:30", userId: "S1234", user: "張主管" }
+      ];
+
+      const body = $("#auditModalBody");
+      body.empty();
+
+      auditData.forEach(a => {
+        // 根據 item 決定 badge 顏色
+        let badgeClass = "badge-secondary"; // 預設
+        if (a.item === "申請") badgeClass = "badge-warning";
+        else if (a.item === "核准") badgeClass = "badge-primary";
+
+        body.append(`
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="mb-1"><span class="badge ${badgeClass} mr-2">${a.item}</span>${a.userId}-${a.user}</h6>
+              <small class="text-muted">${a.time}</small>
+            </div>
+            <i class="fas fa-check-circle text-success"></i>
+          </div>
+        `);
+      });
+
+      $("#auditModal").modal("show");
+    }
 
 
 
