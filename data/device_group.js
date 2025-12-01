@@ -165,7 +165,7 @@ const deviceScheduleList = [
      =============================== */
   // 循環機(OKI-RG7)  核准 (status = 2)
   { scheduleId: 'SCH_OKI_25010101', reviewStatus:2, deviceIds: ['A012200901','A012200902'], groupIds: ['GR_OKI_TPE2500001'], deviceTypeCode: 'OKI-RG7', sendVersionId: "A250501", dispatchType: ["PUSH","PULL"], sendVersion: 'A250501', scheduleDate: '2025-06-01', timePeriod: [{ start: "10:00", end: "12:00" }, { start: "19:00", end: "21:00" }, { start: "01:00", end: "05:00" }], updateTime: '2025-07-01 23:59:59' },
-  { scheduleId: 'SCH_OKI_25010102', reviewStatus: 2, deviceIds: ['A012200902'], groupIds: ['GR_OKI_TPE2500002'], deviceTypeCode: 'OKI-RG7', sendVersionId: "A250601", dispatchType: ["PULL","PUSH"], sendVersion: 'A25.06.01', scheduleDate: '2025-06-05', timePeriod: [{ start: "10:00", end: "12:00" }, { start: "19:00", end: "21:00" }], updateTime: '2025-07-03 23:59:59' },
+  { scheduleId: 'SCH_OKI_25010102', reviewStatus: 2, deviceIds: ['A012200902'], groupIds: ['GR_OKI_TPE2500002'], deviceTypeCode: 'OKI-RG7', sendVersionId: "A250601", dispatchType: ["PULL","PUSH"], sendVersion: 'A25.06.01', scheduleDate: '2025-06-05', timePeriod: [{ start: "10:00", end: "12:00" }, { start: "19:00", end: "21:00" }], updateTime: '2025-07-03 00:00:00' },
 
   // 審核中 (status = 0)
   { scheduleId: 'SCH_OKI_25010201', reviewStatus: 0, deviceIds: ['A012200903'], groupIds: ['GR_OKI_NTP01'], deviceTypeCode: 'OKI-RG7', sendVersionId: "A250601", dispatchType: ["PULL"], sendVersion: 'A25.06.02', scheduleDate: '2025-06-10', timePeriod: [{ start: "14:00", end: "16:00" }], updateTime: '2025-07-10 23:59:59' },

@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>設備軟體排程(修改)</title>
+  <title>軟體派送排程(修改)</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet"
@@ -34,7 +34,7 @@
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="deviceSchedule.html" class="nav-link">返回設備軟體排程總覽頁</a>
+          <a href="deviceSchedule.html" class="nav-link">返回軟體派送排程總覽頁</a>
         </li>
       </ul>
 
@@ -91,7 +91,7 @@
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="../../index.html">首頁</a></li>
-                <li class="breadcrumb-item active">設備軟體派送管理 / 設備軟體排程 / 設備軟體排程修改</li>
+                <li class="breadcrumb-item active">軟體派送管理 / 軟體派送排程 / 軟體派送排程修改</li>
               </ol>
             </div>
           </div>
@@ -105,7 +105,7 @@
           <div class="col-md-12">
             <div class="card card-info">
               <div class="card-header">
-                <h3 class="card-title">設備軟體排程</h3>
+                <h3 class="card-title">軟體派送排程</h3>
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                     <i class="fas fa-minus"></i>
@@ -149,6 +149,7 @@
                         <option selected disabled>軟體版本選擇</option>
                       </select>
                     </div>
+                    <!--
                     <div class="form-group">
                       <label class="font-weight-bold d-block">派送方式</label>
                       <div class="d-flex flex-wrap">
@@ -163,7 +164,7 @@
                           <label class="custom-control-label" for="dispatchTypePull">設備請求</label>
                         </div>
                       </div>
-                    </div>
+                    </div>-->
                   </div>
                 </div>
                 <div class="row"> <!-- 第四、五行 -->
@@ -192,11 +193,11 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="updateDate">設定更新起始日期<span class="text-danger">*必填</span></label>
-                      <div class="input-group date" id="updateDate" data-target-input="nearest">
-                        <input type="text" id="inputUpdateDate" class="form-control datetimepicker-input readonly-input"
-                          data-target="#updateDate" placeholder="YYYY-MM-DD" />
-                        <div class="input-group-append" data-target="#updateDate" data-toggle="datetimepicker">
+                      <label for="updateTime">更新時間<span class="text-danger">*必填</span></label>
+                      <div class="input-group date" id="updateTime" data-target-input="nearest">
+                        <input type="text" id="inputUpdateTime" class="form-control datetimepicker-input readonly-input"
+                          data-target="#updateTime" placeholder="YYYY-MM-DD HH:mm:ss" />
+                        <div class="input-group-append" data-target="#updateTime" data-toggle="datetimepicker">
                           <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
                       </div>
@@ -426,9 +427,15 @@
       $('#scheduleDate').datetimepicker({
         format: 'YYYY-MM-DD'
       });
-      // 更新起始時間
-      $('#updateDate').datetimepicker({
-        format: 'YYYY-MM-DD'
+      // 更新時間
+      $('#updateTime').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm:ss',
+        icons: {
+          time: 'far fa-clock',
+          date: 'far fa-calendar',
+          up: 'fas fa-arrow-up',
+          down: 'fas fa-arrow-down'
+        }
       });
       //排程時段-選擇開始時刻
       $('#startTimePicker').datetimepicker({
@@ -453,12 +460,12 @@
       document.getElementById('scheduleId').value = currentSchedule.scheduleId;
       document.getElementById('inputScheduleDate').value = currentSchedule.scheduleDate;
       document.getElementById('deviceKind').value = deviceType.deviceTypeName + '(' + deviceType.deviceTypeCode + ')';
-      if (Array.isArray(currentSchedule.dispatchType)) {
+      /*if (Array.isArray(currentSchedule.dispatchType)) { //派送方式
         currentSchedule.dispatchType.forEach(type => {
           const checkbox = document.querySelector(`input[name="dispatchType"][value="${type}"]`);
           if (checkbox) checkbox.checked = true;
         });
-      }
+      }*/
 
       // 派送版本
       const sendVersionSelect = $("#sendVersion");
@@ -472,14 +479,14 @@
         renderTimePeriodTag(t.start, t.end);
       });
       // 更新日期
-      document.getElementById('inputUpdateDate').value = currentSchedule.updateDate;
+      document.getElementById('inputUpdateTime').value = currentSchedule.updateTime;
     }
 
     if (isView) { //檢視頁面   
       //頁面用字
-      document.title = "設備軟體排程(檢視)";
+      document.title = "軟體派送排程(檢視)";
       document.querySelector(".col-sm-6 h1").innerText = "檢視";
-      document.querySelector(".breadcrumb-item.active").innerText = "設備軟體派送管理 / 設備軟體排程 / 設備軟體排程檢視";
+      document.querySelector(".breadcrumb-item.active").innerText = "軟體派送管理 / 軟體派送排程 / 軟體派送排程檢視";
       //獲取自訂義的class
       document.querySelectorAll('.readonly-input').forEach(input => {
         input.disabled = true;
@@ -491,7 +498,7 @@
       expandCard(document.getElementById("device-selected"));
       expandCard(document.getElementById("group-selected"));
     } else {
-      document.querySelectorAll('.readonly-input:not([type="checkbox"]):not(#inputScheduleDate):not(#sendVersion):not(#startTime):not(#endTime):not(#inputUpdateDate):not(#addTimeBtn):not(#sgbtn):not(#sdbtn)').forEach(input => {
+      document.querySelectorAll('.readonly-input:not([type="checkbox"]):not(#inputScheduleDate):not(#sendVersion):not(#startTime):not(#endTime):not(#inputUpdateTime):not(#addTimeBtn):not(#sgbtn):not(#sdbtn)').forEach(input => {
         input.disabled = true;
       });
     }
@@ -877,25 +884,26 @@
       // 獲取左輸入框
       let inputSendVersion = document.getElementById("sendVersion").value;
       let inputScheduleDate = document.getElementById("inputScheduleDate").value;
-      let inputUpdateDate = document.getElementById("inputUpdateDate").value;
+      let inputUpdateTime = document.getElementById("inputUpdateTime").value;
       let dispatchType = Array.from(document.querySelectorAll('input[name="dispatchType"]:checked')).map(cb => cb.value);
       let selectedDeviceList = $("#device2").jsGrid("option", "data");
       let selectedGroupList = $("#jsGrid2").jsGrid("option", "data");
       if (isNullOrEmpty(inputSendVersion) || inputSendVersion === '軟體版本選擇') {
         alert("請選擇派送版本");
         return false;
-      } else if (dispatchType.length === 0) {
+      } /*else if (dispatchType.length === 0) {
         alert("請選擇至少一種派送方式");
         return false;
-      } else if (isNullOrEmpty(inputScheduleDate)) {
+      }*/
+      else if (isNullOrEmpty(inputScheduleDate)) {
         alert("請輸入排程日期");
         return false;
       } else if (isNullOrEmpty(timePeriodList)) {
         alert("請設定排程時段");
         console.log(JSON.stringify(timePeriodList));
         return false;
-      } else if (isNullOrEmpty(inputUpdateDate)) {
-        alert("請設定更新起始日期");
+      } else if (isNullOrEmpty(inputUpdateTime)) {
+        alert("請輸入更新時間");
         return false;
       } else if (isNullOrEmpty(selectedDeviceList) && isNullOrEmpty(selectedGroupList)) {
         alert("請選擇要加入的設備或組別");
