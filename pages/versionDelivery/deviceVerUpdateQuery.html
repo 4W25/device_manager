@@ -209,10 +209,8 @@
 												<th>設備編號</th>
 												<th>位置</th>
 												<th>所屬單位</th>
-												<th>更新前版本</th>
-												<th>更新時間</th>
-												<th>更新軟體版本號</th>
-												<th>更新內容描述</th>
+												<th>派送軟體版本號</th>
+												<th>派送時間</th>
 												<th>狀態</th>
                               </tr>
                             </thead>
@@ -315,7 +313,7 @@ function renderDeviceTable(deviceCode, tableBodyId, deviceType) {
 
   allData.forEach(data => {
   			const statusKey=data.status||'已派送';
-const badgeColor=statusKey==='已派送'?'badge-warning':statusKey==='未派送'?'badge-success':statusKey==='派送失敗'?'badge-danger':'badge-secondary';
+const badgeColor=statusKey==='派送成功'?'badge-warning':statusKey==='未派送'?'badge-success':statusKey==='派送失敗'?'badge-danger':'badge-secondary';
   // 渲染所有資料
     const row = `
 		  <td>${data.deviceName}</td>
@@ -323,12 +321,8 @@ const badgeColor=statusKey==='已派送'?'badge-warning':statusKey==='未派送'
           <td>${data.deviceCode}</td>
           <td>${data.deviceLocation}</td>
           <td>${data.unit}</td>
-
-          <td>${data.lastVer}</td>
-
-          <td>${data.updateTime}</td>
           <td>${data.verNo}</td>
-          <td>${data.releaseNotes}</td>
+          <td>${data.updateTime}</td>
 		  <td><span class="badge ${badgeColor}">${statusKey}</span></td>
 
       `;

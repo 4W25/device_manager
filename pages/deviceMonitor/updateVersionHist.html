@@ -154,7 +154,7 @@ $(function () {
 	  	          // 根據狀態選擇 badge 顏色
           const badgeClass =
             v.deviceStatus === "未派送" ? "badge-warning" :
-            v.deviceStatus === "已更新" ? "badge-success" :
+            v.deviceStatus === "更新成功" ? "badge-success" :
             v.deviceStatus === "更新失敗" ? "badge-danger" :
             "badge-secondary";
       row.innerHTML = `
