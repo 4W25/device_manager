@@ -109,12 +109,7 @@
           <select id="actionNameSelect" class="form-control">
             <option value="">全部</option>
           </select>
-          <label for="resultSelect">交易執行結果：</label>
-          <select id="resultSelect" class="form-control">
-            <option value="">全部</option>
-            <option value="S">S</option>
-            <option value="F">F</option>
-          </select>
+          
           <button class="btn btn-primary" onclick="filterTable()">查詢</button>
           <button class="btn btn-secondary" onclick="resetFilter()">重設</button>
         </div>
@@ -131,7 +126,7 @@
                     <th>使用者編號</th>
                     <th>交易名稱</th>
                     <th>執行動作</th>
-                    <th>交易執行結果</th>
+                   <th>交易結果</th>
                     <th>IP 位址</th>
                     <th>詳細資料</th>
                   </tr>
@@ -189,7 +184,7 @@
 const logData = [];
 const users = ['A001','A002','A003','B001','B002'];
 const actions = ['Login','Logout','GetData','UpdateData','DeleteData'];
-const results = ['S','F'];
+const results = ['200'];
 for(let i=0;i<30;i++){
   const date = new Date();
   date.setDate(date.getDate() - Math.floor(Math.random()*30));
