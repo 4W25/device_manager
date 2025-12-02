@@ -91,7 +91,7 @@
                       <th>設備編號</th>
                       <th>版號</th>
 					  <th>狀態</th>
-                      <th>更新日期</th>
+                      <th>派送時間</th>
                     </tr>
                   </thead>
                   <tbody id="deviceTableBody"></tbody>
@@ -162,7 +162,7 @@ $(function () {
         <td>${v.deviceCode}</td>
         <td>${v.deviceVersion}</td>
 		              <td><span class="badge ${badgeClass}">${v.deviceStatus}</span></td>
-        <td>${v.updateDate}</td>
+        <td>${v.updateTime}</td>
       `;
       tableBody.appendChild(row);
     });

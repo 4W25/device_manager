@@ -8,10 +8,10 @@
 <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
 <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
 <style>
   .nav-tabs { margin-bottom: 20px; }
-  .badge-status { padding: .35em .6em; border-radius: .25rem; color: #fff; }
 </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -66,7 +66,6 @@
         <div class="card">
           <div class="card-header"><h3 class="card-title"><i class="fas fa-th-large"></i> 待覆核版本列表</h3></div>
           <div class="card-body">
-            <ul class="nav nav-tabs" id="device-tabs" role="tablist"></ul>
             <div class="tab-content" id="device-tabContent"></div>
           </div>
         </div>
@@ -99,7 +98,7 @@
           <input type="text" class="form-control" id="m_fileName" disabled>
           <button id="btnDownloadZip" type="button" class="btn btn-secondary mt-2"><i class="fas fa-download"></i> 下載上傳檔案</button>
         </div>
-		<div class="form-group">
+        <div class="form-group mt-3">
           <div class="col-md-6"><label>說明</label><input type="text" class="form-control" id="m_releaseNotes" disabled></div>
         </div>
       </div>
@@ -108,11 +107,20 @@
   </div>
 </div>
 
+<!-- JS 引入 -->
 <script src="../../plugins/jquery/jquery.min.js"></script>
 <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="../../plugins/jszip/jszip.min.js"></script>
+<script src="../../plugins/pdfmake/pdfmake.min.js"></script>
+<script src="../../plugins/pdfmake/vfs_fonts.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <script src="../../dist/js/adminlte.min.js"></script>
 <script src="../../js/sidebar.js"></script>
 <script src="../../data/sidebar_menu.js"></script>
@@ -120,31 +128,20 @@
 
 <script>
 (function () {
-  const createdTables = {};
-
   function buildTabs() {
-    const tabList = $('#device-tabs').empty();
     const tabContent = $('#device-tabContent').empty();
 
     deviceTypeList.forEach((d, idx) => {
       const verNoKey = `Device${String(idx+1).padStart(2,'0')}`;
-      const active = idx===0 ? 'active' : '';
-      const tabId = `tab-${verNoKey}`;
-      const contentId = `content-${verNoKey}`;
-
-      tabList.append(`
-        <li class="nav-item">
-          <a class="nav-link ${active}" id="${tabId}" data-toggle="pill" href="#${contentId}" role="tab" aria-controls="${contentId}" aria-selected="${idx===0}">${d.deviceType}</a>
-        </li>`);
-
       tabContent.append(`
-        <div class="tab-pane fade ${active ? 'show active' : ''}" id="${contentId}" role="tabpanel" aria-labelledby="${tabId}">
+        <div class="tab-pane fade ${idx===0 ? 'show active' : ''}" id="content-${verNoKey}">
           <section class="content p-2">
             <table id="table-${verNoKey}" class="table table-bordered table-hover review-table">
               <thead>
                 <tr>
-				  <th>類型名稱</th>
-				  <th>型號代碼</th>
+                  <th class="text-center"><input type="checkbox" id="checkAll-${verNoKey}"></th>
+                  <th>類型名稱</th>
+                  <th>型號代碼</th>
                   <th>版本號</th>
                   <th>上傳者</th>
                   <th>上傳時間</th>
@@ -159,16 +156,6 @@
 
       renderTable(verNoKey, d.deviceType);
     });
-
-    $('a[data-toggle="pill"]').on('shown.bs.tab', function(e){
-      const href = $(e.target).attr('href');
-      const table = $(href).find('table').attr('id');
-      if(table && !createdTables[table]){
-        createdTables[table] = initializeDataTable(table);
-      } else if(table && createdTables[table]){
-        createdTables[table].columns.adjust();
-      }
-    });
   }
 
   function renderTable(verNoKey, deviceType){
@@ -178,38 +165,66 @@
       .forEach(item=>{
         tbody.append(`
           <tr data-id="${item.id}">
-		  <td>${item.deviceName}</td>
-		  <td>${item.deviceModel}</td>
+            <td class="text-center"><input type="checkbox" class="row-check" data-id="${item.id}"></td>
+            <td>${item.deviceName}</td>
+            <td>${item.deviceModel}</td>
             <td>${item.verNo}</td>
             <td>${item.uploadUser}</td>
             <td>${item.updateTime}</td>
             <td><span class="badge badge-warning">${item.status}</span></td>
             <td>
               <button class="btn btn-primary btn-sm act-view" data-id="${item.id}">檢視</button>
-              <button class="btn btn-success btn-sm act-ok" data-id="${item.id}">通過</button>
               <button class="btn btn-danger btn-sm act-reject" data-id="${item.id}">退回</button>
             </td>
           </tr>`);
       });
-    createdTables[`table-${verNoKey}`] = initializeDataTable(`table-${verNoKey}`);
-  }
 
-  function initializeDataTable(tableId){
-    return $(`#${tableId}`).DataTable({
+    const table = $(`#table-${verNoKey}`).DataTable({
       responsive:true,
       lengthChange:false,
       autoWidth:false,
       ordering:false,
       searching:true,
+      dom: "<'row'<'col-sm-6'B><'col-sm-6'f>>"+
+           "<'row'<'col-12'tr>>"+
+           "<'row'<'col-sm-6'i><'col-sm-6'p>>",
+      buttons:[{
+        text: '<i class="fas fa-check"></i> 通過',
+        className: 'btn btn-success',
+        action: function() {
+          const selectedIds = $(`#table-${verNoKey} .row-check:checked`).map(function(){ return $(this).data('id'); }).get();
+          if(selectedIds.length === 0){ alert("請先勾選要通過的項目！"); return; }
+          selectedIds.forEach(id=>{
+            const row = $(`#table-${verNoKey} tr[data-id="${id}"]`);
+            row.find('td:eq(6) .badge').removeClass('badge-warning').addClass('badge-success').text('已通過');
+            row.find('.row-check').prop('checked', false);
+          });
+          $(`#checkAll-${verNoKey}`).prop('checked', false);
+          alert(selectedIds.length + " 筆已通過！");
+        }
+      }],
       language:{
+        search: "搜尋：",
         lengthMenu:"每頁顯示 _MENU_ 筆",
         zeroRecords:"查無資料",
-		search: "搜尋：",
         info:"顯示第 _START_ 筆到第 _END_ 筆，共 _TOTAL_ 筆",
         infoEmpty:"顯示第 0 筆資料",
         infoFiltered:"(從 _MAX_ 筆資料過濾)",
         paginate:{first:"第一頁",last:"最後一頁",next:"下一頁",previous:"上一頁"}
       }
+    });
+
+    // 全選
+    $(`#checkAll-${verNoKey}`).on('change', function(){
+      const checked = $(this).prop('checked');
+      $(`#table-${verNoKey} .row-check`).prop('checked', checked);
+    });
+
+    // 單筆勾選 → 自動更新全選
+    $(`#table-${verNoKey}`).on('change', '.row-check', function(){
+      const all = $(`#table-${verNoKey} .row-check`).length;
+      const checked = $(`#table-${verNoKey} .row-check:checked`).length;
+      $(`#checkAll-${verNoKey}`).prop('checked', all===checked);
     });
   }
 
@@ -230,20 +245,20 @@
         link.download = data.fileName;
         link.click();
       });
-	  $('#m_releaseNotes').val(data.releaseNotes);
+      $('#m_releaseNotes').val(data.releaseNotes);
 
       $('#viewModal').modal('show');
     });
 
-    $('.review-table tbody').on('click', '.act-ok', function(){ alert('審核通過（待串接後端）'); });
-    $('.review-table tbody').on('click', '.act-reject', function(){ alert('已退回（待串接後端）'); });
+    $('.review-table tbody').on('click', '.act-reject', function(){
+      alert('已退回（待串接後端）');
+    });
   }
 
   $(function(){
     buildTabs();
     bindActions();
   });
-
 })();
 </script>
 </body>

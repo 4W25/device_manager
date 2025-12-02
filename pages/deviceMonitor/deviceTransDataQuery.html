@@ -198,7 +198,7 @@
                                 <th>設備編號</th>
 								<th>位置</th>
 								<th>所屬單位</th>
-                                <th>最後上傳資料時間</th>
+                                <th>最新一筆交易檔案日期</th>
                                 <th>詳細資料</th>
                               </tr>
                             </thead>
@@ -220,32 +220,6 @@
         
     });    
 
-
-// function renderDeviceTable(deviceCode, tableBodyId, deviceType) {
-//   const tableBody = document.getElementById(tableBodyId);
-//   tableBody.innerHTML = ""; // 清空表格
-
-//   // 篩選並渲染該設備類型資料
-//   deviceTransDataQuery
-//     .filter(data => data.deviceType === deviceType)
-//     .sort((a, b) => new Date(b.transTime) - new Date(a.transTime)) // 依更新時間排序（新到舊）
-//     .forEach(data => {
-//       const row = `
-//         <tr>
-//        <td>${data.deviceCode}</td>
-//        <td>${data.deviceType}</td>
-//        <td>${data.lastVer}</td>
-//        <td>${data.isMandatory}</td>
-//        <td>${data.previousVer}</td>
-//        <td>${data.verNo}</td>
-//        <td>${data.releaseNotes}</td>
-//        <td>${data.transTime}</td>
-//        <td>${data.location}</td>
-//         </tr>
-//       `;
-//       tableBody.insertAdjacentHTML('beforeend', row);
-//     });
-// }
 
 function renderDeviceTable(deviceCode, tableBodyId, deviceType) {
   const tableBody = document.getElementById(tableBodyId);

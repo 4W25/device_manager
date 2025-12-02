@@ -5,303 +5,251 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>使用者資料覆核</title>
 
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-<link rel="stylesheet"
-	href="../../plugins/fontawesome-free/css/all.min.css">
-<link rel="stylesheet"
-	href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet"
-	href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-<link rel="stylesheet"
-	href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 <link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
-<link rel="stylesheet"
-	href="../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+<link rel="stylesheet" href="../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
 
 <style>
-.nav-tabs {
-	margin-bottom: 20px;
-}
+.nav-tabs { margin-bottom: 20px; }
 </style>
 </head>
 
 <body class="hold-transition sidebar-mini">
-	<div class="wrapper">
-		<!-- Navbar -->
-		<nav
-			class="main-header navbar navbar-expand navbar-white navbar-light">
-			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" data-widget="pushmenu"
-					href="#" role="button"><i class="fas fa-bars"></i></a></li>
-				<li class="nav-item d-none d-sm-inline-block"><a
-					href="../../index.html" class="nav-link">回首頁</a></li>
-			</ul>
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item"><a class="nav-link"
-					data-widget="fullscreen" href="#" role="button"><i
-						class="fas fa-expand-arrows-alt"></i></a></li>
-			</ul>
-		</nav>
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <ul class="navbar-nav">
+      <li class="nav-item"><a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a></li>
+      <li class="nav-item d-none d-sm-inline-block"><a href="../../index.html" class="nav-link">回首頁</a></li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item"><a class="nav-link" data-widget="fullscreen" href="#" role="button"><i class="fas fa-expand-arrows-alt"></i></a></li>
+    </ul>
+  </nav>
 
-		<!-- Sidebar -->
-		<aside class="main-sidebar sidebar-dark-primary elevation-4">
-			<a href="../../index.html" class="brand-link"> <img
-				src="../../dist/img/device01.png" alt="Logo"
-				class="brand-image img-circle elevation-3" style="opacity: .8">
-				<span class="brand-text font-weight-light">自動化設備管理平臺</span>
-			</a>
+  <!-- Sidebar -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <a href="../../index.html" class="brand-link">
+      <img src="../../dist/img/device01.png" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">自動化設備管理平臺</span>
+    </a>
+    <div class="sidebar">
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image"><img src="../../dist/img/userNobody.png" class="img-circle elevation-2"></div>
+        <div class="info"><a href="#" class="d-block">登入者姓名</a></div>
+      </div>
+      <nav class="mt-2">
+        <ul id="sidebarMenu" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"></ul>
+      </nav>
+    </div>
+  </aside>
 
-			<div class="sidebar">
-				<div class="user-panel mt-3 pb-3 mb-3 d-flex">
-					<div class="image">
-						<img src="../../dist/img/userNobody.png"
-							class="img-circle elevation-2" alt="User Image">
-					</div>
-					<div class="info">
-						<a href="#" class="d-block">登入者姓名</a>
-					</div>
-				</div>
+  <!-- Content Wrapper -->
+  <div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6"><h1>帳號設定覆核</h1></div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="../../index.html">首頁</a></li>
+              <li class="breadcrumb-item active">基本管理 / 帳號設定覆核</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
 
-				<nav class="mt-2">
-					<ul id="sidebarMenu" class="nav nav-pills nav-sidebar flex-column"
-						data-widget="treeview" role="menu" data-accordion="false"></ul>
-				</nav>
-			</div>
-		</aside>
+    <!-- Main Content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="card card-default card-outline">
+          <div class="card-header">
+            <h3 class="card-title"><i class="fas fa-check-circle"></i> 帳號設定覆核清單</h3>
+          </div>
+          <div class="card-body">
+            <table id="pendingTable" class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th class="text-center"><input type="checkbox" id="checkAll"></th>
+                  <th>使用者編號</th>
+                  <th>使用者姓名</th>
+                  <th>狀態</th>
+                  <th>部門</th>
+                  <th>群組別</th>
+                  <th>申請人</th>
+                  <th>申請日期</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 
-		<!-- Content Wrapper -->
-		<div class="content-wrapper">
-			<section class="content-header">
-				<div class="container-fluid">
-					<div class="row mb-2">
-						<div class="col-sm-6">
-							<h1>帳號設定覆核</h1>
-						</div>
-						<div class="col-sm-6">
-							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="../../index.html">首頁</a></li>
-								<li class="breadcrumb-item active">基本管理 / 帳號設定覆核</li>
-							</ol>
-						</div>
-					</div>
-				</div>
-			</section>
+  <footer class="main-footer">
+    <div class="float-right d-none d-sm-block"><b>Version</b> 3.2.0</div>
+    <strong>&copy; 2014-2024 <a href="https://www.leosys.com/">國眾電腦股份有限公司</a>.</strong> All rights reserved.
+  </footer>
+</div>
 
-			<!-- Main Content -->
-			<section class="content">
-				<div class="container-fluid">
-					<div class="card card-default card-outline">
-						<div class="card-header">
-							<h3 class="card-title">
-								<i class="fas fa-check-circle"></i> 帳號設定覆核清單
-							</h3>
-						</div>
-						<div class="card-body">
-							<ul class="nav nav-tabs" id="review-tab" role="tablist">
-								<li class="nav-item"><a class="nav-link active"
-									id="pending-tab" data-toggle="pill" href="#pending" role="tab">待覆核</a></li>
-								<!--<li class="nav-item"><a class="nav-link" id="approved-tab" data-toggle="pill" href="#approved" role="tab">已覆核</a></li>-->
-							</ul>
+<!-- Modal：檢視使用者 -->
+<div class="modal fade" id="viewUserModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <form id="viewUserForm" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">使用者資料檢視</h5>
+        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group"><label>使用者編號</label><input type="text" id="userNo" class="form-control" disabled></div>
+        <div class="form-group"><label>使用者名稱</label><input type="text" id="userName" class="form-control" disabled></div>
+        <div class="form-group"><label>E-mail</label><input type="text" id="email" class="form-control" disabled></div>
+        <div class="form-group"><label>聯絡電話</label><input type="text" id="phoneNo" class="form-control" disabled></div>
+        <div class="form-group"><label>部門</label><input type="text" id="department" class="form-control" disabled></div>
+        <div class="form-group"><label>群組別</label><input type="text" id="groups" class="form-control" disabled></div>
+        <div class="form-group"><label>備註</label><textarea id="note" class="form-control" rows="3" disabled></textarea></div>
+      </div>
+      <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button></div>
+    </form>
+  </div>
+</div>
 
-							<div class="tab-content" id="review-tabContent">
-								<!-- 待覆核 -->
-								<div class="tab-pane fade show active" id="pending"
-									role="tabpanel">
-									<table id="pendingTable"
-										class="table table-bordered table-hover">
-										<thead>
-											<tr>
-												<th>使用者編號</th>
-												<th>使用者姓名</th>
-												<th>狀態</th>
-												<th>部門</th>
-												<th>群組別</th>
-												<th>申請人</th>
-												<th>申請日期</th>
-												<th>操作</th>
-											</tr>
-										</thead>
-										<tbody id="pendingBody"></tbody>
-									</table>
-								</div>
+<!-- JS -->
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="../../plugins/jszip/jszip.min.js"></script>
+<script src="../../plugins/pdfmake/pdfmake.min.js"></script>
+<script src="../../plugins/pdfmake/vfs_fonts.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="../../plugins/select2/js/select2.full.min.js"></script>
+<script src="../../dist/js/adminlte.min.js"></script>
+<script src="../../js/sidebar.js"></script>
+<script src="../../data/sidebar_menu.js"></script>
+<script src="../../data/device_info.js"></script>
 
-								<!-- 已覆核 -->
-								<!-- <div class="tab-pane fade" id="approved" role="tabpanel">
-                <table id="approvedTable" class="table table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th>使用者編號</th>
-                      <th>使用者姓名</th>
-                      <th>部門</th>
-                      <th>群組別</th>
-                      <th>申請人</th>
-                      <th>覆核結果</th>
-                      <th>覆核日期</th>
-                      <th>覆核人員</th>
-                    </tr>
-                  </thead>
-                  <tbody id="approvedBody"></tbody>
-                </table>
-              </div> -->
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-		</div>
+<script>
+$(function(){
+  // 初始化 DataTable
+  const table = $('#pendingTable').DataTable({
+    data: deviceUserCheckList.filter(u=>u.status==="待覆核"),
+    columns:[
+      { data:null, render:(d)=>`<input type="checkbox" class="row-check" data-id="${d.userNo}">`, orderable:false },
+      { data:"userNo" },
+      { data:"userName" },
+      { data:"status", render:(d)=>`<span class="badge ${d==="待覆核"?"badge-warning":d==="核准"?"badge-success":d==="退回"?"badge-danger":"badge-secondary"}">${d}</span>` },
+      { data:"department" },
+      { data:(d)=> (d.groups || []).map(g=>deviceGroupList.find(x=>x.groupNo===g)?.groupName || g).join(", ") },
+      { data:"modId" },
+      { data:"registrationDate", defaultContent:"-" },
+      { data:null, render:(d)=>`
+        <button class="btn btn-primary btn-sm btn-view" data-id="${d.userNo}">檢視</button>
 
-		<!-- Footer -->
-		<footer class="main-footer">
-			<div class="float-right d-none d-sm-block">
-				<b>Version</b> 3.2.0
-			</div>
-			<strong>&copy; 2014-2024 <a href="https://www.leosys.com/">國眾電腦股份有限公司</a>.
-			</strong> All rights reserved.
-		</footer>
-	</div>
+        <button class="btn btn-danger btn-sm btn-reject" data-id="${d.userNo}">退回</button>
+      `, orderable:false }
+    ],
+    responsive:true,
+    lengthChange:false,
+    autoWidth:false,
+    ordering:false,
+    dom: "<'row'<'col-sm-6'B><'col-sm-6'f>>" +
+         "<'row'<'col-12'tr>>" +
+         "<'row'<'col-sm-6'i><'col-sm-6'p>>",
+    buttons:[{
+      text:'<i class="fas fa-check"></i> 通過',
+      className:'btn btn-success',
+      action:function(){
+        const selected = table.$('.row-check:checked').map(function(){ return $(this).data('id'); }).get();
+        if(selected.length===0){ alert("請先勾選！"); return; }
+        selected.forEach(id=>{
+          const row = table.row($(`.row-check[data-id="${id}"]`).closest('tr'));
+          const data = row.data();
+          data.status="核准";
+          row.data(data).draw(false);
+        });
+        $("#checkAll").prop('checked',false);
+        alert(selected.length + " 筆已通過！");
+      }
+    }/*,{
+      text:'<i class="fas fa-times"></i> 退回',
+      className:'btn btn-danger',
+      action:function(){
+        const selected = table.$('.row-check:checked').map(function(){ return $(this).data('id'); }).get();
+        if(selected.length===0){ alert("請先勾選！"); return; }
+        selected.forEach(id=>{
+          const row = table.row($(`.row-check[data-id="${id}"]`).closest('tr'));
+          const data = row.data();
+          data.status="退回";
+          row.data(data).draw(false);
+        });
+        $("#checkAll").prop('checked',false);
+        alert(selected.length + " 筆已退回！");
+      }
+    }*/],
+    language:{
+      search:"搜尋：",
+      zeroRecords:"查無資料",
+      info:"顯示第 _START_ 筆到第 _END_ 筆，共 _TOTAL_ 筆",
+      infoEmpty:"無資料",
+      paginate:{first:"第一頁",last:"最後一頁",next:"下一頁",previous:"上一頁"}
+    }
+  });
 
-	<!-- Modal：檢視使用者 -->
-	<div class="modal fade" id="viewUserModal" tabindex="-1" role="dialog"
-		aria-labelledby="viewUserModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<form id="viewUserForm">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="viewUserModalLabel">使用者資料檢視</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span>&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<div class="form-group">
-							<label>使用者編號</label> <input type="text" id="userNo"
-								class="form-control" disabled>
-						</div>
-						<div class="form-group">
-							<label>使用者名稱</label> <input type="text" id="userName"
-								class="form-control" disabled>
-						</div>
-						<div class="form-group">
-							<label>E-mail</label> <input type="text" id="email"
-								class="form-control" disabled>
-						</div>
-						<div class="form-group">
-							<label>聯絡電話</label> <input type="text" id="phoneNo"
-								class="form-control" disabled>
-						</div>
-						<div class="form-group">
-							<label>部門</label> <input type="text" id="department"
-								class="form-control" disabled>
-						</div>
-						<div class="form-group">
-							<label>群組別</label> <input type="text" id="groups"
-								class="form-control" disabled>
-						</div>
-						<div class="form-group">
-							<label>備註</label>
-							<textarea id="note" class="form-control" rows="3" disabled></textarea>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">關閉</button>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
+  // 全選
+  $(document).on('change','#checkAll',function(){
+    table.$('.row-check').prop('checked',$(this).prop('checked'));
+  });
+  $(document).on('change','.row-check',function(){
+    const total = table.$('.row-check').length;
+    const checked = table.$('.row-check:checked').length;
+    $("#checkAll").prop('checked',total===checked);
+  });
 
-	<script src="../../plugins/jquery/jquery.min.js"></script>
-	<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
-	<script
-		src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-	<script
-		src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-	<script src="../../plugins/select2/js/select2.full.min.js"></script>
-	<script src="../../dist/js/adminlte.min.js"></script>
-	<script src="../../js/sidebar.js"></script>
-	<script src="../../data/sidebar_menu.js"></script>
-	<script src="../../data/device_info.js"></script>
+  // 單筆按鈕
+  $('#pendingTable tbody').on('click','.btn-view',function(){
+    const id=$(this).data('id');
+    const user = deviceUserCheckList.find(u=>u.userNo===id);
+    if(!user) return alert("找不到使用者資料");
+    $("#userNo").val(user.userNo);
+    $("#userName").val(user.userName);
+    $("#email").val(user.email||"");
+    $("#phoneNo").val(user.phoneNo||"");
+    $("#department").val(user.department||"");
+    $("#groups").val((user.groups||[]).map(g=>deviceGroupList.find(x=>x.groupNo===g)?.groupName||g).join(", "));
+    $("#note").val(user.note||"");
+    $('#viewUserModal').modal('show');
+  });
 
-	<script>
-$(function () {
-  renderPending();
- <!-- renderApproved();-->
+  $('#pendingTable tbody').on('click','.btn-approve',function(){
+    const id=$(this).data('id');
+    const row = table.row($(this).closest('tr'));
+    const data = row.data(); data.status="核准"; row.data(data).draw(false);
+    alert(`使用者 ${id} 已通過`);
+  });
 
-  function renderPending() {
-    const tbody = $("#pendingBody").empty();
-    deviceUserCheckList.filter(u => u.status === "待覆核").forEach(u => {
-      const groups = (u.groups || []).map(g => deviceGroupList.find(x => x.groupNo === g)?.groupName || g).join(", ");
-      tbody.append(`
-        <tr>
-          <td>${u.userNo}</td>
-          <td>${u.userName}</td>
-		            <td>
-  <span class="badge ${
-    u.status === "待覆核" ? "badge-warning" :
-    u.status === "核准" ? "badge-success" :
-    u.status === "退回" ? "badge-danger" :
-    "badge-secondary"
-  }">${u.status}</span>
-</td>
-          <td>${u.department}</td>
-          <td>${groups}</td>
-          <td>${u.modId}</td>
-          <td>${u.registrationDate || "-"}</td>
+  $('#pendingTable tbody').on('click','.btn-reject',function(){
+    const id=$(this).data('id');
+    const row = table.row($(this).closest('tr'));
+    const data = row.data(); data.status="退回"; row.data(data).draw(false);
+    alert(`使用者 ${id} 已退回`);
+  });
 
-          <td>
-		    <button class="btn btn-sm btn-primary" onclick="viewUser('${u.userNo}')">檢視</button>
-            <button class="btn btn-sm btn-success" onclick="approveUser('${u.userNo}')">通過</button>
-            <button class="btn btn-sm btn-danger" onclick="rejectUser('${u.userNo}')">退回</button>
-          </td>
-        </tr>
-      `);
-    });
-  }
-
-  function renderApproved() {
-    const tbody = $("#approvedBody").empty();
-    deviceUserCheckList.filter(u => ["已覆核","退回"].includes(u.status)).forEach(u => {
-      const groups = (u.groups || []).map(g => deviceGroupList.find(x => x.groupNo === g)?.groupName || g).join(", ");
-      tbody.append(`
-        <tr>
-          <td>${u.userNo}</td>
-          <td>${u.userName}</td>
-          <td>${u.department}</td>
-          <td>${groups}</td>
-          <td>${u.modId}</td>
-          <td>${u.status}</td>
-          <td>${u.registrationDate || "-"}</td>
-          <td>${u.cofId}</td>
-        </tr>
-      `);
-    });
-  }
 });
-
-// === 按鈕功能 ===
-function approveUser(userNo) { alert("使用者 " + userNo + " 已覆核通過！（需連接後端）"); }
-function rejectUser(userNo) { alert("使用者 " + userNo + " 已退回！（需連接後端）"); }
-
-function viewUser(userNo) {
-  const allData = [...deviceUserList, ...deviceUserCheckList];
-  const user = allData.find(u => u.userNo === userNo);
-  if (!user) return alert("找不到使用者資料");
-
-  $("#userNo").val(user.userNo);
-  $("#userName").val(user.userName);
-  $("#email").val(user.email || "");
-  $("#phoneNo").val(user.phoneNo || "");
-  $("#department").val(user.department || "");
-  $("#groups").val((user.groups || []).map(g => deviceGroupList.find(x => x.groupNo === g)?.groupName || g).join(", "));
-  $("#note").val(user.note || "");
-
-  $("#viewUserModal").modal("show");
-}
 </script>
 
 </body>

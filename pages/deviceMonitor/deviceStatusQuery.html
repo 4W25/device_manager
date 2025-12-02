@@ -226,9 +226,10 @@
                                 <th>型號代碼</th>
                                 <th>設備編號</th>
                                 <th>當前版本</th>
-                                <th>更新時間</th>
+                                
                                 <th>位置</th>
 								<th>所屬單位</th>
+								<th>更新紀錄</th>
                               </tr>
                             </thead>
                             <tbody id="deviceTableBody-${device.deviceId}"></tbody>
@@ -273,9 +274,10 @@
               <td>${data.deviceModel}</td>
               <td>${data.deviceCode}</td>
 			  <td>${data.deviceVersion}</td>
-			  <td>${data.updateTime}</td>
+			  
               </td><td>${data.deviceLocation}</td>
 			  </td><td>${data.unit}</td>
+			  <td class="project-actions text-center"> <a class="btn btn-primary btn-sm" href="updateVersionHist.html?id=${data.deviceCode}&deviceType=${data.deviceType}">查詢</a>
 
           `;
           tableBody.appendChild(row);

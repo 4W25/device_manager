@@ -204,14 +204,16 @@
                           <table id="table-${device.deviceCode}" class="table table-bordered table-hover">
                             <thead>
                               <tr>
-								<th>類型名稱</th>
-                                <th>型號代碼</th>
-                                <th>設備編號</th>
-								<th>位置</th>
-								<th>所屬單位</th>
-                                <th>當前版本</th>
-                                <th>最新更新時間</th>
-								<th>查詢</th>
+												<th>類型名稱</th>
+												<th>型號代碼</th>
+												<th>設備編號</th>
+												<th>位置</th>
+												<th>所屬單位</th>
+												<th>更新前版本</th>
+												<th>更新時間</th>
+												<th>更新軟體版本號</th>
+												<th>更新內容描述</th>
+												<th>狀態</th>
                               </tr>
                             </thead>
                             <tbody id="deviceTableBody-${device.deviceCode}"></tbody>
@@ -258,7 +260,7 @@
 //       tableBody.insertAdjacentHTML('beforeend', row);
 //     });
 // }
-
+/*
 function renderDeviceTable(deviceCode, tableBodyId, deviceType) {
   const tableBody = document.getElementById(tableBodyId);
   tableBody.innerHTML = ""; // 清空表格
@@ -299,6 +301,41 @@ function renderDeviceTable(deviceCode, tableBodyId, deviceType) {
 	
 	
 }
+
+*/
+
+function renderDeviceTable(deviceCode, tableBodyId, deviceType) {
+  const tableBody = document.getElementById(tableBodyId);
+  tableBody.innerHTML = ""; // 清空表格
+
+  // 撈取所有屬於該 deviceType 的資料
+  const allData = deviceUpdatesData
+    .filter(data => data.deviceType === deviceType)
+    .sort((a, b) => new Date(b.updateTime) - new Date(a.updateTime)); // 新 → 舊排序
+
+  allData.forEach(data => {
+  			const statusKey=data.status||'已派送';
+const badgeColor=statusKey==='已派送'?'badge-warning':statusKey==='未派送'?'badge-success':statusKey==='派送失敗'?'badge-danger':'badge-secondary';
+  // 渲染所有資料
+    const row = `
+		  <td>${data.deviceName}</td>
+          <td>${data.deviceModel}</td>
+          <td>${data.deviceCode}</td>
+          <td>${data.deviceLocation}</td>
+          <td>${data.unit}</td>
+
+          <td>${data.lastVer}</td>
+
+          <td>${data.updateTime}</td>
+          <td>${data.verNo}</td>
+          <td>${data.releaseNotes}</td>
+		  <td><span class="badge ${badgeColor}">${statusKey}</span></td>
+
+      `;
+    tableBody.innerHTML += row;
+  });
+}
+
   function initializeDataTable(tableId){
     return $(`#${tableId}`).DataTable({
       responsive:true,

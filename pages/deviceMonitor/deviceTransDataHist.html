@@ -105,6 +105,25 @@
             <span class="section-title"><i class="fas fa-file-upload"></i> 上傳檔案列表</span>
           </div>
           <div class="card-body">
+		  <!-- === 日期篩選器（與搜尋欄位同高） === -->
+<div class="d-flex flex-wrap mb-2" style="gap:10px; align-items:center;">
+  
+  <div>
+    <label>交易檔案日期：</label>
+    <input type="date" id="fileDateStart" class="form-control" style="display:inline-block; width:auto;">
+    <span>～</span>
+    <input type="date" id="fileDateEnd" class="form-control" style="display:inline-block; width:auto;">
+  </div>
+
+  <div>
+    <label>上傳時間：</label>
+    <input type="date" id="uploadTimeStart" class="form-control" style="display:inline-block; width:auto;">
+    <span>～</span>
+    <input type="date" id="uploadTimeEnd" class="form-control" style="display:inline-block; width:auto;">
+  </div>
+
+</div>
+
             <table id="uploadTable" class="table table-bordered table-hover">
               <thead>
               <tr>
@@ -112,6 +131,7 @@
                 <th>型號代碼</th>
                 <th>設備編號</th>
                 <th>檔案名稱</th>
+				<th>交易檔案日期</th>
                 <th>上傳時間</th>
                 <th>操作</th>
               </tr>
@@ -182,18 +202,18 @@
   // === 假資料：CSV / JSON / TXT ===
   const uploadList = [
     { 
-        deviceName: "循環機", deviceModel: "OKI-RG7", deviceCode: "8c67a3d9-7b51-4db1-84fa-63eecb1f7d28",  id: 'UPL-001', name: 'ATM001_20251101.csv', time: '2025-11-01 23:30:00', user: 'userA', count: 3, status: '成功', 
+        deviceName: "循環機", deviceModel: "OKI-RG7", deviceCode: "8c67a3d9",  id: 'UPL-001', name: 'ATM001_20251101.csv', time: '2025-11-01 23:30:00',updateTime: '2025-11-01 23:40:00', user: 'userA', count: 3, status: '成功', 
       base64: btoa(unescape(encodeURIComponent('交易序號,交易時間,交易類型,金額,交易狀態,訊息\n1,2025-11-01 10:25:01,存款,5000,成功,交易完成\n2,2025-11-01 10:26:18,提款,1000,成功,交易完成')))
     },
     { 
-        deviceName: "循環機", deviceModel: "OKI-RG7", deviceCode: "8c67a3d9-7b51-4db1-84fa-63eecb1f7d28", id: 'UPL-002', name: 'ATM001_20251102.json', time: '2025-11-02 23:30:00', user: 'userA', count: 2, status: '成功', 
+        deviceName: "循環機", deviceModel: "OKI-RG7", deviceCode: "8c67a3d9", id: 'UPL-002', name: 'ATM001_20251102.json', time: '2025-11-02 23:30:00',updateTime: '2025-11-02 23:40:00', user: 'userA', count: 2, status: '成功', 
       base64: btoa(unescape(encodeURIComponent(JSON.stringify([
         { seq: 1, time: '2025-11-02 09:56:12', type: '存款', amount: 3000, status: '成功', msg: '交易完成' },
         { seq: 2, time: '2025-11-02 09:57:33', type: '提款', amount: 1000, status: '成功', msg: '交易完成' }
       ], null, 2))))
     },
     { 
-       deviceName: "循環機", deviceModel: "OKI-RG7", deviceCode: "8c67a3d9-7b51-4db1-84fa-63eecb1f7d28",  id: 'UPL-003', name: 'ATM001_20251103.txt', time: '2025-11-03 23:30:00', user: 'userA', count: 2, status: '成功', 
+       deviceName: "循環機", deviceModel: "OKI-RG7", deviceCode: "8c67a3d9",  id: 'UPL-003', name: 'ATM001_20251103.txt', time: '2025-11-03 23:30:00',updateTime: '2025-11-03 23:40:00', user: 'userA', count: 2, status: '成功', 
       base64: btoa(unescape(encodeURIComponent('這是一個純文字檔案範例\n第1行\n第2行\n第3行')))
     }
   ];
@@ -208,6 +228,7 @@
 		{ data: 'deviceCode' },
         { data: 'name' },
         { data: 'time' },
+		{ data: 'updateTime' },
         //{ data: 'user' },
 //        { data: 'count' },
 // === 修改 DataTables 按鈕 render ===
@@ -225,7 +246,7 @@
 
       ],
       responsive: true,
-      searching: false,
+      searching: true,
       ordering: false,
       lengthChange: false,
       language: { 
@@ -262,7 +283,57 @@
       // 以下為格式化功能，預設註解，可解除註解啟用
       // formatContent(data.name, data.base64);
     });
+	
+	// 日期篩選事件
+$('#fileDateStart, #fileDateEnd, #uploadTimeStart, #uploadTimeEnd')
+  .on('change', function () {
+    $('#uploadTable').DataTable().draw();
   });
+
+  });
+  
+  // === DataTables 自訂篩選 ===
+$.fn.dataTable.ext.search.push(function (settings, data) {
+  // 欄位順序：
+  // 0 deviceName
+  // 1 deviceModel
+  // 2 deviceCode
+  // 3 name
+  // 4 time（交易檔案日期）
+  // 5 updateTime（上傳時間）
+
+  const fileDate = data[4];       // 交易檔案日期
+  const uploadTime = data[5];     // 上傳時間
+
+  // 取得輸入的區間
+  const fStart = $('#fileDateStart').val();
+  const fEnd = $('#fileDateEnd').val();
+  const uStart = $('#uploadTimeStart').val();
+  const uEnd = $('#uploadTimeEnd').val();
+
+  // 日期轉換
+  const fileDateVal = fileDate ? new Date(fileDate) : null;
+  const uploadTimeVal = uploadTime ? new Date(uploadTime) : null;
+
+  // === 檔案日期區間判斷 ===
+  if (fStart) {
+    if (!fileDateVal || fileDateVal < new Date(fStart)) return false;
+  }
+  if (fEnd) {
+    if (!fileDateVal || fileDateVal > new Date(fEnd + " 23:59:59")) return false;
+  }
+
+  // === 上傳時間區間判斷 ===
+  if (uStart) {
+    if (!uploadTimeVal || uploadTimeVal < new Date(uStart)) return false;
+  }
+  if (uEnd) {
+    if (!uploadTimeVal || uploadTimeVal > new Date(uEnd + " 23:59:59")) return false;
+  }
+
+  return true;
+});
+
 
 function downloadFile(event, id) {
   event.stopPropagation(); // ← 防止冒泡影響 textarea
