@@ -16,7 +16,7 @@ const deviceDataList = [
 	{ deviceNo: 'A012200902', deviceLocate: '高雄市-中雅門市', deviceTypeCode: "OKI-RG7", createDataDate: '2024-06-10', ip: '0.0.0.0', organId: '0120016', organName: '營運中心', modId: 'Admin', cofId: '楊蔥圈' },
 	/*
 	{ deviceNo: 'A012210201', devicelocate: '新北市-中崙門市', status: '核准', deviceTypeCode: "OKI-RG7",  organId: '0120016', organName: '營運中心', modId: 'Admin', cofId: '楊蔥圈' },
-	{ deviceNo: 'A012210202', devicelocate: '台北市-富邦公庫處ATM2', status: '核准', deviceTypeCode: "OKI-RG7",  organId: '0120016', organName: '營運中心', modId: 'Admin', cofId: '楊蔥圈' },
-	{ deviceNo: 'A012210203', devicelocate: '台北市-富邦公庫處ATM3', status: '核准', deviceTypeCode: "OKI-RG7", organId: '0120016', organName: '營運中心', modId: 'Admin', cofId: '楊蔥圈' },
+	{ deviceNo: 'A012210202', devicelocate: '台北市-公庫處ATM2', status: '核准', deviceTypeCode: "OKI-RG7",  organId: '0120016', organName: '營運中心', modId: 'Admin', cofId: '楊蔥圈' },
+	{ deviceNo: 'A012210203', devicelocate: '台北市-公庫處ATM3', status: '核准', deviceTypeCode: "OKI-RG7", organId: '0120016', organName: '營運中心', modId: 'Admin', cofId: '楊蔥圈' },
 	*/
 ]

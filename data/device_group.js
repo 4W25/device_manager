@@ -73,25 +73,25 @@ const deviceGroupList = [
 
 
   /*  
-  { groupId: 'ATMTPE0001', groupName: 'ATM_台北_1組', groupTag: '台北_松山區', deviceTypeCode: "OKI-RG7", typeName: 'ATM系統', organId: '0123419', organName: '富邦松山分行', modId: 'Admin', lastVersion: 'A25.05.01', lastSendDate: '2025-06-01' },
-  { groupId: 'ATMTPE0002', groupName: 'ATM_台北_2組', groupTag: '台北_信義區', deviceTypeCode: "OKI-RG7", typeName: 'ATM系統', organId: '0123420', organName: '富邦信義分行', modId: 'Admin', lastVersion: 'A25.05.01', lastSendDate: '2025-06-02' },
-  { groupId: 'ATMTAO0003', groupName: 'ATM_桃園_3組', groupTag: '桃園_中壢區', deviceTypeCode: "OKI-RG7", typeName: 'ATM系統', organId: '0123421', organName: '富邦桃園分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
-  { groupId: 'ATMTXG0004', groupName: 'ATM_台中_4組', groupTag: '台中_南屯區', deviceTypeCode: "OKI-RG7", typeName: 'ATM系統', organId: '0123422', organName: '富邦南屯分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
-  { groupId: 'ATMNWT0005', groupName: 'ATM_新北_5組', groupTag: '新北_板橋區', deviceTypeCode: "OKI-RG7", typeName: 'ATM系統', organId: '0123423', organName: '富邦板橋分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
-  { groupId: 'ATMNWT0006', groupName: 'ATM_新北_6組', groupTag: '新北_永和區', deviceTypeCode: "OKI-RG7", typeName: 'ATM系統', organId: '0123424', organName: '富邦永和分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
-  { groupId: 'ATMMIA0007', groupName: 'ATM_苗栗_7組', groupTag: '苗栗_頭份區', typeId: 'Device01', typeName: 'ATM系統', organId: '0123425', organName: '富邦頭份分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
-  { groupId: 'ATMHSZ0008', groupName: 'ATM_新竹_8組', groupTag: '新竹_東區', typeId: 'Device01', typeName: 'ATM系統', organId: '0123426', organName: '富邦新竹分行', modId: 'Admin', lastVersion: 'A25.05.01', lastSendDate: '2025-06-01' },
-  { groupId: 'ATMCHA0009', groupName: 'ATM_彰化_9組', groupTag: '彰化_員林區', typeId: 'Device01', typeName: 'ATM系統', organId: '0123427', organName: '富邦員林分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
-  { groupId: 'ATMNAN0010', groupName: 'ATM_南投_10組', groupTag: '南投_草屯區', typeId: 'Device01', typeName: 'ATM系統', organId: '0123428', organName: '富邦草屯分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
-  { groupId: 'ATMTPE0011', groupName: 'ATM_台北_11組', groupTag: '台北_大安區', typeId: 'Device01', typeName: 'ATM系統', organId: '0123429', organName: '富邦大安分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
-  { groupId: 'ATMTPE0012', groupName: 'ATM_台北_12組', groupTag: '台北_南港區', typeId: 'Device01', typeName: 'ATM系統', organId: '0123430', organName: '富邦南港分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
+  { groupId: 'ATMTPE0001', groupName: 'ATM_台北_1組', groupTag: '台北_松山區', deviceTypeCode: "OKI-RG7", typeName: 'ATM系統', organId: '0123419', organName: '松山分行', modId: 'Admin', lastVersion: 'A25.05.01', lastSendDate: '2025-06-01' },
+  { groupId: 'ATMTPE0002', groupName: 'ATM_台北_2組', groupTag: '台北_信義區', deviceTypeCode: "OKI-RG7", typeName: 'ATM系統', organId: '0123420', organName: '信義分行', modId: 'Admin', lastVersion: 'A25.05.01', lastSendDate: '2025-06-02' },
+  { groupId: 'ATMTAO0003', groupName: 'ATM_桃園_3組', groupTag: '桃園_中壢區', deviceTypeCode: "OKI-RG7", typeName: 'ATM系統', organId: '0123421', organName: '桃園分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
+  { groupId: 'ATMTXG0004', groupName: 'ATM_台中_4組', groupTag: '台中_南屯區', deviceTypeCode: "OKI-RG7", typeName: 'ATM系統', organId: '0123422', organName: '南屯分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
+  { groupId: 'ATMNWT0005', groupName: 'ATM_新北_5組', groupTag: '新北_板橋區', deviceTypeCode: "OKI-RG7", typeName: 'ATM系統', organId: '0123423', organName: '板橋分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
+  { groupId: 'ATMNWT0006', groupName: 'ATM_新北_6組', groupTag: '新北_永和區', deviceTypeCode: "OKI-RG7", typeName: 'ATM系統', organId: '0123424', organName: '永和分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
+  { groupId: 'ATMMIA0007', groupName: 'ATM_苗栗_7組', groupTag: '苗栗_頭份區', typeId: 'Device01', typeName: 'ATM系統', organId: '0123425', organName: '頭份分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
+  { groupId: 'ATMHSZ0008', groupName: 'ATM_新竹_8組', groupTag: '新竹_東區', typeId: 'Device01', typeName: 'ATM系統', organId: '0123426', organName: '新竹分行', modId: 'Admin', lastVersion: 'A25.05.01', lastSendDate: '2025-06-01' },
+  { groupId: 'ATMCHA0009', groupName: 'ATM_彰化_9組', groupTag: '彰化_員林區', typeId: 'Device01', typeName: 'ATM系統', organId: '0123427', organName: '員林分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
+  { groupId: 'ATMNAN0010', groupName: 'ATM_南投_10組', groupTag: '南投_草屯區', typeId: 'Device01', typeName: 'ATM系統', organId: '0123428', organName: '草屯分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
+  { groupId: 'ATMTPE0011', groupName: 'ATM_台北_11組', groupTag: '台北_大安區', typeId: 'Device01', typeName: 'ATM系統', organId: '0123429', organName: '大安分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
+  { groupId: 'ATMTPE0012', groupName: 'ATM_台北_12組', groupTag: '台北_南港區', typeId: 'Device01', typeName: 'ATM系統', organId: '0123430', organName: '南港分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
 
   // 💰 TCR 系統（5 組）
-  { groupId: 'TCRTPE0001', groupName: 'TCR_台北_1組', groupTag: '台北_內湖區', typeId: 'Device02', typeName: 'TCR系統', organId: '0123501', organName: '富邦內湖分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
-  { groupId: 'TCRNWT0002', groupName: 'TCR_新北_2組', groupTag: '新北_新莊區', typeId: 'Device02', typeName: 'TCR系統', organId: '0123502', organName: '富邦新莊分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
-  { groupId: 'TCRTXG0003', groupName: 'TCR_台中_3組', groupTag: '台中_北屯區', typeId: 'Device02', typeName: 'TCR系統', organId: '0123503', organName: '富邦北屯分行', modId: 'Admin', lastVersion: 'T25.01.01', lastSendDate: '2025-06-03' },
-  { groupId: 'TCRHSZ0004', groupName: 'TCR_新竹_4組', groupTag: '新竹_竹北區', typeId: 'Device02', typeName: 'TCR系統', organId: '0123504', organName: '富邦竹北分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
-  { groupId: 'TCRTAO0005', groupName: 'TCR_桃園_5組', groupTag: '桃園_蘆竹區', typeId: 'Device02', typeName: 'TCR系統', organId: '0123505', organName: '富邦蘆竹分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
+  { groupId: 'TCRTPE0001', groupName: 'TCR_台北_1組', groupTag: '台北_內湖區', typeId: 'Device02', typeName: 'TCR系統', organId: '0123501', organName: '內湖分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
+  { groupId: 'TCRNWT0002', groupName: 'TCR_新北_2組', groupTag: '新北_新莊區', typeId: 'Device02', typeName: 'TCR系統', organId: '0123502', organName: '新莊分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
+  { groupId: 'TCRTXG0003', groupName: 'TCR_台中_3組', groupTag: '台中_北屯區', typeId: 'Device02', typeName: 'TCR系統', organId: '0123503', organName: '北屯分行', modId: 'Admin', lastVersion: 'T25.01.01', lastSendDate: '2025-06-03' },
+  { groupId: 'TCRHSZ0004', groupName: 'TCR_新竹_4組', groupTag: '新竹_竹北區', typeId: 'Device02', typeName: 'TCR系統', organId: '0123504', organName: '竹北分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
+  { groupId: 'TCRTAO0005', groupName: 'TCR_桃園_5組', groupTag: '桃園_蘆竹區', typeId: 'Device02', typeName: 'TCR系統', organId: '0123505', organName: '蘆竹分行', modId: 'Admin', lastVersion: '', lastSendDate: '' },
 
   // 門禁系統（15 組）
   { groupId: 'ACSTPE0001', groupName: 'ACS_台北_1組', groupTag: '台北_信義區', typeId: 'Device03', typeName: '門禁系統', organId: '0123601', organName: '信義商業大樓', modId: 'Admin', lastVersion: '', lastSendDate: '' },
