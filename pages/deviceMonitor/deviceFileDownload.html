@@ -257,7 +257,9 @@
       { title: "類型名稱" },
       { title: "型號代碼" },
       { title: "設備編號" },
-      { title: "檔案獲取流水號" },
+      { title: "位置" },
+      { title: "所屬單位" },
+      { title: "任務編號" },
       { title: "檔案路徑" },
       { title: "建立時間" },
       { title: "檔案獲取狀態" },
@@ -311,6 +313,7 @@
         .filter(d => d.deviceTypeCode === typeCode)
         .map(d => {
           const deviceType = deviceTypeList.find(t => t.deviceTypeCode === d.deviceTypeCode);
+          const device = deviceList.find(item => item.deviceId === d.deviceId);
           const viewBtn = `<button class="btn btn-sm btn-primary" onclick="showFilePathsModal('${d.downloadSeq}')">檢視</button>`;
           const downloadBtn = d.status === 1
             ? `<button class="btn btn-sm btn-success btnDownload" data-id="${d.downloadSeq}"><i class="fas fa-download"></i> 下載</button>`
@@ -319,6 +322,8 @@
             deviceType.deviceTypeName,
             deviceType.deviceTypeCode,
             d.deviceId,
+            device ? device.deviceLocate : '',
+            device ? device.organName : '',
             d.downloadSeq,
             viewBtn,
             d.createdTime,
