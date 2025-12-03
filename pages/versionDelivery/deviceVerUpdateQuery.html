@@ -209,7 +209,8 @@
 												<th>設備編號</th>
 												<th>位置</th>
 												<th>所屬單位</th>
-												<th>派送軟體版本號</th>
+												<th>排程編號</th>
+												<th>軟體版號</th>
 												<th>派送時間</th>
 												<th>狀態</th>
                               </tr>
@@ -321,6 +322,7 @@ const badgeColor=statusKey==='派送成功'?'badge-warning':statusKey==='未派�
           <td>${data.deviceCode}</td>
           <td>${data.deviceLocation}</td>
           <td>${data.unit}</td>
+          <td>${data.scheduleId}</td>
           <td>${data.verNo}</td>
           <td>${data.updateTime}</td>
 		  <td><span class="badge ${badgeColor}">${statusKey}</span></td>
