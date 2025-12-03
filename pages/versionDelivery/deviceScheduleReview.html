@@ -122,6 +122,8 @@
                     <th>排程編號</th>
                     <th>派送版本</th>
                     <th>排程日期</th>
+                    <th>申請人</th>
+                    <th>申請時間</th>
                     <th>已選設備/組別</th>
                     <th>更新時間</th>
                     <th>審核狀態</th>
@@ -195,6 +197,8 @@
             id: d.scheduleId,
             version: d.sendVersion,
             date: d.scheduleDate,
+            applicant: d.applicant,
+            applyTime: d.applyTime,
             list: badges,
             update: d.updateTime,
             reviewStatus: `<span class="badge ${reviewStatus.find(rs => rs.statusCode === d.reviewStatus).colorBadge}">${reviewStatus.find(rs => rs.statusCode === d.reviewStatus).statusName}</span>`,
@@ -216,6 +220,8 @@
           { data: "id" },
           { data: "version" },
           { data: "date" },
+          { data: "applicant" },
+          { data: "applyTime" },
           { data: "list" },
           { data: "update" },
           { data: "reviewStatus"},
