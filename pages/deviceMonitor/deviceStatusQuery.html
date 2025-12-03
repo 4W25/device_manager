@@ -17,6 +17,18 @@
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
   <style>
     .nav-tabs { margin-bottom: 20px;}
+    .status-indicator {
+      height: 10px;
+      width: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .status-green {
+      background-color: #28a745;
+    }
+    .status-gray {
+      background-color: #6c757d;
+    }
   </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -226,9 +238,10 @@
                                 <th>型號代碼</th>
                                 <th>設備編號</th>
                                 <th>當前版本</th>
-                                
                                 <th>位置</th>
 								<th>所屬單位</th>
+                                <th>狀態</th>
+                                <th>最後連線</th>
 								<th>更新紀錄</th>
                               </tr>
                             </thead>
@@ -255,33 +268,41 @@
       const tableBody = document.getElementById(tableBodyId);
       tableBody.innerHTML = ""; // 清空表格
 
-    // 直接使用原始資料，不排序，DataTables 會排序
-    deviceStatusData
+      // 直接使用原始資料，不排序，DataTables 會排序
+      deviceStatusData
         .filter(data => data.deviceType === deviceType)
         .forEach(data => {
             const row = document.createElement('tr');
           
-          // 根據狀態選擇 badge 顏色
-          const badgeClass =
-            data.deviceStatus === "未派送" ? "badge-warning" :
-            data.deviceStatus === "已更新" ? "badge-success" :
-            data.deviceStatus === "更新失敗" ? "badge-danger" :
-            "badge-secondary";
+            // 計算時間差來決定狀態燈號
+            const now = new Date();
+            const lastConnection = new Date(data.lastConnectionTime);
+            const diffMinutes = (now - lastConnection) / (1000 * 60);
+            const statusLightClass = diffMinutes <= 30 ? 'status-green' : 'status-gray';
 
-          // 根據 updateVersion 判斷按鈕顯示內容
-		            row.innerHTML = `
-			  <td>${data.deviceName}</td>
+            // 格式化時間
+            const formattedTime = lastConnection.getFullYear() + '-' +
+                                  ('0' + (lastConnection.getMonth() + 1)).slice(-2) + '-' +
+                                  ('0' + lastConnection.getDate()).slice(-2) + ' ' +
+                                  ('0' + lastConnection.getHours()).slice(-2) + ':' +
+                                  ('0' + lastConnection.getMinutes()).slice(-2) + ':' +
+                                  ('0' + lastConnection.getSeconds()).slice(-2);
+
+            row.innerHTML = `
+              <td>${data.deviceName}</td>
               <td>${data.deviceModel}</td>
               <td>${data.deviceCode}</td>
-			  <td>${data.deviceVersion}</td>
-			  
-              </td><td>${data.deviceLocation}</td>
-			  </td><td>${data.unit}</td>
-			  <td class="project-actions text-center"> <a class="btn btn-primary btn-sm" href="updateVersionHist.html?id=${data.deviceCode}&deviceType=${data.deviceType}">查詢</a>
-
-          `;
-          tableBody.appendChild(row);
-      });
+              <td>${data.deviceVersion}</td>
+              <td>${data.deviceLocation}</td>
+              <td>${data.unit}</td>
+              <td class="text-center"><span class="status-indicator ${statusLightClass}"></span></td>
+              <td>${formattedTime}</td>
+              <td class="project-actions text-center">
+                  <a class="btn btn-primary btn-sm" href="updateVersionHist.html?id=${data.deviceCode}&deviceType=${data.deviceType}">查詢</a>
+              </td>
+            `;
+            tableBody.appendChild(row);
+        });
     }
     
     // 自定義函數來初始化 DataTable
