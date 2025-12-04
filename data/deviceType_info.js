@@ -9,11 +9,11 @@ const deviceTypeList = [
 // 設備資料 deviceData.html
 const deviceDataList = [
 	// 循環機
-	{ deviceNo: 'A012001601', deviceLocate: '台北市-大眾門市', deviceTypeCode: "OKI-RG7", createDataDate: '2025-07-08', ip: '0.16.10.0', organId: '0120016', organName: '營運中心', modId: 'Admin', cofId: '楊蔥圈' },
-	{ deviceNo: 'A012001602', deviceLocate: '台北市-中崙門市', deviceTypeCode: "OKI-RG7", createDataDate: '2025-03-15', ip: '05.05.0.05', organId: '0120016', organName: '營運中心', modId: 'Admin', cofId: '楊蔥圈' },
-	{ deviceNo: 'A012001603', deviceLocate: '新北市-大庭門市', deviceTypeCode: "OKI-RG7", createDataDate: '2024-12-31', ip: '164.11.20.18', organId: '0120016', organName: '營運中心', modId: 'Admin', cofId: '楊蔥圈' },
-	{ deviceNo: 'A012200901', deviceLocate: '台中市-大時代門市', deviceTypeCode: "OKI-RG7", createDataDate: '2024-10-22', ip: '162.15.0.04', organId: '0120016', organName: '營運中心', modId: 'Admin', cofId: '楊蔥圈' },
-	{ deviceNo: 'A012200902', deviceLocate: '高雄市-中雅門市', deviceTypeCode: "OKI-RG7", createDataDate: '2024-06-10', ip: '0.0.0.0', organId: '0120016', organName: '營運中心', modId: 'Admin', cofId: '楊蔥圈' },
+	{ deviceNo: 'A012001601', deviceLocate: '台北市-大眾門市', deviceTypeCode: "OKI-RG7", createDataDate: '2025-07-08', ip: '0.16.10.0', organId: '0120016', organName: '營運中心', modId: 'Admin', cofId: '楊蔥圈', deliveryPaused: true },
+	{ deviceNo: 'A012001602', deviceLocate: '台北市-中崙門市', deviceTypeCode: "OKI-RG7", createDataDate: '2025-03-15', ip: '05.05.0.05', organId: '0120016', organName: '營運中心', modId: 'Admin', cofId: '楊蔥圈', deliveryPaused: false },
+	{ deviceNo: 'A012001603', deviceLocate: '新北市-大庭門市', deviceTypeCode: "OKI-RG7", createDataDate: '2024-12-31', ip: '164.11.20.18', organId: '0120016', organName: '營運中心', modId: 'Admin', cofId: '楊蔥圈', deliveryPaused: false },
+	{ deviceNo: 'A012200901', deviceLocate: '台中市-大時代門市', deviceTypeCode: "OKI-RG7", createDataDate: '2024-10-22', ip: '162.15.0.04', organId: '0120016', organName: '營運中心', modId: 'Admin', cofId: '楊蔥圈', deliveryPaused: true },
+	{ deviceNo: 'A012200902', deviceLocate: '高雄市-中雅門市', deviceTypeCode: "OKI-RG7", createDataDate: '2024-06-10', ip: '0.0.0.0', organId: '0120016', organName: '營運中心', modId: 'Admin', cofId: '楊蔥圈', deliveryPaused: false },
 	/*
 	{ deviceNo: 'A012210201', devicelocate: '新北市-中崙門市', status: '核准', deviceTypeCode: "OKI-RG7",  organId: '0120016', organName: '營運中心', modId: 'Admin', cofId: '楊蔥圈' },
 	{ deviceNo: 'A012210202', devicelocate: '台北市-公庫處ATM2', status: '核准', deviceTypeCode: "OKI-RG7",  organId: '0120016', organName: '營運中心', modId: 'Admin', cofId: '楊蔥圈' },

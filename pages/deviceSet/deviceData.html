@@ -191,6 +191,7 @@
                           <th>類型名稱</th><th>型號代碼</th>
                           <th>設備編號</th>
                           <th>設備位置</th><th>所屬單位</th>
+                          <th>暫停派送</th>
                           <th>功能</th>
                         </tr>
                       </thead>
@@ -220,6 +221,7 @@
               <td>${d.deviceNo}</td>
               <td>${d.deviceLocate}</td>
               <td>${d.organId} - ${d.organName}</td>
+              <td>${d.deliveryPaused ? '是' : '否'}</td>
               <td style="text-align:center;">
                 <a href="deviceDataEdit.html?id=${d.deviceNo}&readonly=true&deviceTypeCode=${deviceTypeCode}" class="btn btn-sm btn-primary">檢視</a>
                 <a href="deviceDataEdit.html?id=${d.deviceNo}&deviceTypeCode=${deviceTypeCode}" class="btn btn-sm btn-secondary">修改</a>

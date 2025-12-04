@@ -133,8 +133,13 @@
                   <div class="form-group">
                     <label for="bandwidth">頻寬限制</label>
                     <input type="text" id="bandwidth" class="form-control"><label for="bandwidth">KB/s</label>     
-                  </div>                     
-                 
+                  </div>
+                  <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input" type="checkbox" id="deliveryPaused" name="deliveryPaused">
+                      <label for="deliveryPaused" class="custom-control-label">暫停派送</label>
+                    </div>
+                  </div>
                 </div>
                 <!-- 右 -->
                 <div class="col-md-6"> 
@@ -272,6 +277,7 @@
       $("#deviceIP").val(deviceData.ip);
       $("#organName").val(deviceData.organName);
       $("#createDataDate").val(deviceData.createDataDate);
+      $("#deliveryPaused").prop("checked", deviceData.deliveryPaused);
     }
     // 檢視模式
     if(isReadOnly){
